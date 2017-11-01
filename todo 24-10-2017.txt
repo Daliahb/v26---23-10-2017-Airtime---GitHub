@@ -1,0 +1,15 @@
+-- create table devices_slots
+-- add column fk_DeviceSlot to cards table
+
+
+CREATE TABLE `slots_lockup` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Slote` varchar(45) DEFAULT NULL,
+
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+go
+-----------------------------------
+
+proc UseCard

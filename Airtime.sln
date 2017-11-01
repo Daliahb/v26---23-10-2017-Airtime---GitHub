@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Airtime", "Airtime\Airtime.vbproj", "{2207A5F1-BD35-4DF0-9900-02703255D63D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AirTime system setup", "AirTime system setup\AirTime system setup.vdproj", "{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Debug|x86.ActiveCfg = Debug|x86
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Debug|x86.Build.0 = Debug|x86
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Release|x86.ActiveCfg = Release|x86
+		{2207A5F1-BD35-4DF0-9900-02703255D63D}.Release|x86.Build.0 = Release|x86
+		{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}.Debug|Any CPU.ActiveCfg = Debug
+		{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}.Debug|x86.ActiveCfg = Debug
+		{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}.Release|Any CPU.ActiveCfg = Release
+		{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}.Release|Any CPU.Build.0 = Release
+		{4BE9BE90-DAD2-4969-B336-A76DE27AAF85}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
