@@ -52,13 +52,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B3781DA48F2D50688A4C538205F1ED6E"
+        "OwnerKey" = "8:_456348DE6901CE025ACAB8CADA140EC5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_456348DE6901CE025ACAB8CADA140EC5"
+        "OwnerKey" = "8:_B3781DA48F2D50688A4C538205F1ED6E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -106,7 +106,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Airtime Setup-01-11-2017.msi"
+        "OutputFilename" = "8:Release\\Airtime Setup-01-11-2017_2.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -213,11 +213,6 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_456348DE6901CE025ACAB8CADA140EC5"
-                    {
-                    "Name" = "8:Microsoft.VisualBasic.PowerPacks.Vs.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Microsoft.VisualBasic.PowerPacks.Vs.dll"
             "TargetName" = "8:"
@@ -244,11 +239,6 @@
             "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.1.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B3781DA48F2D50688A4C538205F1ED6E"
-                    {
-                    "Name" = "8:MySql.Data.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MySql.Data.DLL"
             "TargetName" = "8:"
@@ -324,15 +314,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Airtime System"
-        "ProductCode" = "8:{97B534C2-B817-480F-B894-9DE9BC126BB8}"
-        "PackageCode" = "8:{0CFA7D51-D0DD-4067-B25A-D21BF22AE7D5}"
+        "ProductCode" = "8:{F807F2D9-3E2D-4CC4-923E-FC8E7B1A9119}"
+        "PackageCode" = "8:{5BE686F6-1A97-4A75-AECC-2E93DA969D8B}"
         "UpgradeCode" = "8:{509215C4-01A4-498F-AB5C-0CBCA87835DB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.1"
+        "ProductVersion" = "8:1.5.2"
         "Manufacturer" = "8:Maple Telecommunications"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
