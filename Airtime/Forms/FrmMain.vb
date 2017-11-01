@@ -29,6 +29,7 @@ Public Class FrmMain
             Me.IiiToolStripMenuItem.Visible = True
             Me.AddSimCardsOrdersToolStripMenuItem.Enabled = True
             ViewSimCardsOrdersToolStripMenuItem.Enabled = True
+            Me.ReportsToolStripMenuItem.Visible = False
             '  FillDataSets()
 
         ElseIf gUser.type = Enumerators.UsersTypes.Supervisor Then
@@ -37,9 +38,13 @@ Public Class FrmMain
             Me.SettingToolStripMenuItem.Visible = False
             Me.btnShiftEndUsersDevices2.Visible = True
             Me.ProvidersBalancesToolStripMenuItem.Visible = True
+            Me.ProvidersBalancesToolStripMenuItem.Enabled = True
             Me.IiiToolStripMenuItem.Visible = True
             Me.AddSimCardsOrdersToolStripMenuItem.Enabled = True
             ViewSimCardsOrdersToolStripMenuItem.Enabled = True
+            Me.ReportsToolStripMenuItem.Visible = True
+            ToolStripMenuItem1.Enabled = True
+            SlotDetailsReportToolStripMenuItem.Enabled = True
 
         ElseIf gUser.type = Enumerators.UsersTypes.Audit Then
             Me.PanelCardsUser.Visible = False
@@ -58,6 +63,9 @@ Public Class FrmMain
             ViewSimCardsOrdersToolStripMenuItem.Enabled = True
             ViewProviderPayementsToolStripMenuItem.Enabled = True
             Me.CardsStatusToolStripMenuItem.Visible = True
+            Me.ReportsToolStripMenuItem.Visible = True
+            ToolStripMenuItem1.Enabled = True
+            SlotDetailsReportToolStripMenuItem.Enabled = True
 
         ElseIf gUser.type = Enumerators.UsersTypes.Provider Then
             Me.PanelCardsUser.Visible = False
@@ -69,7 +77,8 @@ Public Class FrmMain
             Me.btnWrongCards.Location = New Point(85, 127)
             Me.btnCorrectedCards.Location = New Point(264, 127)
             Me.btnSendCards.Visible = False
-            Me.ProvidersBalancesToolStripMenuItem.Visible = True
+            Me.ReportsToolStripMenuItem.Visible = False
+            IiiToolStripMenuItem.Visible = False
 
         ElseIf gUser.type = Enumerators.UsersTypes.Admin Then
             Me.PanelCardsUser.Visible = False
@@ -95,6 +104,16 @@ Public Class FrmMain
             ViewProviderPayementsToolStripMenuItem.Enabled = True
             ShiftReportsFolderToolStripMenuItem.Visible = True
             Me.CardsStatusToolStripMenuItem.Visible = True
+            Me.ReportsToolStripMenuItem.Visible = True
+            ToolStripMenuItem1.Enabled = True
+            SlotDetailsReportToolStripMenuItem.Enabled = True
+            InsertedByProviderReportToolStripMenuItem.Enabled = True
+            ProviderCardsReportToolStripMenuItem.Enabled = True
+            CardsLessThanLimitToolStripMenuItem.Enabled = True
+            ProvidersBalancesToolStripMenuItem.Enabled = True
+            ShiftReportToolStripMenuItem.Enabled = True
+            CardsStatusToolStripMenuItem.Enabled = True
+
         End If
     End Sub
 

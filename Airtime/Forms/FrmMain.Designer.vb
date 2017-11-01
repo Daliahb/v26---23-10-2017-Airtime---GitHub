@@ -51,6 +51,7 @@ Partial Class FrmMain
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.CardsStatusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SlotDetailsReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.IiiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddExpensesAirtimeCardsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddExpensesOthersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -87,7 +88,6 @@ Partial Class FrmMain
         Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PrintForm1 = New Microsoft.VisualBasic.PowerPacks.Printing.PrintForm(Me.components)
-        Me.SlotDetailsReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.PanelCardsUser.SuspendLayout()
         CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -211,6 +211,7 @@ Partial Class FrmMain
         '
         'InsertedByProviderReportToolStripMenuItem
         '
+        Me.InsertedByProviderReportToolStripMenuItem.Enabled = False
         Me.InsertedByProviderReportToolStripMenuItem.Name = "InsertedByProviderReportToolStripMenuItem"
         Me.InsertedByProviderReportToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.InsertedByProviderReportToolStripMenuItem.Text = "Inserted by Provider Report"
@@ -218,6 +219,7 @@ Partial Class FrmMain
         '
         'ProviderCardsReportToolStripMenuItem
         '
+        Me.ProviderCardsReportToolStripMenuItem.Enabled = False
         Me.ProviderCardsReportToolStripMenuItem.Name = "ProviderCardsReportToolStripMenuItem"
         Me.ProviderCardsReportToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.ProviderCardsReportToolStripMenuItem.Text = "Providers-Cards Report"
@@ -225,6 +227,7 @@ Partial Class FrmMain
         '
         'CardsLessThanLimitToolStripMenuItem
         '
+        Me.CardsLessThanLimitToolStripMenuItem.Enabled = False
         Me.CardsLessThanLimitToolStripMenuItem.Name = "CardsLessThanLimitToolStripMenuItem"
         Me.CardsLessThanLimitToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.CardsLessThanLimitToolStripMenuItem.Text = "Cards less than limit"
@@ -232,6 +235,7 @@ Partial Class FrmMain
         '
         'ProvidersBalancesToolStripMenuItem
         '
+        Me.ProvidersBalancesToolStripMenuItem.Enabled = False
         Me.ProvidersBalancesToolStripMenuItem.Name = "ProvidersBalancesToolStripMenuItem"
         Me.ProvidersBalancesToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.ProvidersBalancesToolStripMenuItem.Text = "Providers Balances"
@@ -239,6 +243,7 @@ Partial Class FrmMain
         '
         'ShiftReportToolStripMenuItem
         '
+        Me.ShiftReportToolStripMenuItem.Enabled = False
         Me.ShiftReportToolStripMenuItem.Name = "ShiftReportToolStripMenuItem"
         Me.ShiftReportToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.ShiftReportToolStripMenuItem.Text = "Shift Report"
@@ -251,6 +256,7 @@ Partial Class FrmMain
         '
         'CardsStatusToolStripMenuItem
         '
+        Me.CardsStatusToolStripMenuItem.Enabled = False
         Me.CardsStatusToolStripMenuItem.Name = "CardsStatusToolStripMenuItem"
         Me.CardsStatusToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
         Me.CardsStatusToolStripMenuItem.Text = "Cards Status"
@@ -258,9 +264,17 @@ Partial Class FrmMain
         '
         'ToolStripMenuItem1
         '
+        Me.ToolStripMenuItem1.Enabled = False
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(218, 22)
         Me.ToolStripMenuItem1.Text = "Device Performance Report"
+        '
+        'SlotDetailsReportToolStripMenuItem
+        '
+        Me.SlotDetailsReportToolStripMenuItem.Enabled = False
+        Me.SlotDetailsReportToolStripMenuItem.Name = "SlotDetailsReportToolStripMenuItem"
+        Me.SlotDetailsReportToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
+        Me.SlotDetailsReportToolStripMenuItem.Text = "Slot Details Report"
         '
         'IiiToolStripMenuItem
         '
@@ -625,12 +639,6 @@ Partial Class FrmMain
         Me.PrintForm1.PrintAction = System.Drawing.Printing.PrintAction.PrintToPrinter
         Me.PrintForm1.PrinterSettings = CType(resources.GetObject("PrintForm1.PrinterSettings"), System.Drawing.Printing.PrinterSettings)
         Me.PrintForm1.PrintFileName = Nothing
-        '
-        'SlotDetailsReportToolStripMenuItem
-        '
-        Me.SlotDetailsReportToolStripMenuItem.Name = "SlotDetailsReportToolStripMenuItem"
-        Me.SlotDetailsReportToolStripMenuItem.Size = New System.Drawing.Size(218, 22)
-        Me.SlotDetailsReportToolStripMenuItem.Text = "Slot Details Report"
         '
         'FrmMain
         '
