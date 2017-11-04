@@ -2,10 +2,11 @@
 
     Dim ds As DataSet
     Dim lCountryID, lProviderID, lOperatorID, lCategoryID, lReturnedByID, lLocationID, lWrongType As Integer
-    Dim FromDate, ToDate As Date
-    Dim boolCheckDate, isloaded As Boolean
+    Dim FromDate, ToDate, WrongDateFrom, WrongDateTo As Date
+    Dim boolCheckDate, isloaded, boolWrongDate As Boolean
     Dim strCardNo As String
     Dim dsCountries, dsDevices, dsLocations As DataSet
+
 
     Private Sub frmWrongCards_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -37,7 +38,7 @@
         Try
             Me.DataGridView1.Rows.Clear()
             Generate()
-            ds = odbaccess.GetWrongCards(lWrongType, lCountryID, lProviderID, lOperatorID, lCategoryID, lReturnedByID, lLocationID, strCardNo, boolCheckDate, FromDate, ToDate)
+            ds = odbaccess.GetWrongCards(lWrongType, lCountryID, lProviderID, lOperatorID, lCategoryID, lReturnedByID, lLocationID, strCardNo, boolCheckDate, FromDate, ToDate, boolWrongDate, WrongDateFrom, WrongDateTo)
             If Not ds Is Nothing AndAlso Not ds.Tables().Count = 0 Then
                 For Each dr As DataRow In ds.Tables(0).Rows
                     Try
@@ -268,6 +269,11 @@
         Me.dtpFromDate.Enabled = chkDate.Checked
     End Sub
 
+    Private Sub chkWrongDate_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkWrongDate.CheckedChanged
+        Me.dtpWrongDateFrom.Enabled = chkWrongDate.Checked
+        Me.dtpWrongDateTo.Enabled = chkWrongDate.Checked
+    End Sub
+
     Public Sub FillTypes()
         Try
             dsCountries = odbaccess.GetCountriesDS
@@ -339,6 +345,15 @@
         Else
             boolCheckDate = False
         End If
+
+        If Me.chkWrongDate.Checked Then
+            boolWrongDate = True
+            WrongDateFrom = Me.dtpWrongDateFrom.Value
+            WrongDateTo = CDate(Me.dtpWrongDateTo.Value).AddDays(1)
+        Else
+            boolWrongDate = False
+        End If
+
         If Me.chkCard.Checked Then
             strCardNo = Me.txtCardNumber.Text
         Else
@@ -402,4 +417,7 @@
         End If
     End Sub
 
+    Private Sub Panel1_Paint(sender As System.Object, e As System.Windows.Forms.PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
 End Class

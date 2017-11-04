@@ -651,4 +651,21 @@ Public Class FrmMain
             frm.Show()
         End If
     End Sub
+
+    Private Sub Button1_Click_2(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+        Dim webClient As New System.Net.WebClient
+        Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_05:31:01&date_to=2017-11-02_05:31:01&prefix=99234")
+
+        If Not result Is Nothing AndAlso Not result.Length = 0 Then
+            result.Trim()
+
+            Dim strArr() As String
+            Dim count As Integer
+            strArr = result.Split("|")
+            intTotalCalls = CInt(strArr(0))
+
+            {total calls}|{duration in seconds}|{ACD in seconds}|{ASR without %}  
+        End If
+        MsgBox(result)
+    End Sub
 End Class

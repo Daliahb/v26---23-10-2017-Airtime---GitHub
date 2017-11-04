@@ -92,6 +92,9 @@ Partial Class frmDistributedCards
         Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -104,8 +107,8 @@ Partial Class frmDistributedCards
         'Panel1
         '
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.Controls.Add(Me.Label5)
         Me.Panel1.Controls.Add(Me.cmbDevices)
         Me.Panel1.Controls.Add(Me.chkDevice)
@@ -513,8 +516,8 @@ Partial Class frmDistributedCards
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -641,33 +644,33 @@ Partial Class frmDistributedCards
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHistoryToolStripMenuItem, Me.DeleteCardToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHistoryToolStripMenuItem, Me.DeleteCardToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem, Me.ToolStripSeparator2, Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem, Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(148, 76)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(266, 148)
         '
         'ShowHistoryToolStripMenuItem
         '
         Me.ShowHistoryToolStripMenuItem.Name = "ShowHistoryToolStripMenuItem"
-        Me.ShowHistoryToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ShowHistoryToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
         Me.ShowHistoryToolStripMenuItem.Text = "Show Card History"
         '
         'DeleteCardToolStripMenuItem
         '
         Me.DeleteCardToolStripMenuItem.Name = "DeleteCardToolStripMenuItem"
-        Me.DeleteCardToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.DeleteCardToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
         Me.DeleteCardToolStripMenuItem.Text = "Delete Cards"
         Me.DeleteCardToolStripMenuItem.Visible = False
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(144, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(262, 6)
         '
         'ExportToExcelToolStripMenuItem
         '
         Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
-        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
         Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
         '
         'btnSearch
@@ -703,6 +706,23 @@ Partial Class frmDistributedCards
         'ErrorProvider1
         '
         Me.ErrorProvider1.ContainerControl = Me
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(262, 6)
+        '
+        'ChangeFromUsedToWrongScratchNoToolStripMenuItem
+        '
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Name = "ChangeFromUsedToWrongScratchNoToolStripMenuItem"
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Text = "Change from Used to Wrong Scratch No."
+        '
+        'ChangeFromUsedToAlradyUsedCardToolStripMenuItem
+        '
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Name = "ChangeFromUsedToAlradyUsedCardToolStripMenuItem"
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Text = "Change from Used to Alrady Used Card"
         '
         'frmDistributedCards
         '
@@ -791,5 +811,8 @@ Partial Class frmDistributedCards
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents cmbDevices As System.Windows.Forms.ComboBox
     Friend WithEvents chkDevice As System.Windows.Forms.CheckBox
+    Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ChangeFromUsedToWrongScratchNoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ChangeFromUsedToAlradyUsedCardToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

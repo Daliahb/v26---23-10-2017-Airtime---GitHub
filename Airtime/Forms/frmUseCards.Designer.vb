@@ -689,12 +689,14 @@ Partial Class frmUseCards
         Me.dgDeviceSlotID.HeaderText = "DeviceSlotID"
         Me.dgDeviceSlotID.Name = "dgDeviceSlotID"
         Me.dgDeviceSlotID.ReadOnly = True
+        Me.dgDeviceSlotID.Visible = False
         '
         'dgSlot
         '
         Me.dgSlot.HeaderText = "Slot"
         Me.dgSlot.Name = "dgSlot"
         Me.dgSlot.ReadOnly = True
+        Me.dgSlot.Visible = False
         '
         'frmUseCards
         '
@@ -756,6 +758,13 @@ Partial Class frmUseCards
     Friend WithEvents btnSetAsWrongCard As System.Windows.Forms.Button
     Friend WithEvents btnSetAsUsed As System.Windows.Forms.Button
     Friend WithEvents chkSelectClear As System.Windows.Forms.CheckBox
+    Friend WithEvents DataGridViewDisableButtonColumn1 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn2 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn3 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn4 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn5 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn6 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn7 As WindowsApplication1.DataGridViewDisableButtonColumn
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents clID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -775,11 +784,4 @@ Partial Class frmUseCards
     Friend WithEvents dgAddSimsBtn As WindowsApplication1.DataGridViewDisableButtonColumn
     Friend WithEvents dgDeviceSlotID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewDisableButtonColumn1 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn2 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn3 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn4 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn5 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn6 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn7 As WindowsApplication1.DataGridViewDisableButtonColumn
 End Class

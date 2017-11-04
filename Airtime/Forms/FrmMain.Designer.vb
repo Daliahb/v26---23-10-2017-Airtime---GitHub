@@ -88,6 +88,7 @@ Partial Class FrmMain
         Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PrintForm1 = New Microsoft.VisualBasic.PowerPacks.Printing.PrintForm(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.PanelCardsUser.SuspendLayout()
         CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -493,6 +494,7 @@ Partial Class FrmMain
         '
         'PanelDistributor
         '
+        Me.PanelDistributor.Controls.Add(Me.Button1)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsersDevices)
         Me.PanelDistributor.Controls.Add(Me.btnDistributedCards)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsers)
@@ -640,6 +642,15 @@ Partial Class FrmMain
         Me.PrintForm1.PrinterSettings = CType(resources.GetObject("PrintForm1.PrinterSettings"), System.Drawing.Printing.PrinterSettings)
         Me.PrintForm1.PrintFileName = Nothing
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(455, 155)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 115
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -733,4 +744,5 @@ Partial Class FrmMain
     Friend WithEvents CardsStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SlotDetailsReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class

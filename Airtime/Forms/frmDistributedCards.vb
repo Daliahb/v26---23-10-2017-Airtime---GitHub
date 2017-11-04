@@ -439,4 +439,67 @@
         Me.cmbDevices.Enabled = chkDevice.Checked
     End Sub
 
+    Private Sub ChangeFromUsedToWrongScratchNoToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromUsedToWrongScratchNoToolStripMenuItem.Click
+        If Me.rbSent.Checked = True Then
+            If Not Me.DataGridView1.SelectedCells.Count = 0 Then
+                If MsgBox("Are you sure you want to change the selected cards from Used Cards to Wrong Scratch No.?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    Dim ar As New ArrayList
+                    For Each cell As DataGridViewCell In Me.DataGridView1.SelectedCells()
+                        If Not ar.Contains(cell.RowIndex) Then
+                            ar.Add(cell.RowIndex)
+                        End If
+                    Next
+                    ar.Sort()
+                    Dim strCardIDs As String = ""
+                    Dim id As Integer
+                    For Each id In ar
+                        strCardIDs += Me.DataGridView1.Rows(id).Cells(0).Value.ToString
+                        strCardIDs += ","
+                    Next
+                    If odbaccess.ChangeCardsFromUsedCardToWrongCard(strCardIDs, 2) Then
+                        MsgBox("Operation done successfully.")
+                        For i As Integer = ar.Count - 1 To 0 Step -1
+                            Me.DataGridView1.Rows.RemoveAt(CInt(ar(i)))
+                        Next
+                    Else
+                        MsgBox("An error occured!")
+                    End If
+                End If
+            End If
+        Else
+            MsgBox("To activate this feature, the filter 'Used' should be selected.")
+        End If
+    End Sub
+
+    Private Sub ChangeFromUsedToAlradyUsedCardToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Click
+        If Me.rbSent.Checked = True Then
+            If Not Me.DataGridView1.SelectedCells.Count = 0 Then
+                If MsgBox("Are you sure you want to change the selected cards from Used Cards to Wrong Scratch No.?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    Dim ar As New ArrayList
+                    For Each cell As DataGridViewCell In Me.DataGridView1.SelectedCells()
+                        If Not ar.Contains(cell.RowIndex) Then
+                            ar.Add(cell.RowIndex)
+                        End If
+                    Next
+                    ar.Sort()
+                    Dim strCardIDs As String = ""
+                    Dim id As Integer
+                    For Each id In ar
+                        strCardIDs += Me.DataGridView1.Rows(id).Cells(0).Value.ToString
+                        strCardIDs += ","
+                    Next
+                    If odbaccess.ChangeCardsFromUsedCardToWrongCard(strCardIDs, 3) Then
+                        MsgBox("Operation done successfully.")
+                        For i As Integer = ar.Count - 1 To 0 Step -1
+                            Me.DataGridView1.Rows.RemoveAt(CInt(ar(i)))
+                        Next
+                    Else
+                        MsgBox("An error occured!")
+                    End If
+                End If
+            End If
+        Else
+            MsgBox("To activate this feature, the filter 'Used' should be selected.")
+        End If
+    End Sub
 End Class

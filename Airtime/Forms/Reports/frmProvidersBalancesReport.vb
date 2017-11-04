@@ -20,13 +20,18 @@
 
     Private Sub btnSearch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearch.Click
         Dim intRowIndex As Integer
-
+        Dim lCountry As Integer
         Dim ds As DataSet
         Try
             Me.DataGridView1.Rows.Clear()
             '  Generate()
+            If Me.chkCountry.Checked Then
+                lCountry = CInt(cmbCountries.SelectedValue)
+            Else
+                lCountry = 0
+            End If
             If boolError Then
-                ds = odbaccess.GetProvicersBalancesReport() 'lCountryID, lProviderID, FromDate, ToDate)
+                ds = odbaccess.GetProvicersBalancesReport(lCountry) 'lCountryID, lProviderID, FromDate, ToDate)
                 If Not ds Is Nothing AndAlso Not ds.Tables().Count = 0 Then
                     Me.Button1.Enabled = True
                     Me.Button2.Enabled = True
@@ -247,7 +252,6 @@
             Else
                 startPage = 0
             End If
-
         Next
 
     End Sub
@@ -257,5 +261,9 @@
         ppd.Document = PrintDocument1
         ppd.WindowState = FormWindowState.Maximized
         ppd.ShowDialog()
+    End Sub
+
+    Private Sub chkCountry_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkCountry.CheckedChanged
+        Me.cmbCountries.Enabled = Me.chkCountry.Checked
     End Sub
 End Class

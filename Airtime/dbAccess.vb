@@ -18,10 +18,9 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        'oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
-
+        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
     End Sub
 
     Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
@@ -2026,7 +2025,7 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetWrongCards(ByVal lWrongType As Integer, ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lReturnedByID As Integer, ByVal lLocationID As Integer, ByVal strCardNo As String, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date) As DataSet
+    Public Function GetWrongCards(ByVal lWrongType As Integer, ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lReturnedByID As Integer, ByVal lLocationID As Integer, ByVal strCardNo As String, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date, boolWrongDate As Boolean, WrongDateFrom As Date, WrongDateTo As Date) As DataSet
         ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
@@ -2109,6 +2108,28 @@ Public Class DBAccess
                 .Value = ToDate
             End With
             oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "boolWrongDate"
+                .Value = boolWrongDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dWrongDateFrom"
+                .Value = WrongDateFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dWrongDateTo"
+                .Value = WrongDateTo
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
@@ -2321,6 +2342,50 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "strCardIDs"
                 .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+
+        End Try
+    End Function
+
+    Public Function ChangeCardsFromUsedCardToWrongCard(ByVal strCardIDs As String, lWrongCardType As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangeCardsFromUsedCardToWrongCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lWrongCardType"
+                .Value = lWrongCardType
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -3266,12 +3331,19 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetProvicersBalancesReport() As DataSet
+    Public Function GetProvicersBalancesReport(lCountryID As Integer) As DataSet
         ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
             oSelectCommand.CommandText = "GetProvidersBalancesReport"
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam

@@ -37,6 +37,12 @@ Partial Class frmProvidersBalancesReport
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowHistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -46,12 +52,8 @@ Partial Class frmProvidersBalancesReport
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cmbCountries = New System.Windows.Forms.ComboBox()
+        Me.chkCountry = New System.Windows.Forms.CheckBox()
         Me.Panel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -64,6 +66,8 @@ Partial Class frmProvidersBalancesReport
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Controls.Add(Me.cmbCountries)
+        Me.Panel1.Controls.Add(Me.chkCountry)
         Me.Panel1.Controls.Add(Me.lblHeader)
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -78,7 +82,7 @@ Partial Class frmProvidersBalancesReport
         'lblHeader
         '
         Me.lblHeader.AutoSize = True
-        Me.lblHeader.Location = New System.Drawing.Point(248, 15)
+        Me.lblHeader.Location = New System.Drawing.Point(352, 25)
         Me.lblHeader.Name = "lblHeader"
         Me.lblHeader.Size = New System.Drawing.Size(180, 16)
         Me.lblHeader.TabIndex = 115
@@ -88,9 +92,9 @@ Partial Class frmProvidersBalancesReport
         'Button2
         '
         Me.Button2.Enabled = False
-        Me.Button2.Location = New System.Drawing.Point(84, 9)
+        Me.Button2.Location = New System.Drawing.Point(623, 11)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(128, 28)
+        Me.Button2.Size = New System.Drawing.Size(136, 41)
         Me.Button2.TabIndex = 114
         Me.Button2.Text = "Print Preview"
         Me.Button2.UseVisualStyleBackColor = True
@@ -98,21 +102,22 @@ Partial Class frmProvidersBalancesReport
         'Button1
         '
         Me.Button1.Enabled = False
-        Me.Button1.Location = New System.Drawing.Point(3, 9)
+        Me.Button1.Location = New System.Drawing.Point(519, 11)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 28)
         Me.Button1.TabIndex = 114
         Me.Button1.Text = "Print"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'btnSearch
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(770, 7)
+        Me.btnSearch.Location = New System.Drawing.Point(770, 11)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
+        Me.btnSearch.Size = New System.Drawing.Size(136, 41)
         Me.btnSearch.TabIndex = 36
         Me.btnSearch.Text = "Filter"
         Me.btnSearch.UseVisualStyleBackColor = True
@@ -143,15 +148,62 @@ Partial Class frmProvidersBalancesReport
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle6
-        Me.DataGridView1.Location = New System.Drawing.Point(4, 49)
+        Me.DataGridView1.Location = New System.Drawing.Point(4, 60)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(4)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
         DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         Me.DataGridView1.RowsDefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(902, 567)
+        Me.DataGridView1.Size = New System.Drawing.Size(902, 556)
         Me.DataGridView1.TabIndex = 37
+        '
+        'Column2
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column2.HeaderText = "Country"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.Width = 150
+        '
+        'Column4
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle3
+        Me.Column4.HeaderText = "Provider"
+        Me.Column4.Name = "Column4"
+        Me.Column4.ReadOnly = True
+        Me.Column4.Width = 150
+        '
+        'Column7
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column7.DefaultCellStyle = DataGridViewCellStyle4
+        Me.Column7.HeaderText = "Money Trasnfers"
+        Me.Column7.Name = "Column7"
+        Me.Column7.Width = 120
+        '
+        'Column5
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Column5.HeaderText = "Expenses"
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        Me.Column5.Width = 160
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Wrong Cards Value"
+        Me.Column3.Name = "Column3"
+        Me.Column3.Width = 110
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Remaining Balance"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Width = 160
         '
         'ContextMenuStrip1
         '
@@ -202,52 +254,27 @@ Partial Class frmProvidersBalancesReport
         'PrintDocument1
         '
         '
-        'Column2
+        'cmbCountries
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column2.HeaderText = "Country"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.Width = 150
+        Me.cmbCountries.DisplayMember = "Name"
+        Me.cmbCountries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbCountries.Enabled = False
+        Me.cmbCountries.FormattingEnabled = True
+        Me.cmbCountries.Location = New System.Drawing.Point(93, 14)
+        Me.cmbCountries.Name = "cmbCountries"
+        Me.cmbCountries.Size = New System.Drawing.Size(216, 24)
+        Me.cmbCountries.TabIndex = 153
+        Me.cmbCountries.ValueMember = "ID"
         '
-        'Column4
+        'chkCountry
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Column4.HeaderText = "Provider"
-        Me.Column4.Name = "Column4"
-        Me.Column4.ReadOnly = True
-        Me.Column4.Width = 150
-        '
-        'Column7
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column7.DefaultCellStyle = DataGridViewCellStyle4
-        Me.Column7.HeaderText = "Money Trasnfers"
-        Me.Column7.Name = "Column7"
-        Me.Column7.Width = 120
-        '
-        'Column5
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Column5.HeaderText = "Expenses"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.Width = 160
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Wrong Cards Value"
-        Me.Column3.Name = "Column3"
-        Me.Column3.Width = 110
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Remaining Balance"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Width = 160
+        Me.chkCountry.AutoSize = True
+        Me.chkCountry.Location = New System.Drawing.Point(9, 16)
+        Me.chkCountry.Name = "chkCountry"
+        Me.chkCountry.Size = New System.Drawing.Size(79, 20)
+        Me.chkCountry.TabIndex = 154
+        Me.chkCountry.Text = "Country"
+        Me.chkCountry.UseVisualStyleBackColor = True
         '
         'frmProvidersBalancesReport
         '
@@ -294,5 +321,7 @@ Partial Class frmProvidersBalancesReport
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents cmbCountries As System.Windows.Forms.ComboBox
+    Friend WithEvents chkCountry As System.Windows.Forms.CheckBox
 
 End Class

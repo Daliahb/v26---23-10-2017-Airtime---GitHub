@@ -78,14 +78,19 @@ Partial Class frmWrongCards
         Me.ConfirmRightCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnChangeWrogCardTypeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.chkDate = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.chkWrongDate = New System.Windows.Forms.CheckBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtpWrongDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtpWrongDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -101,9 +106,13 @@ Partial Class frmWrongCards
         Me.Panel1.Controls.Add(Me.cmbUsers)
         Me.Panel1.Controls.Add(Me.txtCardNumber)
         Me.Panel1.Controls.Add(Me.chkCard)
+        Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.dtpWrongDateTo)
         Me.Panel1.Controls.Add(Me.dtpToDate)
+        Me.Panel1.Controls.Add(Me.dtpWrongDateFrom)
         Me.Panel1.Controls.Add(Me.dtpFromDate)
+        Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.cmbLocation)
         Me.Panel1.Controls.Add(Me.cmbCategory)
@@ -120,6 +129,7 @@ Partial Class frmWrongCards
         Me.Panel1.Controls.Add(Me.chkTypes)
         Me.Panel1.Controls.Add(Me.DataGridView1)
         Me.Panel1.Controls.Add(Me.btnSearch)
+        Me.Panel1.Controls.Add(Me.chkWrongDate)
         Me.Panel1.Controls.Add(Me.chkDate)
         Me.Panel1.Location = New System.Drawing.Point(3, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
@@ -160,7 +170,7 @@ Partial Class frmWrongCards
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(874, 99)
+        Me.Label2.Location = New System.Drawing.Point(874, 102)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(23, 16)
         Me.Label2.TabIndex = 114
@@ -171,7 +181,7 @@ Partial Class frmWrongCards
         Me.dtpToDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpToDate.Enabled = False
         Me.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpToDate.Location = New System.Drawing.Point(905, 96)
+        Me.dtpToDate.Location = New System.Drawing.Point(905, 99)
         Me.dtpToDate.Name = "dtpToDate"
         Me.dtpToDate.Size = New System.Drawing.Size(200, 23)
         Me.dtpToDate.TabIndex = 111
@@ -181,7 +191,7 @@ Partial Class frmWrongCards
         Me.dtpFromDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpFromDate.Enabled = False
         Me.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpFromDate.Location = New System.Drawing.Point(905, 67)
+        Me.dtpFromDate.Location = New System.Drawing.Point(905, 72)
         Me.dtpFromDate.Name = "dtpFromDate"
         Me.dtpFromDate.Size = New System.Drawing.Size(200, 23)
         Me.dtpFromDate.TabIndex = 112
@@ -189,7 +199,7 @@ Partial Class frmWrongCards
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(867, 68)
+        Me.Label3.Location = New System.Drawing.Point(867, 73)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(39, 16)
         Me.Label3.TabIndex = 113
@@ -528,6 +538,19 @@ Partial Class frmWrongCards
         Me.mnChangeWrogCardTypeToolStripMenuItem.Text = "Change 'Wrong Card' type"
         Me.mnChangeWrogCardTypeToolStripMenuItem.Visible = False
         '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(254, 6)
+        Me.ToolStripSeparator2.Visible = False
+        '
+        'ChangeFromWrongCardToUsedCardToolStripMenuItem
+        '
+        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Name = "ChangeFromWrongCardToUsedCardToolStripMenuItem"
+        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Size = New System.Drawing.Size(257, 22)
+        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Text = "Change from Wrong Card to Used Card"
+        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Visible = False
+        '
         'btnSearch
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -543,7 +566,7 @@ Partial Class frmWrongCards
         'chkDate
         '
         Me.chkDate.AutoSize = True
-        Me.chkDate.Location = New System.Drawing.Point(722, 67)
+        Me.chkDate.Location = New System.Drawing.Point(722, 72)
         Me.chkDate.Name = "chkDate"
         Me.chkDate.Size = New System.Drawing.Size(154, 20)
         Me.chkDate.TabIndex = 115
@@ -572,18 +595,53 @@ Partial Class frmWrongCards
         '
         Me.ErrorProvider1.ContainerControl = Me
         '
-        'ChangeFromWrongCardToUsedCardToolStripMenuItem
+        'chkWrongDate
         '
-        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Name = "ChangeFromWrongCardToUsedCardToolStripMenuItem"
-        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Size = New System.Drawing.Size(257, 22)
-        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Text = "Change from Wrong Card to Used Card"
-        Me.ChangeFromWrongCardToUsedCardToolStripMenuItem.Visible = False
+        Me.chkWrongDate.AutoSize = True
+        Me.chkWrongDate.Location = New System.Drawing.Point(722, 12)
+        Me.chkWrongDate.Name = "chkWrongDate"
+        Me.chkWrongDate.Size = New System.Drawing.Size(152, 20)
+        Me.chkWrongDate.TabIndex = 115
+        Me.chkWrongDate.Text = "Set as wrong date:"
+        Me.chkWrongDate.UseVisualStyleBackColor = True
         '
-        'ToolStripSeparator2
+        'Label1
         '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(254, 6)
-        Me.ToolStripSeparator2.Visible = False
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(867, 13)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(39, 16)
+        Me.Label1.TabIndex = 113
+        Me.Label1.Text = "From"
+        '
+        'dtpWrongDateFrom
+        '
+        Me.dtpWrongDateFrom.CustomFormat = "dddd  dd/MM/yyyy"
+        Me.dtpWrongDateFrom.Enabled = False
+        Me.dtpWrongDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpWrongDateFrom.Location = New System.Drawing.Point(905, 12)
+        Me.dtpWrongDateFrom.Name = "dtpWrongDateFrom"
+        Me.dtpWrongDateFrom.Size = New System.Drawing.Size(200, 23)
+        Me.dtpWrongDateFrom.TabIndex = 112
+        '
+        'dtpWrongDateTo
+        '
+        Me.dtpWrongDateTo.CustomFormat = "dddd  dd/MM/yyyy"
+        Me.dtpWrongDateTo.Enabled = False
+        Me.dtpWrongDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpWrongDateTo.Location = New System.Drawing.Point(905, 39)
+        Me.dtpWrongDateTo.Name = "dtpWrongDateTo"
+        Me.dtpWrongDateTo.Size = New System.Drawing.Size(200, 23)
+        Me.dtpWrongDateTo.TabIndex = 111
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(874, 42)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(23, 16)
+        Me.Label4.TabIndex = 114
+        Me.Label4.Text = "To"
         '
         'frmWrongCards
         '
@@ -659,5 +717,10 @@ Partial Class frmWrongCards
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ChangeFromWrongCardToUsedCardToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents dtpWrongDateTo As System.Windows.Forms.DateTimePicker
+    Friend WithEvents dtpWrongDateFrom As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents chkWrongDate As System.Windows.Forms.CheckBox
 
 End Class
