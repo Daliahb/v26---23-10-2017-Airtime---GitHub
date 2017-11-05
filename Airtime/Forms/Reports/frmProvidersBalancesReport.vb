@@ -16,6 +16,13 @@
         '   isloaded = True
 
         Me.lblHeader.Text += " - " + Now().ToString("dd/MM/yyyy")
+
+        dsCountries = odbaccess.GetCountriesDS
+        If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+            Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            Me.cmbCountries.DisplayMember = "Country"
+            Me.cmbCountries.ValueMember = "ID"
+        End If
     End Sub
 
     Private Sub btnSearch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearch.Click
