@@ -77,6 +77,7 @@ Partial Class FrmMain
         Me.btnReturnCards = New System.Windows.Forms.Button()
         Me.btnUseCards = New System.Windows.Forms.Button()
         Me.PanelDistributor = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.btnShiftEndUsersDevices = New System.Windows.Forms.Button()
         Me.btnDistributedCards = New System.Windows.Forms.Button()
         Me.btnShiftEndUsers = New System.Windows.Forms.Button()
@@ -178,7 +179,7 @@ Partial Class FrmMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditToolStripMenuItem, Me.SettingToolStripMenuItem, Me.ReportsToolStripMenuItem, Me.IiiToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(506, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(507, 24)
         Me.MenuStrip1.TabIndex = 9
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -493,6 +494,7 @@ Partial Class FrmMain
         '
         'PanelDistributor
         '
+        Me.PanelDistributor.Controls.Add(Me.Button1)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsersDevices)
         Me.PanelDistributor.Controls.Add(Me.btnDistributedCards)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsers)
@@ -505,6 +507,16 @@ Partial Class FrmMain
         Me.PanelDistributor.Name = "PanelDistributor"
         Me.PanelDistributor.Size = New System.Drawing.Size(504, 217)
         Me.PanelDistributor.TabIndex = 109
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(461, 174)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 115
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'btnShiftEndUsersDevices
         '
@@ -628,7 +640,7 @@ Partial Class FrmMain
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(0, 27)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(506, 79)
+        Me.PictureBox1.Size = New System.Drawing.Size(507, 79)
         Me.PictureBox1.TabIndex = 110
         Me.PictureBox1.TabStop = False
         '
@@ -645,7 +657,7 @@ Partial Class FrmMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(249, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(506, 326)
+        Me.ClientSize = New System.Drawing.Size(507, 328)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.PanelDistributor)
         Me.Controls.Add(Me.PanelCardsUser)
@@ -733,4 +745,5 @@ Partial Class FrmMain
     Friend WithEvents CardsStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SlotDetailsReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Button1 As System.Windows.Forms.Button
 End Class

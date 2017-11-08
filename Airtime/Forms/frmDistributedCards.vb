@@ -440,7 +440,7 @@
     End Sub
 
     Private Sub ChangeFromUsedToWrongScratchNoToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromUsedToWrongScratchNoToolStripMenuItem.Click
-        If Me.rbSent.Checked = True Then
+        If chkStatus.Checked AndAlso Me.rbSent.Checked = True Then
             If Not Me.DataGridView1.SelectedCells.Count = 0 Then
                 If MsgBox("Are you sure you want to change the selected cards from Used Cards to Wrong Scratch No.?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                     Dim ar As New ArrayList
@@ -472,7 +472,7 @@
     End Sub
 
     Private Sub ChangeFromUsedToAlradyUsedCardToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Click
-        If Me.rbSent.Checked = True Then
+        If chkStatus.Checked AndAlso Me.rbSent.Checked = True Then
             If Not Me.DataGridView1.SelectedCells.Count = 0 Then
                 If MsgBox("Are you sure you want to change the selected cards from Used Cards to Wrong Scratch No.?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                     Dim ar As New ArrayList

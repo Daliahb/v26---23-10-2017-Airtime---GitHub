@@ -87,14 +87,14 @@ Partial Class frmDistributedCards
         Me.DeleteCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -673,6 +673,23 @@ Partial Class frmDistributedCards
         Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
         Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
         '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(262, 6)
+        '
+        'ChangeFromUsedToWrongScratchNoToolStripMenuItem
+        '
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Name = "ChangeFromUsedToWrongScratchNoToolStripMenuItem"
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
+        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Text = "Change from Used to Wrong Scratch No."
+        '
+        'ChangeFromUsedToAlradyUsedCardToolStripMenuItem
+        '
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Name = "ChangeFromUsedToAlradyUsedCardToolStripMenuItem"
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
+        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Text = "Change from Used to Already Used Card"
+        '
         'btnSearch
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -706,23 +723,6 @@ Partial Class frmDistributedCards
         'ErrorProvider1
         '
         Me.ErrorProvider1.ContainerControl = Me
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(262, 6)
-        '
-        'ChangeFromUsedToWrongScratchNoToolStripMenuItem
-        '
-        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Name = "ChangeFromUsedToWrongScratchNoToolStripMenuItem"
-        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
-        Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem.Text = "Change from Used to Wrong Scratch No."
-        '
-        'ChangeFromUsedToAlradyUsedCardToolStripMenuItem
-        '
-        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Name = "ChangeFromUsedToAlradyUsedCardToolStripMenuItem"
-        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Size = New System.Drawing.Size(265, 22)
-        Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem.Text = "Change from Used to Alrady Used Card"
         '
         'frmDistributedCards
         '

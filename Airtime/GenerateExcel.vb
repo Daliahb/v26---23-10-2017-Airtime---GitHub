@@ -48,6 +48,7 @@ Public Class GenerateExcel
         Try
             excel.Visible = True
             Dim i As Integer
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
             Dim ExcelPath As String = System.Windows.Forms.Application.StartupPath & "\ShiftReport.xlsx"
             excel.Workbooks.Open(ExcelPath)
             excel.WindowState = Microsoft.Office.Interop.Excel.XlWindowState.xlMinimized

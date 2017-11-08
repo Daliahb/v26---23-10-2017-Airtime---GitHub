@@ -210,7 +210,7 @@ Partial Class frmChooseShiftEndUsers
         'Panel2
         '
         Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Controls.Add(Me.lblUsername)
         Me.Panel2.Controls.Add(Me.btnAddUser)
@@ -218,7 +218,7 @@ Partial Class frmChooseShiftEndUsers
         Me.Panel2.Enabled = False
         Me.Panel2.Location = New System.Drawing.Point(7, 93)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(355, 418)
+        Me.Panel2.Size = New System.Drawing.Size(355, 502)
         Me.Panel2.TabIndex = 101
         '
         'lblUsername
@@ -235,7 +235,7 @@ Partial Class frmChooseShiftEndUsers
         '
         Me.btnAddUser.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnAddUser.Enabled = False
-        Me.btnAddUser.Location = New System.Drawing.Point(89, 383)
+        Me.btnAddUser.Location = New System.Drawing.Point(89, 467)
         Me.btnAddUser.Name = "btnAddUser"
         Me.btnAddUser.Size = New System.Drawing.Size(155, 31)
         Me.btnAddUser.TabIndex = 0
@@ -247,6 +247,8 @@ Partial Class frmChooseShiftEndUsers
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
+        Me.DataGridView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -270,7 +272,7 @@ Partial Class frmChooseShiftEndUsers
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(337, 344)
+        Me.DataGridView1.Size = New System.Drawing.Size(337, 428)
         Me.DataGridView1.TabIndex = 87
         '
         'Column1
@@ -314,7 +316,7 @@ Partial Class frmChooseShiftEndUsers
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(636, 516)
+        Me.ClientSize = New System.Drawing.Size(636, 600)
         Me.Controls.Add(Me.btnGetData)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.ListView1)
