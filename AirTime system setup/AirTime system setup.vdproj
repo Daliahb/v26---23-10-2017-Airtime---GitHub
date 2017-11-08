@@ -88,25 +88,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_65315CA3C5F94FB5AC3167F2E5661A41"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B5927A8E727543B8133F8D74245CF0BA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_41A046C5A735315E3E7B85359592DFA9"
+        "OwnerKey" = "8:_65315CA3C5F94FB5AC3167F2E5661A41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_44119A99AB9D546DFA450FCE016CF371"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_41A046C5A735315E3E7B85359592DFA9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,7 +166,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Airtime Setup-04-11-2017_2.msi"
+        "OutputFilename" = "8:Release\\Airtime Setup-08-11-2017_2.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -528,15 +528,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Airtime System"
-        "ProductCode" = "8:{232ECA3B-F978-491A-9B91-6C3035A2553B}"
-        "PackageCode" = "8:{07A10A31-E198-4D14-B725-45004F586A5D}"
+        "ProductCode" = "8:{75081305-9C2E-4298-9EF4-EA6BCB6E5F84}"
+        "PackageCode" = "8:{D841D8ED-DA5D-40E1-AC4E-26D7F7DDC388}"
         "UpgradeCode" = "8:{509215C4-01A4-498F-AB5C-0CBCA87835DB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.6.1"
+        "ProductVersion" = "8:1.7.2"
         "Manufacturer" = "8:Maple Telecommunications"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1064,7 +1064,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D5628A4BC25846D0BB6A261D12024952"
             {
-            "SourcePath" = "8:..\\Airtime\\obj\\Debug\\Airtime.exe"
+            "SourcePath" = "8:..\\Airtime\\obj\\Release\\Airtime.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B30008F6C5F44A7BA8FE3A1242BCE8B6"
