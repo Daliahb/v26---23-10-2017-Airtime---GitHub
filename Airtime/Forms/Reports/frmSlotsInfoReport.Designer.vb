@@ -40,11 +40,13 @@ Partial Class frmSlotsInfoReport
         Me.txtASRFrom = New System.Windows.Forms.TextBox()
         Me.txtDurationFrom = New System.Windows.Forms.TextBox()
         Me.txtBalanceFrom = New System.Windows.Forms.TextBox()
+        Me.txtDifferenceFrom = New System.Windows.Forms.TextBox()
         Me.txtTotalSimsFrom = New System.Windows.Forms.TextBox()
         Me.txtACDTo = New System.Windows.Forms.TextBox()
         Me.txtASRTo = New System.Windows.Forms.TextBox()
         Me.txtDurationTo = New System.Windows.Forms.TextBox()
         Me.txtBalanceTo = New System.Windows.Forms.TextBox()
+        Me.txtDifferenceTo = New System.Windows.Forms.TextBox()
         Me.txtTotalSimsTo = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtpToDate = New System.Windows.Forms.DateTimePicker()
@@ -59,6 +61,7 @@ Partial Class frmSlotsInfoReport
         Me.chkASR = New System.Windows.Forms.CheckBox()
         Me.chkDuration = New System.Windows.Forms.CheckBox()
         Me.chkBalance = New System.Windows.Forms.CheckBox()
+        Me.chkDifference = New System.Windows.Forms.CheckBox()
         Me.chkTotalSims = New System.Windows.Forms.CheckBox()
         Me.chkTrafficType = New System.Windows.Forms.CheckBox()
         Me.cmbDevices = New System.Windows.Forms.ComboBox()
@@ -75,6 +78,7 @@ Partial Class frmSlotsInfoReport
         Me.Label7 = New System.Windows.Forms.Label()
         Me.chkHumanBehaiviour = New System.Windows.Forms.CheckBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.lblTotalCalls = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -141,11 +145,13 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Controls.Add(Me.txtASRFrom)
         Me.Panel1.Controls.Add(Me.txtDurationFrom)
         Me.Panel1.Controls.Add(Me.txtBalanceFrom)
+        Me.Panel1.Controls.Add(Me.txtDifferenceFrom)
         Me.Panel1.Controls.Add(Me.txtTotalSimsFrom)
         Me.Panel1.Controls.Add(Me.txtACDTo)
         Me.Panel1.Controls.Add(Me.txtASRTo)
         Me.Panel1.Controls.Add(Me.txtDurationTo)
         Me.Panel1.Controls.Add(Me.txtBalanceTo)
+        Me.Panel1.Controls.Add(Me.txtDifferenceTo)
         Me.Panel1.Controls.Add(Me.txtTotalSimsTo)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.dtpToDate)
@@ -158,6 +164,7 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Controls.Add(Me.chkASR)
         Me.Panel1.Controls.Add(Me.chkDuration)
         Me.Panel1.Controls.Add(Me.chkBalance)
+        Me.Panel1.Controls.Add(Me.chkDifference)
         Me.Panel1.Controls.Add(Me.chkTotalSims)
         Me.Panel1.Controls.Add(Me.chkTrafficType)
         Me.Panel1.Controls.Add(Me.cmbDevices)
@@ -174,6 +181,7 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Controls.Add(Me.Label7)
         Me.Panel1.Controls.Add(Me.chkHumanBehaiviour)
         Me.Panel1.Controls.Add(Me.Label5)
+        Me.Panel1.Controls.Add(Me.Label15)
         Me.Panel1.Controls.Add(Me.lblTotalCalls)
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label8)
@@ -259,6 +267,14 @@ Partial Class frmSlotsInfoReport
         Me.txtBalanceFrom.Size = New System.Drawing.Size(68, 23)
         Me.txtBalanceFrom.TabIndex = 148
         '
+        'txtDifferenceFrom
+        '
+        Me.txtDifferenceFrom.Enabled = False
+        Me.txtDifferenceFrom.Location = New System.Drawing.Point(550, 130)
+        Me.txtDifferenceFrom.Name = "txtDifferenceFrom"
+        Me.txtDifferenceFrom.Size = New System.Drawing.Size(64, 23)
+        Me.txtDifferenceFrom.TabIndex = 148
+        '
         'txtTotalSimsFrom
         '
         Me.txtTotalSimsFrom.Enabled = False
@@ -298,6 +314,14 @@ Partial Class frmSlotsInfoReport
         Me.txtBalanceTo.Name = "txtBalanceTo"
         Me.txtBalanceTo.Size = New System.Drawing.Size(68, 23)
         Me.txtBalanceTo.TabIndex = 147
+        '
+        'txtDifferenceTo
+        '
+        Me.txtDifferenceTo.Enabled = False
+        Me.txtDifferenceTo.Location = New System.Drawing.Point(642, 130)
+        Me.txtDifferenceTo.Name = "txtDifferenceTo"
+        Me.txtDifferenceTo.Size = New System.Drawing.Size(64, 23)
+        Me.txtDifferenceTo.TabIndex = 147
         '
         'txtTotalSimsTo
         '
@@ -430,6 +454,16 @@ Partial Class frmSlotsInfoReport
         Me.chkBalance.TabIndex = 139
         Me.chkBalance.Text = "Balance"
         Me.chkBalance.UseVisualStyleBackColor = True
+        '
+        'chkDifference
+        '
+        Me.chkDifference.AutoSize = True
+        Me.chkDifference.Location = New System.Drawing.Point(421, 131)
+        Me.chkDifference.Name = "chkDifference"
+        Me.chkDifference.Size = New System.Drawing.Size(94, 20)
+        Me.chkDifference.TabIndex = 139
+        Me.chkDifference.Text = "Difference"
+        Me.chkDifference.UseVisualStyleBackColor = True
         '
         'chkTotalSims
         '
@@ -596,6 +630,15 @@ Partial Class frmSlotsInfoReport
         Me.Label5.Size = New System.Drawing.Size(23, 16)
         Me.Label5.TabIndex = 126
         Me.Label5.Text = "To"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(617, 133)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(23, 16)
+        Me.Label15.TabIndex = 126
+        Me.Label15.Text = "To"
         '
         'lblTotalCalls
         '
@@ -1061,5 +1104,9 @@ Partial Class frmSlotsInfoReport
     Friend WithEvents DsSlots1 As WindowsApplication1.dsSlots
     Friend WithEvents DataTable1BindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DataTable1TableAdapter1 As WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter
+    Friend WithEvents txtDifferenceFrom As System.Windows.Forms.TextBox
+    Friend WithEvents txtDifferenceTo As System.Windows.Forms.TextBox
+    Friend WithEvents chkDifference As System.Windows.Forms.CheckBox
+    Friend WithEvents Label15 As System.Windows.Forms.Label
 
 End Class

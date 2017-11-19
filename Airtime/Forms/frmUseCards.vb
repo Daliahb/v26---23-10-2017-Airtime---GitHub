@@ -145,6 +145,14 @@
     Private Sub btnGetCard_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGetCard.Click
         Dim intLimit As Integer
         If CheckOperatorLimit(intLimit) Then
+            'check if he gets more than 32 cards using Hold Slot.
+            If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
+                If (Me.ocolDevices.FindGetByIDAndAdd1(lCurrentDeviceSlotID)) >= 32 Then
+                    MsgBox("Hold Slot cannot get more than 32 card." & vbCrLf & "You can 'Start' the slot then get more cards.")
+                    Return
+                End If
+            End If
+
             If Not Me.lUsersCardsNo = 0 AndAlso Not Me.lblCardsNo.Text = "0" Then
                 Me.txtCardNumber.Text = Me.dsUserCards.Tables(0).Rows(Me.lCurrentCardIndex).Item("card_number").ToString
                 Me.txtCardNumber.Focus()
@@ -602,7 +610,7 @@
             Me.btnSetAsUsed.Enabled = False
 
             If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
-                If (Me.ocolDevices.GetNoOfUsedCards(lCurrentDeviceSlotID)) = 32 Then
+                If (Me.ocolDevices.GetNoOfUsedCards(lCurrentDeviceSlotID)) >= 32 Then
                     MsgBox("Hold Slot cannot use more than 32 card." & vbCrLf & "You can 'Start' the slot then use more cards.")
                     Me.btnSetAsUsed.Enabled = True
                     Me.chkSelectClear.Checked = False
@@ -631,7 +639,7 @@
 
                         '5- add used cards to ocolDevices column to check if it reached 32
                         If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
-                            If (Me.ocolDevices.FindByIDAndAdd1(lCurrentDeviceSlotID)) = 32 Then
+                            If (Me.ocolDevices.FindByIDAndAdd1(lCurrentDeviceSlotID)) >= 32 Then
                                 MsgBox("Hold Slot cannot use more than 32 card." & vbCrLf & "You can 'Start' the slot then use the remaining cards.")
                                 Exit For
                             End If

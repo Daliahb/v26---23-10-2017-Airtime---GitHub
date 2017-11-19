@@ -50,8 +50,9 @@
                                 .Cells(1).Value = dr.Item("Provider")
                                 .Cells(2).Value = dr.Item("TotalPayments")
                                 .Cells(3).Value = dr.Item("TotalExpenses")
-                                .Cells(4).Value = dr.Item("WrongCardsValue")
-                                .Cells(5).Value = CDec(dr.Item("TotalPayments")) - CDec(dr.Item("TotalExpenses")) + CDec(dr.Item("WrongCardsValue"))
+                                .Cells(4).Value = CDec(dr.Item("WrongCardsValue")) - CDec(dr.Item("Waived_deductible"))
+                                .Cells(5).Value = CDec(dr.Item("TotalPayments")) - CDec(dr.Item("TotalExpenses")) + CDec(dr.Item("WrongCardsValue")) - CDec(dr.Item("Waived_deductible"))
+
                             End With
                         Catch ex As Exception
 

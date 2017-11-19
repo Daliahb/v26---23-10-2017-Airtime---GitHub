@@ -598,6 +598,26 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "boolDifference"
+                .Value = oSlotInfoSearch.boolDifference
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblDifferenceFrom"
+                .Value = oSlotInfoSearch.dblDifferenceFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblDifferenceTo"
+                .Value = oSlotInfoSearch.dblDifferenceTo
+            End With
+            oSelectCommand.Parameters.Add(oParam)
 
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
@@ -696,6 +716,20 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "dDateTo"
                 .Value = oSlotInfoSearch.dDateTo.AddDays(1)
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCreatedBy"
+                .Value = oSlotInfoSearch.lCreatedBy
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lChargedBy"
+                .Value = oSlotInfoSearch.lChargedBy
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -1254,7 +1288,7 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function insertProvider(ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String) As Boolean
+    Public Function insertProvider(ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
@@ -1284,6 +1318,13 @@ Public Class DBAccess
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
+                .ParameterName = "dblWaivedDeductible"
+                .Value = dblWaivedDeductible
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
                 .ParameterName = "lUserID"
                 .Value = gUser.Id
             End With
@@ -1305,7 +1346,7 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function EditProvider(ByVal lProviderId As Integer, ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String) As Boolean
+    Public Function EditProvider(ByVal lProviderId As Integer, ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
@@ -1337,6 +1378,13 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "strLocationIDs"
                 .Value = strLocationIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblWaivedDeductible"
+                .Value = dblWaivedDeductible
             End With
             oSelectCommand.Parameters.Add(oParam)
 

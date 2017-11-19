@@ -32,10 +32,13 @@ Partial Class frmAddProvider
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnReset = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtWaivedDeductible = New System.Windows.Forms.TextBox()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -44,26 +47,29 @@ Partial Class frmAddProvider
         'Panel1
         '
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.CheckedListBox1)
         Me.Panel1.Controls.Add(Me.cmbCountries)
         Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.Label9)
+        Me.Panel1.Controls.Add(Me.txtWaivedDeductible)
         Me.Panel1.Controls.Add(Me.txtName)
         Me.Panel1.Location = New System.Drawing.Point(1, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(343, 285)
+        Me.Panel1.Size = New System.Drawing.Size(389, 335)
         Me.Panel1.TabIndex = 0
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(4, 67)
+        Me.Label2.Location = New System.Drawing.Point(4, 124)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(70, 16)
         Me.Label2.TabIndex = 81
@@ -73,7 +79,7 @@ Partial Class frmAddProvider
         '
         Me.CheckedListBox1.CheckOnClick = True
         Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Location = New System.Drawing.Point(110, 71)
+        Me.CheckedListBox1.Location = New System.Drawing.Point(137, 128)
         Me.CheckedListBox1.Name = "CheckedListBox1"
         Me.CheckedListBox1.Size = New System.Drawing.Size(223, 148)
         Me.CheckedListBox1.TabIndex = 80
@@ -83,7 +89,7 @@ Partial Class frmAddProvider
         Me.cmbCountries.DisplayMember = "Name"
         Me.cmbCountries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbCountries.FormattingEnabled = True
-        Me.cmbCountries.Location = New System.Drawing.Point(110, 9)
+        Me.cmbCountries.Location = New System.Drawing.Point(137, 9)
         Me.cmbCountries.Name = "cmbCountries"
         Me.cmbCountries.Size = New System.Drawing.Size(223, 24)
         Me.cmbCountries.TabIndex = 79
@@ -95,7 +101,7 @@ Partial Class frmAddProvider
         Me.Panel2.Controls.Add(Me.btnCancel)
         Me.Panel2.Controls.Add(Me.btnSave)
         Me.Panel2.Controls.Add(Me.btnReset)
-        Me.Panel2.Location = New System.Drawing.Point(43, 243)
+        Me.Panel2.Location = New System.Drawing.Point(66, 293)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(254, 35)
         Me.Panel2.TabIndex = 78
@@ -129,6 +135,15 @@ Partial Class frmAddProvider
         Me.btnReset.Text = "Reset"
         Me.btnReset.UseVisualStyleBackColor = True
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(4, 72)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(128, 16)
+        Me.Label3.TabIndex = 76
+        Me.Label3.Text = "Waived Deductible"
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -147,9 +162,18 @@ Partial Class frmAddProvider
         Me.Label9.TabIndex = 76
         Me.Label9.Text = "Country"
         '
+        'txtWaivedDeductible
+        '
+        Me.txtWaivedDeductible.Location = New System.Drawing.Point(137, 69)
+        Me.txtWaivedDeductible.Name = "txtWaivedDeductible"
+        Me.txtWaivedDeductible.Size = New System.Drawing.Size(223, 23)
+        Me.txtWaivedDeductible.TabIndex = 0
+        Me.txtWaivedDeductible.Tag = ""
+        Me.txtWaivedDeductible.Text = "0"
+        '
         'txtName
         '
-        Me.txtName.Location = New System.Drawing.Point(110, 39)
+        Me.txtName.Location = New System.Drawing.Point(137, 39)
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(223, 23)
         Me.txtName.TabIndex = 0
@@ -158,12 +182,23 @@ Partial Class frmAddProvider
         '
         Me.ErrorProvider1.ContainerControl = Me
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(122, 97)
+        Me.Label4.Name = "Label4"
+        Me.Label4.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.Label4.Size = New System.Drawing.Size(239, 14)
+        Me.Label4.TabIndex = 82
+        Me.Label4.Text = "قيمة التنازل عن خصم ال Wrong Cards values"
+        '
         'frmAddProvider
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(347, 287)
+        Me.ClientSize = New System.Drawing.Size(393, 337)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -191,4 +226,7 @@ Partial Class frmAddProvider
     Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents txtWaivedDeductible As System.Windows.Forms.TextBox
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 End Class

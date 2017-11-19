@@ -50,9 +50,9 @@
             GetProviderLocations()
 
             If Me.enumEditAdd = Enumerators.EditAdd.Add Then
-                boolError = odbaccess.insertProvider(Me.txtName.Text, CInt(Me.cmbCountries.SelectedValue), strLocationIDs.ToString)
+                boolError = odbaccess.insertProvider(Me.txtName.Text, CInt(Me.cmbCountries.SelectedValue), strLocationIDs.ToString, Me.txtWaivedDeductible.Text)
             ElseIf Me.enumEditAdd = Enumerators.EditAdd.Edit Then
-                boolError = odbaccess.EditProvider(lProviderID, Me.txtName.Text, CInt(Me.cmbCountries.SelectedValue), strLocationIDs.ToString)
+                boolError = odbaccess.EditProvider(lProviderID, Me.txtName.Text, CInt(Me.cmbCountries.SelectedValue), strLocationIDs.ToString, Me.txtWaivedDeductible.Text)
             End If
             If boolError Then
                 MsgBox("Operation done successfully.", , "Airtime System")
@@ -71,13 +71,13 @@
 
     Public Sub ResetForm()
         Me.txtName.Text = ""
-
+        Me.txtWaivedDeductible.Text = 0
     End Sub
 
     Public Sub SetControls()
         Me.txtName.Text = dgRow.Cells(2).Value.ToString
         Me.cmbCountries.SelectedValue = CInt(dgRow.Cells(4).Value)
-
+        Me.txtWaivedDeductible.Text = dgRow.Cells(6).Value.ToString
         lProviderID = CInt(dgRow.Cells(0).Value)
 
         If Not dsProvidersLocations Is Nothing AndAlso Not dsProvidersLocations.Tables.Count < 2 Then
@@ -148,5 +148,12 @@
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+
+    Private Sub txtWaivedDeductible_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs) Handles txtWaivedDeductible.KeyPress
+        If Not Char.IsControl(e.KeyChar) AndAlso Not IsNumeric(e.KeyChar) AndAlso Not e.KeyChar = "." Then
+            e.Handled = True
+        End If
     End Sub
 End Class

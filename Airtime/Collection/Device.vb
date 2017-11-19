@@ -3,7 +3,7 @@
     Public DeviceID As Long
     Public Device As String
     Public NoOfSentCards As Integer
-
+    Public NoOfGetCards As Integer
 
 End Class
 
@@ -43,6 +43,17 @@ Public Class ColDevice
         For Each odevice As Device In Me.List
             If odevice.DeviceID = lID Then
                 Return odevice.NoOfSentCards
+                Exit For
+            End If
+        Next
+        Return 0
+    End Function
+
+    Public Function FindGetByIDAndAdd1(lID As Long) As Integer
+        For Each odevice As Device In Me.List
+            If odevice.DeviceID = lID Then
+                odevice.NoOfGetCards = odevice.NoOfGetCards + 1
+                Return odevice.NoOfGetCards
                 Exit For
             End If
         Next

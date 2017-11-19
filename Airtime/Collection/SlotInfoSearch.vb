@@ -19,5 +19,8 @@
     Public dblASRFrom, dblASRTo As Double
     Public boolDate As Boolean
     Public dDateFrom, dDateTo As Date
-
+    Public boolDifference As Boolean
+    Public dblDifferenceFrom, dblDifferenceTo As Double
+    Public lCreatedBy As Integer
+    Public lChargedBy As Integer
 End Class

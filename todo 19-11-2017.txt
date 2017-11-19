@@ -1,0 +1,218 @@
+USE `Airtime_system_dev`;
+DROP procedure IF EXISTS `GetSlotsReport`;
+
+DELIMITER $$
+USE `Airtime_system_dev`$$
+CREATE DEFINER=`airtime_dev`@`%` PROCEDURE `GetSlotsReport`(
+     lCountryID  Integer,
+     enumHumanBehaviour  integer,
+     lOperator  Integer,
+     lOwner  Integer,
+     lDeviceID  Integer,
+     lSlotID  Integer,
+     boolTraficType bit,
+     lTrafficType  Integer,
+     boolTotalSims  bit,
+     intTotalSimsFrom  Integer, intTotalSimsTo  Integer,
+     boolBalance  bit,
+     dblBalanceFrom  Integer, dblBalanceTo  Double,
+     boolDuration  bit,
+     dblDurationFrom  Integer, dblDurationTo  Double,
+     boolACD  bit,
+     dblACDFrom  Double, dblACDTo  Double,
+     boolASR  bit,
+     dblASRFrom  Integer, dblASRTo  Double,
+     boolDate  bit,
+     dDateFrom date, dDateTo  Date,
+	 boolDifference  bit,
+     dblDifferenceFrom  Double, dblDifferenceTo  Double
+)
+BEGIN
+
+
+select ds.* ,(select country from countries where id=(select fk_country from operators where id=ds.FK_Operator)) 'Country', o.Operator,d.Device,sl.slot,
+sh.shift,l.Location 'Owner',
+case ds.TrafficType WHEN 0 THEN 'All'  when (ds.TrafficType IS NULL) then '' ELSE tt.Operator END 'Traffic' ,
+(select ifnull(sum(CardValue),0) from cards c inner join categories ct on ct.id=c.fk_category where c.fk_DeviceSlot=ds.id) 'balance',
+round(ifnull(ds.MinuteCost,0) * ifnull(ds.TalkTime,0),3) 'ExpectedUsage'
+ 
+
+from devices_slots ds
+inner join devices d on d.id=ds.fk_Device
+inner join slots_lockup sl on sl.id=ds.fk_slot
+inner join shifts_lockup sh on sh.id=ds.fk_Shift
+inner join operators o on o.id=ds.fk_operator
+left join operators tt on tt.id=ds.TrafficType
+left join locations l on l.id=d.fk_location
+
+Where
+(lCountryID=0 or (ds.fk_Country=lCountryID)) and
+(enumHumanBehaviour=0 or (ds.HumanBehaviour like concat('%',enumHumanBehaviour,'%'))) and
+(lOperator=0 or (ds.FK_Operator=lOperator)) and
+(lOwner=0 or (l.id=lOwner)) and
+(lDeviceID=0 or (ds.FK_Device=lDeviceID)) and
+(lSlotID=0 or (ds.FK_Slot=lSlotID)) and
+(boolTraficType=0 or (ds.TrafficType=lTrafficType)) and
+(boolTotalSims=0 or (ds.NoOfSims between intTotalSimsFrom and intTotalSimsTo)) and
+(boolDuration=0 or (ds.TalkTime between dblDurationFrom and dblDurationTo))  and
+(boolACD=0 or (ds.ACD between dblACDFrom and dblACDTo))  and
+(boolASR=0 or (ds.ASR between dblASRFrom and dblASRTo))  and
+(boolDate=0 or (ds.Start_Time between dDateFrom and dDateTo ))
+
+having (boolBalance=0 or(balance between dblBalanceFrom and dblBalanceTo)) and 
+(boolDifference=0 or(balance - ExpectedUsage between dblDifferenceFrom and dblDifferenceTo))
+;
+
+END$$
+
+DELIMITER ;
+-- -------------------------------------------------
+
+USE `Airtime_system_dev`;
+DROP procedure IF EXISTS `GetSlotDetailsReport`;
+
+DELIMITER $$
+USE `Airtime_system_dev`$$
+CREATE DEFINER=`airtime_dev`@`%` PROCEDURE `GetSlotDetailsReport`(
+	 lCountryID  Integer,
+     lOperator  Integer,
+     lDeviceID  Integer,
+     lSlotID  Integer,
+     lCreatedBy  Integer,
+     lChargedBy  Integer,
+     boolDate  bit,
+     dDateFrom date, dDateTo  Date
+)
+BEGIN
+
+select ds.id, o.Operator,d.Device,sl.slot,
+ ds.Created_Time,ds.Start_Time,ds.Cut_Time,
+ uc.username 'CreatedBy',us.username 'StartedBy',ucc.username 'CutBy',
+ (select country from countries where id=(select fk_country from operators where id=ds.FK_Operator)) 'Country'
+
+from devices_slots ds
+inner join devices d on d.id=ds.fk_Device
+inner join slots_lockup sl on sl.id=ds.fk_slot
+inner join operators o on o.id=ds.fk_operator
+left join users uc on uc.id=ds.Fk_User_Create
+left join users us on us.id=ds.FK_User_Start
+left join users ucc on ucc.id=ds.FK_User_Cut
+
+where 
+
+(lCountryID=0 or (ds.fk_Country=lCountryID)) and
+(lOperator=0 or (ds.FK_Operator=lOperator)) and
+(lDeviceID=0 or (ds.FK_Device=lDeviceID)) and
+(lSlotID=0 or (ds.FK_Slot=lSlotID)) and
+(boolDate=0 or (ds.Start_Time between dDateFrom and dDateTo )) and
+(lCreatedBy=0 or (ds.Fk_User_Create=lCreatedBy))  
+ and (lChargedBy=0 or (ds.id in (select distinct fk_DeviceSlot from cards c where c.isUsed=1 and c.SentTo_ID=lChargedBy)) )
+
+order by ds.id
+ ;
+
+select distinct ds.id, u.username 'UserName' from devices_slots ds
+inner join cards c on ds.id=c.fk_DeviceSlot
+inner join users u on u.id=c.SentTo_ID
+where (lChargedBy=0 or (c.SentTo_ID=lChargedBy))
+;
+
+END$$
+
+DELIMITER ;
+
+-- ----------------------------------------------
+
+USE `Airtime_system_dev`;
+DROP procedure IF EXISTS `EditProvider`;
+
+DELIMITER $$
+USE `Airtime_system_dev`$$
+CREATE DEFINER=`airtime_dev`@`%` PROCEDURE `EditProvider`(lProviderId int,strProviderName nvarchar(50),lCountryID integer,lUserID integer,strLocationIDs varchar(1000),dblWaivedDeductible double)
+BEGIN
+
+Update providers set`Provider`= strProviderName,`fk_Country`= lCountryID, Waived_deductible=dblWaivedDeductible where id=lProviderId; 
+
+-- update provider's location
+delete from norm_provider_locations where fk_provider=lProviderId;
+
+set @number=1;   
+        SET @Occurrences = LENGTH(strLocationIDs) - LENGTH(REPLACE(strLocationIDs, ',', ''));
+        myloop: WHILE (@Occurrences > 0)
+        DO 
+
+            SET @myValue = SUBSTRING_INDEX(strLocationIDs, ',', 1);
+            IF (@myValue != '') THEN
+				insert into norm_provider_locations(fk_Provider,fk_Location) values (lProviderId,@myValue);
+            ELSE
+            
+                LEAVE myloop; 
+            END IF;
+            set @number=@number+1;
+            SET @Occurrences = LENGTH(strLocationIDs) - LENGTH(REPLACE(strLocationIDs, ',', ''));
+            IF (@occurrences = 0) THEN 
+          
+                LEAVE myloop; 
+            END IF;
+            SET strLocationIDs = SUBSTRING(strLocationIDs,LENGTH(SUBSTRING_INDEX(strLocationIDs, ',', 1))+2);
+              
+        END WHILE;   
+
+
+-- insert history
+Call `InsertHistory`(lUserID ,concat('Edit provider: ',strProviderName));
+
+END$$
+
+DELIMITER ;
+
+-- ------------------------------------------
+
+USE `Airtime_system_dev`;
+DROP procedure IF EXISTS `InsertProvider`;
+
+DELIMITER $$
+USE `Airtime_system_dev`$$
+CREATE DEFINER=`airtime_dev`@`%` PROCEDURE `InsertProvider`(strProviderName nvarchar(50),lCountryID integer,lUserID integer,strLocationIDs varchar(1000),dblWaivedDeductible double)
+BEGIN
+
+select Country into @country from countries where id=lCountryID;
+
+insert into providers (`Provider`,`fk_Country`,`inst_By`,Waived_deductible)
+values (strProviderName,lCountryID,lUserID,dblWaivedDeductible); 
+
+ 
+set @lID=   LAST_INSERT_ID();
+
+-- insert provider's locations
+
+set @number=1;   
+        SET @Occurrences = LENGTH(strLocationIDs) - LENGTH(REPLACE(strLocationIDs, ',', ''));
+        myloop: WHILE (@Occurrences > 0)
+        DO 
+
+            SET @myValue = SUBSTRING_INDEX(strLocationIDs, ',', 1);
+            IF (@myValue != '') THEN
+				insert into norm_provider_locations(fk_Provider,fk_Location) values (@lID,@myValue);
+            ELSE
+            
+                LEAVE myloop; 
+            END IF;
+            set @number=@number+1;
+            SET @Occurrences = LENGTH(strLocationIDs) - LENGTH(REPLACE(strLocationIDs, ',', ''));
+            IF (@occurrences = 0) THEN 
+          
+                LEAVE myloop; 
+            END IF;
+            SET strLocationIDs = SUBSTRING(strLocationIDs,LENGTH(SUBSTRING_INDEX(strLocationIDs, ',', 1))+2);
+              
+        END WHILE; 
+
+-- insert history
+call `InsertHistory`(lUserID ,concat('Insert a new provider: ',strProviderName,' for ',@country));
+
+END$$
+
+DELIMITER ;
+
+

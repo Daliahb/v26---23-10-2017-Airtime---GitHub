@@ -32,6 +32,10 @@ Partial Class frmSlotDetailsReport
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSlotDetailsReport))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmbUsersCharged = New System.Windows.Forms.ComboBox()
+        Me.cmbUsersCreate = New System.Windows.Forms.ComboBox()
+        Me.chkUsersCharged = New System.Windows.Forms.CheckBox()
+        Me.chkUserCreated = New System.Windows.Forms.CheckBox()
         Me.cmbOperators = New System.Windows.Forms.ComboBox()
         Me.chkOperator = New System.Windows.Forms.CheckBox()
         Me.chkSlot = New System.Windows.Forms.CheckBox()
@@ -89,6 +93,10 @@ Partial Class frmSlotDetailsReport
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Controls.Add(Me.cmbUsersCharged)
+        Me.Panel1.Controls.Add(Me.cmbUsersCreate)
+        Me.Panel1.Controls.Add(Me.chkUsersCharged)
+        Me.Panel1.Controls.Add(Me.chkUserCreated)
         Me.Panel1.Controls.Add(Me.cmbOperators)
         Me.Panel1.Controls.Add(Me.chkOperator)
         Me.Panel1.Controls.Add(Me.chkSlot)
@@ -108,6 +116,50 @@ Partial Class frmSlotDetailsReport
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1241, 580)
         Me.Panel1.TabIndex = 0
+        '
+        'cmbUsersCharged
+        '
+        Me.cmbUsersCharged.DisplayMember = "Name"
+        Me.cmbUsersCharged.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbUsersCharged.Enabled = False
+        Me.cmbUsersCharged.FormattingEnabled = True
+        Me.cmbUsersCharged.Location = New System.Drawing.Point(761, 39)
+        Me.cmbUsersCharged.Name = "cmbUsersCharged"
+        Me.cmbUsersCharged.Size = New System.Drawing.Size(170, 24)
+        Me.cmbUsersCharged.TabIndex = 159
+        Me.cmbUsersCharged.ValueMember = "ID"
+        '
+        'cmbUsersCreate
+        '
+        Me.cmbUsersCreate.DisplayMember = "Name"
+        Me.cmbUsersCreate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbUsersCreate.Enabled = False
+        Me.cmbUsersCreate.FormattingEnabled = True
+        Me.cmbUsersCreate.Location = New System.Drawing.Point(761, 7)
+        Me.cmbUsersCreate.Name = "cmbUsersCreate"
+        Me.cmbUsersCreate.Size = New System.Drawing.Size(170, 24)
+        Me.cmbUsersCreate.TabIndex = 159
+        Me.cmbUsersCreate.ValueMember = "ID"
+        '
+        'chkUsersCharged
+        '
+        Me.chkUsersCharged.AutoSize = True
+        Me.chkUsersCharged.Location = New System.Drawing.Point(661, 41)
+        Me.chkUsersCharged.Name = "chkUsersCharged"
+        Me.chkUsersCharged.Size = New System.Drawing.Size(101, 20)
+        Me.chkUsersCharged.TabIndex = 160
+        Me.chkUsersCharged.Text = "Charged by"
+        Me.chkUsersCharged.UseVisualStyleBackColor = True
+        '
+        'chkUserCreated
+        '
+        Me.chkUserCreated.AutoSize = True
+        Me.chkUserCreated.Location = New System.Drawing.Point(661, 9)
+        Me.chkUserCreated.Name = "chkUserCreated"
+        Me.chkUserCreated.Size = New System.Drawing.Size(99, 20)
+        Me.chkUserCreated.TabIndex = 160
+        Me.chkUserCreated.Text = "Created by"
+        Me.chkUserCreated.UseVisualStyleBackColor = True
         '
         'cmbOperators
         '
@@ -170,7 +222,7 @@ Partial Class frmSlotDetailsReport
         Me.cmbDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbDevices.Enabled = False
         Me.cmbDevices.FormattingEnabled = True
-        Me.cmbDevices.Location = New System.Drawing.Point(96, 37)
+        Me.cmbDevices.Location = New System.Drawing.Point(96, 39)
         Me.cmbDevices.Name = "cmbDevices"
         Me.cmbDevices.Size = New System.Drawing.Size(216, 24)
         Me.cmbDevices.TabIndex = 153
@@ -179,7 +231,7 @@ Partial Class frmSlotDetailsReport
         'chkDevice
         '
         Me.chkDevice.AutoSize = True
-        Me.chkDevice.Location = New System.Drawing.Point(12, 38)
+        Me.chkDevice.Location = New System.Drawing.Point(12, 41)
         Me.chkDevice.Name = "chkDevice"
         Me.chkDevice.Size = New System.Drawing.Size(70, 20)
         Me.chkDevice.TabIndex = 154
@@ -518,5 +570,9 @@ Partial Class frmSlotDetailsReport
     Friend WithEvents DsSlots As WindowsApplication1.dsSlots
     Friend WithEvents DataTable1BindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents DataTable1TableAdapter As WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter
+    Friend WithEvents cmbUsersCharged As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbUsersCreate As System.Windows.Forms.ComboBox
+    Friend WithEvents chkUsersCharged As System.Windows.Forms.CheckBox
+    Friend WithEvents chkUserCreated As System.Windows.Forms.CheckBox
 
 End Class

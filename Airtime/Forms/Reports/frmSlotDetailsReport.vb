@@ -114,7 +114,19 @@
                 Me.cmbDevices.ValueMember = "ID"
             End If
 
-         
+            Dim colUsersCreate As ColUser = odbaccess.GetUsers(5)
+            If Not colUsersCreate Is Nothing Then
+                Me.cmbUsersCreate.DataSource = colUsersCreate
+                Me.cmbUsersCreate.DisplayMember = "Username"
+                Me.cmbUsersCreate.ValueMember = "ID"
+            End If
+
+            Dim colUsersCharge As ColUser = odbaccess.GetUsers(5)
+            If Not colUsersCharge Is Nothing Then
+                Me.cmbUsersCharged.DataSource = colUsersCharge
+                Me.cmbUsersCharged.DisplayMember = "Username"
+                Me.cmbUsersCharged.ValueMember = "ID"
+            End If
         Catch ex As Exception
 
         End Try
@@ -144,6 +156,18 @@
                     .lSlotID = CInt(Me.cmbSlot.SelectedValue)
                 Else
                     .lSlotID = 0
+                End If
+
+                If Me.chkUserCreated.Checked Then
+                    .lCreatedBy = CInt(Me.cmbUsersCreate.SelectedValue)
+                Else
+                    .lCreatedBy = 0
+                End If
+
+                If Me.chkUsersCharged.Checked Then
+                    .lChargedBy = CInt(Me.cmbUsersCharged.SelectedValue)
+                Else
+                    .lChargedBy = 0
                 End If
 
                 If Me.chkDate.Checked Then
@@ -223,5 +247,13 @@
 
     Private Sub chkSlot_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkSlot.CheckedChanged
         Me.cmbSlot.Enabled = Me.chkSlot.Checked
+    End Sub
+
+    Private Sub chkUserCreated_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkUserCreated.CheckedChanged
+        Me.cmbUsersCreate.Enabled = Me.chkUserCreated.Checked
+    End Sub
+
+    Private Sub chkUsersCharged_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkUsersCharged.CheckedChanged
+        Me.cmbUsersCharged.Enabled = Me.chkUsersCharged.Checked
     End Sub
 End Class

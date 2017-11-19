@@ -42,7 +42,7 @@
                             If Not intDsTables = 1 Then
                                 .Cells(5).Value = getProviderLocations(CInt(dr.Item("ID")))
                             End If
-
+                            .Cells(6).Value = dr.Item("Waived_deductible")
                             intCounter += 1
                         End With
                     Catch ex As Exception
@@ -149,7 +149,7 @@
             If Not frm.strLocations.ToString = "" Then
                 Me.DataGridView1.Rows(RowIndex).Cells(5).Value = frm.strLocations.ToString.Remove(frm.strLocations.ToString.Length - 1)
             End If
-
+            Me.DataGridView1.Rows(RowIndex).Cells(6).Value = frm.txtWaivedDeductible.Text
         End If
     End Sub
 

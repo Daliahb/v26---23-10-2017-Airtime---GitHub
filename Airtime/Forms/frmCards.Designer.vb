@@ -106,8 +106,8 @@ Partial Class frmCards
         'Panel1
         '
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.Controls.Add(Me.gbDeviceSet)
         Me.Panel1.Controls.Add(Me.chkDeviceSet)
         Me.Panel1.Controls.Add(Me.PanelSetDevices)
@@ -147,7 +147,6 @@ Partial Class frmCards
         Me.gbDeviceSet.Size = New System.Drawing.Size(150, 38)
         Me.gbDeviceSet.TabIndex = 109
         Me.gbDeviceSet.TabStop = False
-        Me.gbDeviceSet.Visible = False
         '
         'rbYes
         '
@@ -178,7 +177,6 @@ Partial Class frmCards
         Me.chkDeviceSet.TabIndex = 110
         Me.chkDeviceSet.Text = "Device Set"
         Me.chkDeviceSet.UseVisualStyleBackColor = True
-        Me.chkDeviceSet.Visible = False
         '
         'PanelSetDevices
         '
@@ -481,8 +479,8 @@ Partial Class frmCards
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

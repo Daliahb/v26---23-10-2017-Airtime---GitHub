@@ -275,6 +275,14 @@
                 Else
                     .boolDate = False
                 End If
+                If Me.chkDifference.Checked Then
+                    .boolDifference = True
+                    .dblDifferenceFrom = CInt(Me.txtDifferenceFrom.Text)
+                    .dblDifferenceTo = CInt(Me.txtDifferenceTo.Text)
+                Else
+                    .boolDifference = False
+                End If
+
             End With
         Catch ex As Exception
 
@@ -379,6 +387,11 @@
         Me.txtTotalSimsTo.Enabled = Me.chkTotalSims.Checked
     End Sub
 
+    Private Sub chkDifference_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDifference.CheckedChanged
+        Me.txtDifferenceFrom.Enabled = Me.chkDifference.Checked
+        Me.txtDifferenceTo.Enabled = Me.chkDifference.Checked
+    End Sub
+
     Private Sub chkBalance_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkBalance.CheckedChanged
         Me.txtBalanceFrom.Enabled = Me.chkBalance.Checked
         Me.txtBalanceTo.Enabled = Me.chkBalance.Checked
@@ -409,4 +422,12 @@
             e.Handled = True
         End If
     End Sub
+
+    Private Sub txtDifferenceFrom_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles txtDifferenceFrom.KeyPress, txtDifferenceFrom.KeyPress
+        If Not Char.IsControl(e.KeyChar) AndAlso Not IsNumeric(e.KeyChar) AndAlso Not e.KeyChar = "." AndAlso Not e.KeyChar = "-" Then
+            e.Handled = True
+        End If
+    End Sub
+
+
 End Class
