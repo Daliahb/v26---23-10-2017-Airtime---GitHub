@@ -186,6 +186,12 @@
       <DependentUpon>dsUsers.xsd</DependentUpon>
     </Compile>
     <Compile Include="Enumerators.vb" />
+    <Compile Include="Forms\frmUseCards.Designer.vb">
+      <DependentUpon>frmUseCards.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUseCards.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Reports\frmSlotDetailsReport.Designer.vb">
       <DependentUpon>frmSlotDetailsReport.vb</DependentUpon>
     </Compile>
@@ -474,12 +480,6 @@
     <Compile Include="Forms\frmProviders.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmUseCards.Designer.vb">
-      <DependentUpon>frmUseCards.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\frmUseCards.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\frmUser.Designer.vb">
       <DependentUpon>frmUser.vb</DependentUpon>
     </Compile>
@@ -524,6 +524,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmUseCards.resx">
+      <DependentUpon>frmUseCards.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Reports\frmSlotDetailsReport.resx">
       <DependentUpon>frmSlotDetailsReport.vb</DependentUpon>
     </EmbeddedResource>
@@ -667,9 +670,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProviders.resx">
       <DependentUpon>frmProviders.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmUseCards.resx">
-      <DependentUpon>frmUseCards.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmUser.resx">
       <DependentUpon>frmUser.vb</DependentUpon>

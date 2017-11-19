@@ -61,6 +61,23 @@ Partial Class frmUseCards
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnRefreshTable = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.btnPutOnHold = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblCardsNo = New System.Windows.Forms.Label()
+        Me.txtCardNumber = New System.Windows.Forms.TextBox()
+        Me.btnGetCard = New System.Windows.Forms.Button()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.SetAsUsedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WrongScratchNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AlreadyUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DataGridViewDisableButtonColumn1 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn2 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn3 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn4 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn5 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn6 = New WindowsApplication1.DataGridViewDisableButtonColumn()
+        Me.DataGridViewDisableButtonColumn7 = New WindowsApplication1.DataGridViewDisableButtonColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -80,23 +97,6 @@ Partial Class frmUseCards
         Me.dgAddSimsBtn = New WindowsApplication1.DataGridViewDisableButtonColumn()
         Me.dgDeviceSlotID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgSlot = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btnPutOnHold = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lblCardsNo = New System.Windows.Forms.Label()
-        Me.txtCardNumber = New System.Windows.Forms.TextBox()
-        Me.btnGetCard = New System.Windows.Forms.Button()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.SetAsUsedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.WrongScratchNumberToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AlreadyUsedCardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DataGridViewDisableButtonColumn1 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn2 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn3 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn4 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn5 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn6 = New WindowsApplication1.DataGridViewDisableButtonColumn()
-        Me.DataGridViewDisableButtonColumn7 = New WindowsApplication1.DataGridViewDisableButtonColumn()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelCardsUser.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -138,7 +138,7 @@ Partial Class frmUseCards
         '
         'chkSelectClear
         '
-        Me.chkSelectClear.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkSelectClear.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkSelectClear.AutoSize = True
         Me.chkSelectClear.Location = New System.Drawing.Point(1121, 516)
         Me.chkSelectClear.Name = "chkSelectClear"
@@ -349,7 +349,7 @@ Partial Class frmUseCards
         '
         'btnRefreshTable
         '
-        Me.btnRefreshTable.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefreshTable.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnRefreshTable.Location = New System.Drawing.Point(1037, 458)
         Me.btnRefreshTable.Name = "btnRefreshTable"
         Me.btnRefreshTable.Size = New System.Drawing.Size(116, 39)
@@ -389,9 +389,153 @@ Partial Class frmUseCards
         Me.DataGridView1.RowHeadersVisible = False
         DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         Me.DataGridView1.RowsDefaultCellStyle = DataGridViewCellStyle15
+        Me.DataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DataGridView1.Size = New System.Drawing.Size(1149, 426)
         Me.DataGridView1.TabIndex = 110
+        '
+        'btnPutOnHold
+        '
+        Me.btnPutOnHold.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnPutOnHold.Enabled = False
+        Me.btnPutOnHold.Location = New System.Drawing.Point(300, 481)
+        Me.btnPutOnHold.Name = "btnPutOnHold"
+        Me.btnPutOnHold.Size = New System.Drawing.Size(145, 31)
+        Me.btnPutOnHold.TabIndex = 110
+        Me.btnPutOnHold.Text = "Put On Hold"
+        Me.btnPutOnHold.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(6, 460)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(69, 16)
+        Me.Label1.TabIndex = 14
+        Me.Label1.Text = "You have"
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(102, 460)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(79, 16)
+        Me.Label3.TabIndex = 16
+        Me.Label3.Text = "new cards."
+        '
+        'lblCardsNo
+        '
+        Me.lblCardsNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblCardsNo.AutoSize = True
+        Me.lblCardsNo.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCardsNo.Location = New System.Drawing.Point(73, 460)
+        Me.lblCardsNo.Name = "lblCardsNo"
+        Me.lblCardsNo.Size = New System.Drawing.Size(32, 16)
+        Me.lblCardsNo.TabIndex = 15
+        Me.lblCardsNo.Text = "999"
+        Me.lblCardsNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtCardNumber
+        '
+        Me.txtCardNumber.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.txtCardNumber.Location = New System.Drawing.Point(7, 484)
+        Me.txtCardNumber.Name = "txtCardNumber"
+        Me.txtCardNumber.ReadOnly = True
+        Me.txtCardNumber.Size = New System.Drawing.Size(204, 23)
+        Me.txtCardNumber.TabIndex = 1
+        '
+        'btnGetCard
+        '
+        Me.btnGetCard.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnGetCard.Enabled = False
+        Me.btnGetCard.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGetCard.Location = New System.Drawing.Point(217, 481)
+        Me.btnGetCard.Name = "btnGetCard"
+        Me.btnGetCard.Size = New System.Drawing.Size(77, 31)
+        Me.btnGetCard.TabIndex = 0
+        Me.btnGetCard.Text = "Get Card"
+        Me.btnGetCard.UseVisualStyleBackColor = True
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetAsUsedToolStripMenuItem, Me.WrongScratchNumberToolStripMenuItem, Me.AlreadyUsedCardToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(197, 70)
+        '
+        'SetAsUsedToolStripMenuItem
+        '
+        Me.SetAsUsedToolStripMenuItem.Name = "SetAsUsedToolStripMenuItem"
+        Me.SetAsUsedToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.SetAsUsedToolStripMenuItem.Text = "Set as used"
+        '
+        'WrongScratchNumberToolStripMenuItem
+        '
+        Me.WrongScratchNumberToolStripMenuItem.Name = "WrongScratchNumberToolStripMenuItem"
+        Me.WrongScratchNumberToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.WrongScratchNumberToolStripMenuItem.Text = "Wrong scratch number"
+        '
+        'AlreadyUsedCardToolStripMenuItem
+        '
+        Me.AlreadyUsedCardToolStripMenuItem.Name = "AlreadyUsedCardToolStripMenuItem"
+        Me.AlreadyUsedCardToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.AlreadyUsedCardToolStripMenuItem.Text = "Already used card"
+        '
+        'DataGridViewDisableButtonColumn1
+        '
+        Me.DataGridViewDisableButtonColumn1.HeaderText = "Old"
+        Me.DataGridViewDisableButtonColumn1.Name = "DataGridViewDisableButtonColumn1"
+        Me.DataGridViewDisableButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewDisableButtonColumn1.Width = 60
+        '
+        'DataGridViewDisableButtonColumn2
+        '
+        Me.DataGridViewDisableButtonColumn2.HeaderText = "Hold"
+        Me.DataGridViewDisableButtonColumn2.Name = "DataGridViewDisableButtonColumn2"
+        Me.DataGridViewDisableButtonColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewDisableButtonColumn2.Width = 60
+        '
+        'DataGridViewDisableButtonColumn3
+        '
+        Me.DataGridViewDisableButtonColumn3.HeaderText = "New Slot"
+        Me.DataGridViewDisableButtonColumn3.Name = "DataGridViewDisableButtonColumn3"
+        Me.DataGridViewDisableButtonColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewDisableButtonColumn3.Width = 90
+        '
+        'DataGridViewDisableButtonColumn4
+        '
+        Me.DataGridViewDisableButtonColumn4.HeaderText = "Get"
+        Me.DataGridViewDisableButtonColumn4.Name = "DataGridViewDisableButtonColumn4"
+        Me.DataGridViewDisableButtonColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn4.Width = 50
+        '
+        'DataGridViewDisableButtonColumn5
+        '
+        Me.DataGridViewDisableButtonColumn5.HeaderText = "Start"
+        Me.DataGridViewDisableButtonColumn5.Name = "DataGridViewDisableButtonColumn5"
+        Me.DataGridViewDisableButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.DataGridViewDisableButtonColumn5.Width = 50
+        '
+        'DataGridViewDisableButtonColumn6
+        '
+        Me.DataGridViewDisableButtonColumn6.HeaderText = "Cut"
+        Me.DataGridViewDisableButtonColumn6.Name = "DataGridViewDisableButtonColumn6"
+        Me.DataGridViewDisableButtonColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn6.Width = 50
+        '
+        'DataGridViewDisableButtonColumn7
+        '
+        Me.DataGridViewDisableButtonColumn7.HeaderText = "Add New Sims"
+        Me.DataGridViewDisableButtonColumn7.Name = "DataGridViewDisableButtonColumn7"
+        Me.DataGridViewDisableButtonColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewDisableButtonColumn7.Width = 80
         '
         'Column1
         '
@@ -545,157 +689,12 @@ Partial Class frmUseCards
         Me.dgDeviceSlotID.HeaderText = "DeviceSlotID"
         Me.dgDeviceSlotID.Name = "dgDeviceSlotID"
         Me.dgDeviceSlotID.ReadOnly = True
-        Me.dgDeviceSlotID.Visible = False
         '
         'dgSlot
         '
         Me.dgSlot.HeaderText = "Slot"
         Me.dgSlot.Name = "dgSlot"
         Me.dgSlot.ReadOnly = True
-        Me.dgSlot.Visible = False
-        '
-        'btnPutOnHold
-        '
-        Me.btnPutOnHold.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnPutOnHold.Enabled = False
-        Me.btnPutOnHold.Location = New System.Drawing.Point(300, 481)
-        Me.btnPutOnHold.Name = "btnPutOnHold"
-        Me.btnPutOnHold.Size = New System.Drawing.Size(145, 31)
-        Me.btnPutOnHold.TabIndex = 110
-        Me.btnPutOnHold.Text = "Put On Hold"
-        Me.btnPutOnHold.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(6, 460)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(69, 16)
-        Me.Label1.TabIndex = 14
-        Me.Label1.Text = "You have"
-        '
-        'Label3
-        '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(102, 460)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(79, 16)
-        Me.Label3.TabIndex = 16
-        Me.Label3.Text = "new cards."
-        '
-        'lblCardsNo
-        '
-        Me.lblCardsNo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblCardsNo.AutoSize = True
-        Me.lblCardsNo.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCardsNo.Location = New System.Drawing.Point(73, 460)
-        Me.lblCardsNo.Name = "lblCardsNo"
-        Me.lblCardsNo.Size = New System.Drawing.Size(32, 16)
-        Me.lblCardsNo.TabIndex = 15
-        Me.lblCardsNo.Text = "999"
-        Me.lblCardsNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'txtCardNumber
-        '
-        Me.txtCardNumber.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.txtCardNumber.Location = New System.Drawing.Point(7, 484)
-        Me.txtCardNumber.Name = "txtCardNumber"
-        Me.txtCardNumber.ReadOnly = True
-        Me.txtCardNumber.Size = New System.Drawing.Size(204, 23)
-        Me.txtCardNumber.TabIndex = 1
-        '
-        'btnGetCard
-        '
-        Me.btnGetCard.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnGetCard.Enabled = False
-        Me.btnGetCard.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGetCard.Location = New System.Drawing.Point(217, 481)
-        Me.btnGetCard.Name = "btnGetCard"
-        Me.btnGetCard.Size = New System.Drawing.Size(77, 31)
-        Me.btnGetCard.TabIndex = 0
-        Me.btnGetCard.Text = "Get Card"
-        Me.btnGetCard.UseVisualStyleBackColor = True
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetAsUsedToolStripMenuItem, Me.WrongScratchNumberToolStripMenuItem, Me.AlreadyUsedCardToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(197, 70)
-        '
-        'SetAsUsedToolStripMenuItem
-        '
-        Me.SetAsUsedToolStripMenuItem.Name = "SetAsUsedToolStripMenuItem"
-        Me.SetAsUsedToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.SetAsUsedToolStripMenuItem.Text = "Set as used"
-        '
-        'WrongScratchNumberToolStripMenuItem
-        '
-        Me.WrongScratchNumberToolStripMenuItem.Name = "WrongScratchNumberToolStripMenuItem"
-        Me.WrongScratchNumberToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.WrongScratchNumberToolStripMenuItem.Text = "Wrong scratch number"
-        '
-        'AlreadyUsedCardToolStripMenuItem
-        '
-        Me.AlreadyUsedCardToolStripMenuItem.Name = "AlreadyUsedCardToolStripMenuItem"
-        Me.AlreadyUsedCardToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.AlreadyUsedCardToolStripMenuItem.Text = "Already used card"
-        '
-        'DataGridViewDisableButtonColumn1
-        '
-        Me.DataGridViewDisableButtonColumn1.HeaderText = "Old"
-        Me.DataGridViewDisableButtonColumn1.Name = "DataGridViewDisableButtonColumn1"
-        Me.DataGridViewDisableButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewDisableButtonColumn1.Width = 60
-        '
-        'DataGridViewDisableButtonColumn2
-        '
-        Me.DataGridViewDisableButtonColumn2.HeaderText = "Hold"
-        Me.DataGridViewDisableButtonColumn2.Name = "DataGridViewDisableButtonColumn2"
-        Me.DataGridViewDisableButtonColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewDisableButtonColumn2.Width = 60
-        '
-        'DataGridViewDisableButtonColumn3
-        '
-        Me.DataGridViewDisableButtonColumn3.HeaderText = "New Slot"
-        Me.DataGridViewDisableButtonColumn3.Name = "DataGridViewDisableButtonColumn3"
-        Me.DataGridViewDisableButtonColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewDisableButtonColumn3.Width = 90
-        '
-        'DataGridViewDisableButtonColumn4
-        '
-        Me.DataGridViewDisableButtonColumn4.HeaderText = "Get"
-        Me.DataGridViewDisableButtonColumn4.Name = "DataGridViewDisableButtonColumn4"
-        Me.DataGridViewDisableButtonColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn4.Width = 50
-        '
-        'DataGridViewDisableButtonColumn5
-        '
-        Me.DataGridViewDisableButtonColumn5.HeaderText = "Start"
-        Me.DataGridViewDisableButtonColumn5.Name = "DataGridViewDisableButtonColumn5"
-        Me.DataGridViewDisableButtonColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.DataGridViewDisableButtonColumn5.Width = 50
-        '
-        'DataGridViewDisableButtonColumn6
-        '
-        Me.DataGridViewDisableButtonColumn6.HeaderText = "Cut"
-        Me.DataGridViewDisableButtonColumn6.Name = "DataGridViewDisableButtonColumn6"
-        Me.DataGridViewDisableButtonColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn6.Width = 50
-        '
-        'DataGridViewDisableButtonColumn7
-        '
-        Me.DataGridViewDisableButtonColumn7.HeaderText = "Add New Sims"
-        Me.DataGridViewDisableButtonColumn7.Name = "DataGridViewDisableButtonColumn7"
-        Me.DataGridViewDisableButtonColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewDisableButtonColumn7.Width = 80
         '
         'frmUseCards
         '
@@ -757,13 +756,6 @@ Partial Class frmUseCards
     Friend WithEvents btnSetAsWrongCard As System.Windows.Forms.Button
     Friend WithEvents btnSetAsUsed As System.Windows.Forms.Button
     Friend WithEvents chkSelectClear As System.Windows.Forms.CheckBox
-    Friend WithEvents DataGridViewDisableButtonColumn1 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn2 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn3 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn4 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn5 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn6 As WindowsApplication1.DataGridViewDisableButtonColumn
-    Friend WithEvents DataGridViewDisableButtonColumn7 As WindowsApplication1.DataGridViewDisableButtonColumn
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents clID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -783,4 +775,11 @@ Partial Class frmUseCards
     Friend WithEvents dgAddSimsBtn As WindowsApplication1.DataGridViewDisableButtonColumn
     Friend WithEvents dgDeviceSlotID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewDisableButtonColumn1 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn2 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn3 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn4 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn5 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn6 As WindowsApplication1.DataGridViewDisableButtonColumn
+    Friend WithEvents DataGridViewDisableButtonColumn7 As WindowsApplication1.DataGridViewDisableButtonColumn
 End Class

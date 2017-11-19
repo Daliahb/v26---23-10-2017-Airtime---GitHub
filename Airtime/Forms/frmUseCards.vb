@@ -507,9 +507,9 @@
 
         '2- empty the listview
         Me.dgOnHold.Rows.Remove(Me.dgOnHold.SelectedRows(0))
-       
-            '4- decrement lOnHold
-            lOnHold -= 1
+
+        '4- decrement lOnHold
+        lOnHold -= 1
 
     End Sub
 
