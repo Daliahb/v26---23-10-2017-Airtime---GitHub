@@ -4,6 +4,7 @@
     Public lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom As Integer
     Public boolSaved, isLoaded, boolError As Boolean
     Public strCards As New System.Text.StringBuilder
+    Dim Sql As New System.Text.StringBuilder
     Public strLastCard As String
 
     Public Sub New(ByVal enumEditAdd As Enumerators.EditAdd, Optional ByVal dgRow As DataGridViewRow = Nothing)
@@ -44,8 +45,8 @@
             If validation() Then
                 Me.btnSave.Enabled = False
                 FillObject()
-                boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
-
+                '  boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
+                boolError = odbaccess.InsertCards(Sql.ToString)
                 If boolError Then
                     MsgBox("Operation done successfully.", , "Airtime System")
                     If Me.enumEditAdd = Enumerators.EditAdd.Edit Then
@@ -123,19 +124,28 @@
         lCategoryID = CInt(Me.cmbCategory.SelectedValue)
         lGetCardFrom = CInt(Me.cmbGetItBy.SelectedValue)
 
+        'For i As Integer = 0 To Me.DataGridView1.Rows.Count - 1
+        '    If Not Me.DataGridView1.Rows(i).Cells(1).Value Is Nothing Then
+        '        strCards.Append(Me.DataGridView1.Rows(i).Cells(1).Value)
+        '        strCards.Append(",")
+        '    End If
+        'Next
+        'For i As Integer = Me.DataGridView1.Rows.Count - 1 To 0 Step -1
+        '    If Not Me.DataGridView1.Rows(i).Cells(1).Value Is Nothing AndAlso Not Me.DataGridView1.Rows(i).Cells(1).Value.ToString = "" Then
+        '        strLastCard = Me.DataGridView1.Rows(i).Cells(1).Value.ToString
+        '        Exit For
+        '    End If
+        'Next
+        Sql = New System.Text.StringBuilder
+        Sql.Append("  insert into cards (card_number,fk_Country,fk_Provider,fk_Operator,fk_Category,fk_insertedby,inst_date,fk_GotFrom) values ")
         For i As Integer = 0 To Me.DataGridView1.Rows.Count - 1
             If Not Me.DataGridView1.Rows(i).Cells(1).Value Is Nothing Then
-                strCards.Append(Me.DataGridView1.Rows(i).Cells(1).Value)
-                strCards.Append(",")
+                Sql.Append("('" & Me.DataGridView1.Rows(i).Cells(1).Value.ToString & "'," & lCountryID & "," & lProviderID & "," & lOperatorID & "," & lCategoryID & "," & gUser.Id & ",'" & Now().ToString("yyyy-MM-dd HH:mm:ss") & "'," & lGetCardFrom & "),")
             End If
         Next
-        For i As Integer = Me.DataGridView1.Rows.Count - 1 To 0 Step -1
-            If Not Me.DataGridView1.Rows(i).Cells(1).Value Is Nothing AndAlso Not Me.DataGridView1.Rows(i).Cells(1).Value.ToString = "" Then
-                strLastCard = Me.DataGridView1.Rows(i).Cells(1).Value.ToString
-                Exit For
-            End If
-        Next
-
+        If Not Sql.Length = 0 Then
+            Sql.Remove(Sql.Length - 1, 1)
+        End If
     End Sub
 
     Public Sub SetControls()

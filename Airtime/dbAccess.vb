@@ -18,9 +18,9 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        '  oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
+        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
     End Sub
 
     Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
@@ -2664,6 +2664,38 @@ Public Class DBAccess
                 oConnection.Close()
                 Return False
             End If
+        End Try
+    End Function
+
+    Public Function InsertCards(sql As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.Text
+            oSelectCommand.CommandText = sql
+            oSelectCommand.Connection = oConnection
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'If ex.Message = "Fatal error encountered during command execution." Then
+            '    'todo : check if the cards were instered
+            '    If odbaccess.checkCardExists(strLastCard) Then
+            '        Return True
+            '    Else
+            '        Return False
+            '    End If
+            'Else
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+            '  End If
         End Try
     End Function
 
