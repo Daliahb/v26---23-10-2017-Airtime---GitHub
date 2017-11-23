@@ -2,9 +2,9 @@
 
     Dim lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, lLocationID, lDeviceID As Integer
     Dim FromDate, ToDate As Date
-    Dim boolCheckDate, isloaded As Boolean
+    Dim boolCheckDate, isloaded, boolDeviceSetYes, boolDeviceSet As Boolean
     Dim strCardNo As String
-    Dim dsCountries, dsLocations, dsDevices As DataSet
+    Dim dsCountries, dsLocations, dsDevices, dsSetDevices As DataSet
 
     Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.Close()
@@ -17,13 +17,17 @@
         isloaded = True
         If gUser.type = Enumerators.UsersTypes.Provider Then
             '  Me.DataGridView1.Columns(1).Visible = False
+            Me.DataGridView1.Location = New Point(9, 181)
             Me.chkProvider.Enabled = False
             Me.cmbProviders.SelectedValue = gUser.Provider
             Me.chkLocation.Enabled = False
+            Me.PanelSetDevices.Visible = False
+            Me.lblSetDevice.Visible = False
+
             ' Me.DataGridView1.Location = New Point(4, 53)
         Else
             Me.Panel2.Visible = True
-
+            Me.lblSendCards.Visible = True
             ' Me.DataGridView1.Location = New Point(4, 101)
 
         End If
@@ -37,9 +41,14 @@
 
         Dim ds As DataSet
         Try
+
+            If Not gUser.type = Enumerators.UsersTypes.Provider Then
+                Me.PanelSetDevices.Enabled = True
+                Me.lblSetDevice.Enabled = True
+            End If
             Me.DataGridView1.Rows.Clear()
             Generate()
-            ds = odbaccess.GetCorrectedCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lLocationID, lDeviceID, strCardNo, boolCheckDate, FromDate, ToDate)
+            ds = odbaccess.GetCorrectedCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lLocationID, lDeviceID, strCardNo, boolCheckDate, FromDate, ToDate, boolDeviceSet, boolDeviceSetYes)
             If Not ds Is Nothing AndAlso Not ds.Tables().Count = 0 Then
                 For Each dr As DataRow In ds.Tables(0).Rows
                     Try
@@ -55,9 +64,18 @@
                             .Cells(8).Value = CDate(dr.Item("inst_Date")).ToString("yyyy-MM-dd")
                             .Cells(9).Value = CDate(dr.Item("inst_Date")).ToString("HH:mm")
                             .Cells(10).Value = dr.Item("How")
-                            .Cells(11).Value = CDate(dr.Item("SetAsWrong_Date")).ToString("yyyy-MM-dd HH:mm")
+                            If Not dr.Item("SetAsWrong_Date") Is DBNull.Value Then
+                                .Cells(11).Value = CDate(dr.Item("SetAsWrong_Date")).ToString("yyyy-MM-dd HH:mm")
+                            End If
+
                             .Cells(12).Value = dr.Item("Username")
-                            .Cells(13).Value = CDate(dr.Item("Correction_Date")).ToString("yyyy-MM-dd HH:mm")
+                            If Not dr.Item("Correction_Date") Is DBNull.Value Then
+                                .Cells(13).Value = CDate(dr.Item("Correction_Date")).ToString("yyyy-MM-dd HH:mm")
+                            End If
+
+                            If Not dr.Item("Device") Is DBNull.Value Then
+                                .Cells(14).Value = dr.Item("Device")
+                            End If
                             intCounter += 1
                             'If Me.chkCountry.Checked Then
                             '    intTotal += CInt(dr.Item("Category"))
@@ -127,6 +145,16 @@
         Else
             lDeviceID = 0
         End If
+        If Me.chkDeviceSet.Checked Then
+            boolDeviceSet = True
+            If Me.rbYes.Checked Then
+                boolDeviceSetYes = True
+            Else
+                boolDeviceSetYes = False
+            End If
+        Else
+            boolDeviceSet = False
+        End If
     End Sub
 
     Private Sub ExportToExcelToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExportToExcelToolStripMenuItem.Click
@@ -174,6 +202,8 @@
                 Me.cmbDevices.DisplayMember = "Device"
                 Me.cmbDevices.ValueMember = "ID"
             End If
+
+           
         Catch ex As Exception
 
         End Try
@@ -221,15 +251,17 @@
         End If
     End Sub
 
-    Private Sub chkSelectAll_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkSelectAll.CheckedChanged
+    Private Sub chkSelectAll_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkSelectAll.CheckedChanged, chkSelectAll2.CheckedChanged
         Me.chkSelectAll.Checked = False
+        Me.chkSelectAll2.Checked = False
         For Each dr As DataGridViewRow In Me.DataGridView1.Rows
             dr.Cells(1).Value = True
         Next
     End Sub
 
-    Private Sub chkClearAll_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkClearAll.CheckedChanged
+    Private Sub chkClearAll_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkClearAll.CheckedChanged, chkClearAll2.CheckedChanged
         Me.chkClearAll.Checked = False
+        Me.chkClearAll2.Checked = False
         For Each dr As DataGridViewRow In Me.DataGridView1.Rows
             dr.Cells(1).Value = False
         Next
@@ -399,5 +431,69 @@
    
     Private Sub chkDevice_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDevice.CheckedChanged
         Me.cmbDevices.Enabled = chkDevice.Checked
+    End Sub
+
+    Private Sub chkDeviceSet_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDeviceSet.CheckedChanged
+        Me.gbDeviceSet.Enabled = Me.chkDeviceSet.Checked
+    End Sub
+
+    Private Sub cmbLocation_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbLocation.SelectedIndexChanged
+        dsSetDevices = odbaccess.GetDevices(CInt(Me.cmbLocation.SelectedValue))
+        If Not dsSetDevices Is Nothing Then
+            Me.cmdSetDevice.DataSource = dsSetDevices.Tables(0)
+            Me.cmdSetDevice.DisplayMember = "Device"
+            Me.cmdSetDevice.ValueMember = "ID"
+        End If
+    End Sub
+
+    Private Sub btnSetDevice_Click(sender As System.Object, e As System.EventArgs) Handles btnSetDevice.Click
+        Dim strCardID As New System.Text.StringBuilder
+        Dim lDeviceID As Integer
+
+        If Me.rbDevice.Checked Then
+            If Me.cmdSetDevice.SelectedValue Is Nothing Then
+                ErrorProvider1.SetError(cmdSetDevice, "Please select device from the list.")
+                Exit Sub
+            Else
+                ErrorProvider1.SetError(cmdSetDevice, "")
+                lDeviceID = CInt(Me.cmdSetDevice.SelectedValue)
+            End If
+        Else
+            lDeviceID = 0
+        End If
+
+
+        For Each dr As DataGridViewRow In Me.DataGridView1.Rows
+            If CBool(dr.Cells(1).Value) = True Then
+                strCardID.Append(dr.Cells(0).Value.ToString + ",")
+            End If
+        Next
+
+        If Not strCardID.ToString.Length = 0 Then
+            Dim boolError As Boolean
+            boolError = odbaccess.SetCardsDevice(lDeviceID, strCardID.ToString)
+            If boolError Then
+                MsgBox("Cards's device was set successfully.")
+                btnSearch_Click(Me, New System.EventArgs)
+            Else
+                MsgBox("An error occured.", , "Airtime System")
+            End If
+        Else
+            MsgBox("Please choose the cards you need to send.", , "Airtime System")
+        End If
+    End Sub
+
+  
+    Private Sub btnSelect2_Click(sender As System.Object, e As System.EventArgs) Handles btnSelect2.Click
+        If Not CInt(Me.txtSelectNo2.Text) = 0 Then
+            chkClearAll_CheckedChanged(Me, New System.EventArgs)
+            For i = 0 To CInt(Me.txtSelectNo2.Text) - 1
+                If i > Me.DataGridView1.Rows.Count - 1 Then
+                    Exit For
+                End If
+                Me.DataGridView1.Rows(i).Cells(1).Value = True
+
+            Next
+        End If
     End Sub
 End Class

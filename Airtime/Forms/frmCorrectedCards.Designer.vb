@@ -37,6 +37,21 @@ Partial Class frmCorrectedCards
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCorrectedCards))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblSendCards = New System.Windows.Forms.Label()
+        Me.lblSetDevice = New System.Windows.Forms.Label()
+        Me.chkDeviceSet = New System.Windows.Forms.CheckBox()
+        Me.PanelSetDevices = New System.Windows.Forms.Panel()
+        Me.cmdSetDevice = New System.Windows.Forms.ComboBox()
+        Me.rbDevice = New System.Windows.Forms.RadioButton()
+        Me.rbNoDevice = New System.Windows.Forms.RadioButton()
+        Me.btnSelect2 = New System.Windows.Forms.Button()
+        Me.txtSelectNo2 = New System.Windows.Forms.TextBox()
+        Me.chkClearAll2 = New System.Windows.Forms.CheckBox()
+        Me.btnSetDevice = New System.Windows.Forms.Button()
+        Me.chkSelectAll2 = New System.Windows.Forms.CheckBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cmbDevices = New System.Windows.Forms.ComboBox()
+        Me.chkDevice = New System.Windows.Forms.CheckBox()
         Me.txtCardNumber = New System.Windows.Forms.TextBox()
         Me.chkCard = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -65,6 +80,18 @@ Partial Class frmCorrectedCards
         Me.chkSelectAll = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.gbDeviceSet = New System.Windows.Forms.GroupBox()
+        Me.rbYes = New System.Windows.Forms.RadioButton()
+        Me.rbNo = New System.Windows.Forms.RadioButton()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowHistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.clID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column8 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.clNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -79,21 +106,12 @@ Partial Class frmCorrectedCards
         Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ShowHistoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.cmbDevices = New System.Windows.Forms.ComboBox()
-        Me.chkDevice = New System.Windows.Forms.CheckBox()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
+        Me.PanelSetDevices.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbDeviceSet.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ContextMenuStripHideColumn.SuspendLayout()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -104,6 +122,10 @@ Partial Class frmCorrectedCards
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Controls.Add(Me.lblSendCards)
+        Me.Panel1.Controls.Add(Me.lblSetDevice)
+        Me.Panel1.Controls.Add(Me.chkDeviceSet)
+        Me.Panel1.Controls.Add(Me.PanelSetDevices)
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.cmbDevices)
         Me.Panel1.Controls.Add(Me.chkDevice)
@@ -128,16 +150,188 @@ Partial Class frmCorrectedCards
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.DataGridView1)
         Me.Panel1.Controls.Add(Me.btnSearch)
+        Me.Panel1.Controls.Add(Me.gbDeviceSet)
         Me.Panel1.Location = New System.Drawing.Point(3, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1159, 472)
+        Me.Panel1.Size = New System.Drawing.Size(1613, 723)
         Me.Panel1.TabIndex = 0
+        '
+        'lblSendCards
+        '
+        Me.lblSendCards.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblSendCards.AutoSize = True
+        Me.lblSendCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblSendCards.Location = New System.Drawing.Point(1198, 156)
+        Me.lblSendCards.Name = "lblSendCards"
+        Me.lblSendCards.Size = New System.Drawing.Size(81, 16)
+        Me.lblSendCards.TabIndex = 146
+        Me.lblSendCards.Text = "Send Cards"
+        Me.lblSendCards.Visible = False
+        '
+        'lblSetDevice
+        '
+        Me.lblSetDevice.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblSetDevice.AutoSize = True
+        Me.lblSetDevice.Enabled = False
+        Me.lblSetDevice.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblSetDevice.Location = New System.Drawing.Point(1198, 40)
+        Me.lblSetDevice.Name = "lblSetDevice"
+        Me.lblSetDevice.Size = New System.Drawing.Size(77, 16)
+        Me.lblSetDevice.TabIndex = 145
+        Me.lblSetDevice.Text = "Set Device"
+        '
+        'chkDeviceSet
+        '
+        Me.chkDeviceSet.AutoSize = True
+        Me.chkDeviceSet.Location = New System.Drawing.Point(371, 103)
+        Me.chkDeviceSet.Name = "chkDeviceSet"
+        Me.chkDeviceSet.Size = New System.Drawing.Size(96, 20)
+        Me.chkDeviceSet.TabIndex = 144
+        Me.chkDeviceSet.Text = "Device Set"
+        Me.chkDeviceSet.UseVisualStyleBackColor = True
+        '
+        'PanelSetDevices
+        '
+        Me.PanelSetDevices.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PanelSetDevices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PanelSetDevices.Controls.Add(Me.cmdSetDevice)
+        Me.PanelSetDevices.Controls.Add(Me.rbDevice)
+        Me.PanelSetDevices.Controls.Add(Me.rbNoDevice)
+        Me.PanelSetDevices.Controls.Add(Me.btnSelect2)
+        Me.PanelSetDevices.Controls.Add(Me.txtSelectNo2)
+        Me.PanelSetDevices.Controls.Add(Me.chkClearAll2)
+        Me.PanelSetDevices.Controls.Add(Me.btnSetDevice)
+        Me.PanelSetDevices.Controls.Add(Me.chkSelectAll2)
+        Me.PanelSetDevices.Enabled = False
+        Me.PanelSetDevices.Location = New System.Drawing.Point(1192, 48)
+        Me.PanelSetDevices.Name = "PanelSetDevices"
+        Me.PanelSetDevices.Size = New System.Drawing.Size(417, 101)
+        Me.PanelSetDevices.TabIndex = 142
+        '
+        'cmdSetDevice
+        '
+        Me.cmdSetDevice.DisplayMember = "Name"
+        Me.cmdSetDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmdSetDevice.FormattingEnabled = True
+        Me.cmdSetDevice.Location = New System.Drawing.Point(78, 51)
+        Me.cmdSetDevice.Name = "cmdSetDevice"
+        Me.cmdSetDevice.Size = New System.Drawing.Size(141, 24)
+        Me.cmdSetDevice.TabIndex = 102
+        Me.cmdSetDevice.ValueMember = "ID"
+        '
+        'rbDevice
+        '
+        Me.rbDevice.AutoSize = True
+        Me.rbDevice.Checked = True
+        Me.rbDevice.Location = New System.Drawing.Point(3, 52)
+        Me.rbDevice.Name = "rbDevice"
+        Me.rbDevice.Size = New System.Drawing.Size(74, 20)
+        Me.rbDevice.TabIndex = 103
+        Me.rbDevice.TabStop = True
+        Me.rbDevice.Text = "Device:"
+        Me.rbDevice.UseVisualStyleBackColor = True
+        '
+        'rbNoDevice
+        '
+        Me.rbNoDevice.AutoSize = True
+        Me.rbNoDevice.Location = New System.Drawing.Point(3, 78)
+        Me.rbNoDevice.Name = "rbNoDevice"
+        Me.rbNoDevice.Size = New System.Drawing.Size(92, 20)
+        Me.rbNoDevice.TabIndex = 111
+        Me.rbNoDevice.Text = "No device."
+        Me.rbNoDevice.UseVisualStyleBackColor = True
+        '
+        'btnSelect2
+        '
+        Me.btnSelect2.Location = New System.Drawing.Point(8, 12)
+        Me.btnSelect2.Name = "btnSelect2"
+        Me.btnSelect2.Size = New System.Drawing.Size(77, 23)
+        Me.btnSelect2.TabIndex = 102
+        Me.btnSelect2.Text = "Select"
+        Me.btnSelect2.UseVisualStyleBackColor = True
+        '
+        'txtSelectNo2
+        '
+        Me.txtSelectNo2.Location = New System.Drawing.Point(91, 12)
+        Me.txtSelectNo2.Name = "txtSelectNo2"
+        Me.txtSelectNo2.Size = New System.Drawing.Size(39, 23)
+        Me.txtSelectNo2.TabIndex = 61
+        Me.txtSelectNo2.Text = "0"
+        '
+        'chkClearAll2
+        '
+        Me.chkClearAll2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkClearAll2.AutoSize = True
+        Me.chkClearAll2.BackColor = System.Drawing.Color.Transparent
+        Me.chkClearAll2.Font = New System.Drawing.Font("Tahoma", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkClearAll2.Location = New System.Drawing.Point(336, 15)
+        Me.chkClearAll2.Name = "chkClearAll2"
+        Me.chkClearAll2.Size = New System.Drawing.Size(72, 17)
+        Me.chkClearAll2.TabIndex = 59
+        Me.chkClearAll2.Text = "Clear All"
+        Me.chkClearAll2.UseVisualStyleBackColor = False
+        '
+        'btnSetDevice
+        '
+        Me.btnSetDevice.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSetDevice.Font = New System.Drawing.Font("Tahoma", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSetDevice.Location = New System.Drawing.Point(302, 63)
+        Me.btnSetDevice.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnSetDevice.Name = "btnSetDevice"
+        Me.btnSetDevice.Size = New System.Drawing.Size(109, 31)
+        Me.btnSetDevice.TabIndex = 60
+        Me.btnSetDevice.Tag = ""
+        Me.btnSetDevice.Text = "Set Device"
+        Me.btnSetDevice.UseVisualStyleBackColor = True
+        '
+        'chkSelectAll2
+        '
+        Me.chkSelectAll2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkSelectAll2.AutoSize = True
+        Me.chkSelectAll2.BackColor = System.Drawing.Color.Transparent
+        Me.chkSelectAll2.Font = New System.Drawing.Font("Tahoma", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkSelectAll2.Location = New System.Drawing.Point(242, 15)
+        Me.chkSelectAll2.Name = "chkSelectAll2"
+        Me.chkSelectAll2.Size = New System.Drawing.Size(78, 17)
+        Me.chkSelectAll2.TabIndex = 58
+        Me.chkSelectAll2.Text = "Select All"
+        Me.chkSelectAll2.UseVisualStyleBackColor = False
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(683, 18)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(0, 16)
+        Me.Label4.TabIndex = 140
+        '
+        'cmbDevices
+        '
+        Me.cmbDevices.DisplayMember = "Name"
+        Me.cmbDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbDevices.Enabled = False
+        Me.cmbDevices.FormattingEnabled = True
+        Me.cmbDevices.Location = New System.Drawing.Point(95, 101)
+        Me.cmbDevices.Name = "cmbDevices"
+        Me.cmbDevices.Size = New System.Drawing.Size(199, 24)
+        Me.cmbDevices.TabIndex = 139
+        Me.cmbDevices.ValueMember = "ID"
+        '
+        'chkDevice
+        '
+        Me.chkDevice.AutoSize = True
+        Me.chkDevice.Location = New System.Drawing.Point(10, 103)
+        Me.chkDevice.Name = "chkDevice"
+        Me.chkDevice.Size = New System.Drawing.Size(70, 20)
+        Me.chkDevice.TabIndex = 141
+        Me.chkDevice.Text = "Device"
+        Me.chkDevice.UseVisualStyleBackColor = True
         '
         'txtCardNumber
         '
         Me.txtCardNumber.Enabled = False
-        Me.txtCardNumber.Location = New System.Drawing.Point(440, 70)
+        Me.txtCardNumber.Location = New System.Drawing.Point(474, 70)
         Me.txtCardNumber.Name = "txtCardNumber"
         Me.txtCardNumber.Size = New System.Drawing.Size(214, 23)
         Me.txtCardNumber.TabIndex = 138
@@ -145,7 +339,7 @@ Partial Class frmCorrectedCards
         'chkCard
         '
         Me.chkCard.AutoSize = True
-        Me.chkCard.Location = New System.Drawing.Point(334, 72)
+        Me.chkCard.Location = New System.Drawing.Point(371, 72)
         Me.chkCard.Name = "chkCard"
         Me.chkCard.Size = New System.Drawing.Size(101, 20)
         Me.chkCard.TabIndex = 137
@@ -155,7 +349,7 @@ Partial Class frmCorrectedCards
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(410, 114)
+        Me.Label2.Location = New System.Drawing.Point(443, 142)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(23, 16)
         Me.Label2.TabIndex = 135
@@ -166,7 +360,7 @@ Partial Class frmCorrectedCards
         Me.dtpToDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpToDate.Enabled = False
         Me.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpToDate.Location = New System.Drawing.Point(441, 111)
+        Me.dtpToDate.Location = New System.Drawing.Point(474, 139)
         Me.dtpToDate.Name = "dtpToDate"
         Me.dtpToDate.Size = New System.Drawing.Size(213, 23)
         Me.dtpToDate.TabIndex = 132
@@ -176,7 +370,7 @@ Partial Class frmCorrectedCards
         Me.dtpFromDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpFromDate.Enabled = False
         Me.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpFromDate.Location = New System.Drawing.Point(193, 111)
+        Me.dtpFromDate.Location = New System.Drawing.Point(192, 139)
         Me.dtpFromDate.Name = "dtpFromDate"
         Me.dtpFromDate.Size = New System.Drawing.Size(200, 23)
         Me.dtpFromDate.TabIndex = 133
@@ -184,7 +378,7 @@ Partial Class frmCorrectedCards
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(155, 114)
+        Me.Label3.Location = New System.Drawing.Point(154, 142)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(39, 16)
         Me.Label3.TabIndex = 134
@@ -196,7 +390,7 @@ Partial Class frmCorrectedCards
         Me.cmbLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLocation.Enabled = False
         Me.cmbLocation.FormattingEnabled = True
-        Me.cmbLocation.Location = New System.Drawing.Point(440, 42)
+        Me.cmbLocation.Location = New System.Drawing.Point(474, 42)
         Me.cmbLocation.Name = "cmbLocation"
         Me.cmbLocation.Size = New System.Drawing.Size(214, 24)
         Me.cmbLocation.TabIndex = 124
@@ -208,7 +402,7 @@ Partial Class frmCorrectedCards
         Me.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbCategory.Enabled = False
         Me.cmbCategory.FormattingEnabled = True
-        Me.cmbCategory.Location = New System.Drawing.Point(440, 14)
+        Me.cmbCategory.Location = New System.Drawing.Point(474, 14)
         Me.cmbCategory.Name = "cmbCategory"
         Me.cmbCategory.Size = New System.Drawing.Size(214, 24)
         Me.cmbCategory.TabIndex = 125
@@ -220,9 +414,9 @@ Partial Class frmCorrectedCards
         Me.cmbOperators.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbOperators.Enabled = False
         Me.cmbOperators.FormattingEnabled = True
-        Me.cmbOperators.Location = New System.Drawing.Point(94, 70)
+        Me.cmbOperators.Location = New System.Drawing.Point(95, 72)
         Me.cmbOperators.Name = "cmbOperators"
-        Me.cmbOperators.Size = New System.Drawing.Size(215, 24)
+        Me.cmbOperators.Size = New System.Drawing.Size(199, 24)
         Me.cmbOperators.TabIndex = 123
         Me.cmbOperators.ValueMember = "ID"
         '
@@ -232,9 +426,9 @@ Partial Class frmCorrectedCards
         Me.cmbProviders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbProviders.Enabled = False
         Me.cmbProviders.FormattingEnabled = True
-        Me.cmbProviders.Location = New System.Drawing.Point(94, 42)
+        Me.cmbProviders.Location = New System.Drawing.Point(95, 43)
         Me.cmbProviders.Name = "cmbProviders"
-        Me.cmbProviders.Size = New System.Drawing.Size(216, 24)
+        Me.cmbProviders.Size = New System.Drawing.Size(199, 24)
         Me.cmbProviders.TabIndex = 121
         Me.cmbProviders.ValueMember = "ID"
         '
@@ -244,16 +438,16 @@ Partial Class frmCorrectedCards
         Me.cmbCountries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbCountries.Enabled = False
         Me.cmbCountries.FormattingEnabled = True
-        Me.cmbCountries.Location = New System.Drawing.Point(94, 14)
+        Me.cmbCountries.Location = New System.Drawing.Point(95, 14)
         Me.cmbCountries.Name = "cmbCountries"
-        Me.cmbCountries.Size = New System.Drawing.Size(216, 24)
+        Me.cmbCountries.Size = New System.Drawing.Size(199, 24)
         Me.cmbCountries.TabIndex = 122
         Me.cmbCountries.ValueMember = "ID"
         '
         'chkLocation
         '
         Me.chkLocation.AutoSize = True
-        Me.chkLocation.Location = New System.Drawing.Point(334, 44)
+        Me.chkLocation.Location = New System.Drawing.Point(371, 44)
         Me.chkLocation.Name = "chkLocation"
         Me.chkLocation.Size = New System.Drawing.Size(82, 20)
         Me.chkLocation.TabIndex = 129
@@ -263,7 +457,7 @@ Partial Class frmCorrectedCards
         'chkCategory
         '
         Me.chkCategory.AutoSize = True
-        Me.chkCategory.Location = New System.Drawing.Point(334, 16)
+        Me.chkCategory.Location = New System.Drawing.Point(371, 16)
         Me.chkCategory.Name = "chkCategory"
         Me.chkCategory.Size = New System.Drawing.Size(87, 20)
         Me.chkCategory.TabIndex = 131
@@ -273,7 +467,7 @@ Partial Class frmCorrectedCards
         'chkOperator
         '
         Me.chkOperator.AutoSize = True
-        Me.chkOperator.Location = New System.Drawing.Point(9, 72)
+        Me.chkOperator.Location = New System.Drawing.Point(9, 74)
         Me.chkOperator.Name = "chkOperator"
         Me.chkOperator.Size = New System.Drawing.Size(86, 20)
         Me.chkOperator.TabIndex = 128
@@ -293,7 +487,7 @@ Partial Class frmCorrectedCards
         'chkProvider
         '
         Me.chkProvider.AutoSize = True
-        Me.chkProvider.Location = New System.Drawing.Point(9, 44)
+        Me.chkProvider.Location = New System.Drawing.Point(9, 45)
         Me.chkProvider.Name = "chkProvider"
         Me.chkProvider.Size = New System.Drawing.Size(82, 20)
         Me.chkProvider.TabIndex = 127
@@ -303,7 +497,7 @@ Partial Class frmCorrectedCards
         'chkDate
         '
         Me.chkDate.AutoSize = True
-        Me.chkDate.Location = New System.Drawing.Point(10, 112)
+        Me.chkDate.Location = New System.Drawing.Point(9, 140)
         Me.chkDate.Name = "chkDate"
         Me.chkDate.Size = New System.Drawing.Size(154, 20)
         Me.chkDate.TabIndex = 136
@@ -322,7 +516,7 @@ Partial Class frmCorrectedCards
         Me.Panel2.Controls.Add(Me.chkClearAll)
         Me.Panel2.Controls.Add(Me.btnSendCards)
         Me.Panel2.Controls.Add(Me.chkSelectAll)
-        Me.Panel2.Location = New System.Drawing.Point(734, 50)
+        Me.Panel2.Location = New System.Drawing.Point(1192, 165)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(417, 84)
         Me.Panel2.TabIndex = 101
@@ -417,7 +611,7 @@ Partial Class frmCorrectedCards
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button1.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(926, 8)
+        Me.Button1.Location = New System.Drawing.Point(1380, 8)
         Me.Button1.Margin = New System.Windows.Forms.Padding(4)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(89, 33)
@@ -442,7 +636,7 @@ Partial Class frmCorrectedCards
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clID, Me.Column8, Me.clNo, Me.Column1, Me.Category, Me.Column3, Me.Operatorww, Me.Column2, Me.Column4, Me.Column7, Me.Column6, Me.Column9, Me.Column5, Me.Column10})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.clID, Me.Column8, Me.clNo, Me.Column1, Me.Category, Me.Column3, Me.Operatorww, Me.Column2, Me.Column4, Me.Column7, Me.Column6, Me.Column9, Me.Column5, Me.Column10, Me.Column11})
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle12.BackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle12.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -451,13 +645,102 @@ Partial Class frmCorrectedCards
         DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle12
-        Me.DataGridView1.Location = New System.Drawing.Point(4, 153)
+        Me.DataGridView1.Location = New System.Drawing.Point(4, 259)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(4)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1151, 315)
+        Me.DataGridView1.Size = New System.Drawing.Size(1605, 460)
         Me.DataGridView1.TabIndex = 37
+        '
+        'btnSearch
+        '
+        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(1473, 7)
+        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
+        Me.btnSearch.TabIndex = 36
+        Me.btnSearch.Text = "Filter"
+        Me.btnSearch.UseVisualStyleBackColor = True
+        '
+        'gbDeviceSet
+        '
+        Me.gbDeviceSet.Controls.Add(Me.rbYes)
+        Me.gbDeviceSet.Controls.Add(Me.rbNo)
+        Me.gbDeviceSet.Enabled = False
+        Me.gbDeviceSet.Location = New System.Drawing.Point(475, 90)
+        Me.gbDeviceSet.Name = "gbDeviceSet"
+        Me.gbDeviceSet.Size = New System.Drawing.Size(213, 38)
+        Me.gbDeviceSet.TabIndex = 143
+        Me.gbDeviceSet.TabStop = False
+        '
+        'rbYes
+        '
+        Me.rbYes.AutoSize = True
+        Me.rbYes.Location = New System.Drawing.Point(6, 13)
+        Me.rbYes.Name = "rbYes"
+        Me.rbYes.Size = New System.Drawing.Size(50, 20)
+        Me.rbYes.TabIndex = 0
+        Me.rbYes.Text = "Yes"
+        Me.rbYes.UseVisualStyleBackColor = True
+        '
+        'rbNo
+        '
+        Me.rbNo.AutoSize = True
+        Me.rbNo.Location = New System.Drawing.Point(123, 14)
+        Me.rbNo.Name = "rbNo"
+        Me.rbNo.Size = New System.Drawing.Size(42, 20)
+        Me.rbNo.TabIndex = 1
+        Me.rbNo.Text = "No"
+        Me.rbNo.UseVisualStyleBackColor = True
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHistoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(148, 54)
+        '
+        'ShowHistoryToolStripMenuItem
+        '
+        Me.ShowHistoryToolStripMenuItem.Name = "ShowHistoryToolStripMenuItem"
+        Me.ShowHistoryToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ShowHistoryToolStripMenuItem.Text = "Show Card History"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(144, 6)
+        '
+        'ExportToExcelToolStripMenuItem
+        '
+        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
+        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
+        '
+        'ContextMenuStripHideColumn
+        '
+        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
+        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
+        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
+        '
+        'HideColumnToolStripMenuItem
+        '
+        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
+        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
+        '
+        'ShowAllColumnsToolStripMenuItem
+        '
+        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
+        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
         '
         'clID
         '
@@ -570,93 +853,10 @@ Partial Class frmCorrectedCards
         Me.Column10.Name = "Column10"
         Me.Column10.Width = 150
         '
-        'btnSearch
+        'Column11
         '
-        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1019, 7)
-        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
-        Me.btnSearch.TabIndex = 36
-        Me.btnSearch.Text = "Filter"
-        Me.btnSearch.UseVisualStyleBackColor = True
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHistoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(148, 54)
-        '
-        'ShowHistoryToolStripMenuItem
-        '
-        Me.ShowHistoryToolStripMenuItem.Name = "ShowHistoryToolStripMenuItem"
-        Me.ShowHistoryToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.ShowHistoryToolStripMenuItem.Text = "Show Card History"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(144, 6)
-        '
-        'ExportToExcelToolStripMenuItem
-        '
-        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
-        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
-        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
-        '
-        'ContextMenuStripHideColumn
-        '
-        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
-        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
-        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
-        '
-        'HideColumnToolStripMenuItem
-        '
-        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
-        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
-        '
-        'ShowAllColumnsToolStripMenuItem
-        '
-        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
-        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
-        '
-        'ErrorProvider1
-        '
-        Me.ErrorProvider1.ContainerControl = Me
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(683, 18)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(0, 16)
-        Me.Label4.TabIndex = 140
-        '
-        'cmbDevices
-        '
-        Me.cmbDevices.DisplayMember = "Name"
-        Me.cmbDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbDevices.Enabled = False
-        Me.cmbDevices.FormattingEnabled = True
-        Me.cmbDevices.Location = New System.Drawing.Point(748, 14)
-        Me.cmbDevices.Name = "cmbDevices"
-        Me.cmbDevices.Size = New System.Drawing.Size(141, 24)
-        Me.cmbDevices.TabIndex = 139
-        Me.cmbDevices.ValueMember = "ID"
-        '
-        'chkDevice
-        '
-        Me.chkDevice.AutoSize = True
-        Me.chkDevice.Location = New System.Drawing.Point(679, 16)
-        Me.chkDevice.Name = "chkDevice"
-        Me.chkDevice.Size = New System.Drawing.Size(70, 20)
-        Me.chkDevice.TabIndex = 141
-        Me.chkDevice.Text = "Device"
-        Me.chkDevice.UseVisualStyleBackColor = True
+        Me.Column11.HeaderText = "Device"
+        Me.Column11.Name = "Column11"
         '
         'frmCorrectedCards
         '
@@ -664,7 +864,7 @@ Partial Class frmCorrectedCards
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(1163, 477)
+        Me.ClientSize = New System.Drawing.Size(1617, 728)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -676,9 +876,13 @@ Partial Class frmCorrectedCards
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.PanelSetDevices.ResumeLayout(False)
+        Me.PanelSetDevices.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbDeviceSet.ResumeLayout(False)
+        Me.gbDeviceSet.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ContextMenuStripHideColumn.ResumeLayout(False)
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -722,6 +926,25 @@ Partial Class frmCorrectedCards
     Friend WithEvents chkCountry As System.Windows.Forms.CheckBox
     Friend WithEvents chkProvider As System.Windows.Forms.CheckBox
     Friend WithEvents chkDate As System.Windows.Forms.CheckBox
+    Friend WithEvents btnGetUsers As System.Windows.Forms.Button
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents cmbDevices As System.Windows.Forms.ComboBox
+    Friend WithEvents chkDevice As System.Windows.Forms.CheckBox
+    Friend WithEvents PanelSetDevices As System.Windows.Forms.Panel
+    Friend WithEvents cmdSetDevice As System.Windows.Forms.ComboBox
+    Friend WithEvents rbDevice As System.Windows.Forms.RadioButton
+    Friend WithEvents rbNoDevice As System.Windows.Forms.RadioButton
+    Friend WithEvents btnSelect2 As System.Windows.Forms.Button
+    Friend WithEvents txtSelectNo2 As System.Windows.Forms.TextBox
+    Friend WithEvents chkClearAll2 As System.Windows.Forms.CheckBox
+    Friend WithEvents btnSetDevice As System.Windows.Forms.Button
+    Friend WithEvents chkSelectAll2 As System.Windows.Forms.CheckBox
+    Friend WithEvents lblSendCards As System.Windows.Forms.Label
+    Friend WithEvents lblSetDevice As System.Windows.Forms.Label
+    Friend WithEvents chkDeviceSet As System.Windows.Forms.CheckBox
+    Friend WithEvents gbDeviceSet As System.Windows.Forms.GroupBox
+    Friend WithEvents rbYes As System.Windows.Forms.RadioButton
+    Friend WithEvents rbNo As System.Windows.Forms.RadioButton
     Friend WithEvents clID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column8 As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents clNo As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -736,9 +959,6 @@ Partial Class frmCorrectedCards
     Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column10 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents btnGetUsers As System.Windows.Forms.Button
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents cmbDevices As System.Windows.Forms.ComboBox
-    Friend WithEvents chkDevice As System.Windows.Forms.CheckBox
+    Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
 
 End Class

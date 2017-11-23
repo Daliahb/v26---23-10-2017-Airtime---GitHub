@@ -69,11 +69,15 @@
 
 
     Public Sub FillObject()
-
+        Dim strResult As String
         strNote = Me.txtNote.Text
         dblBurnedBalance = CDbl(Me.txtBurnedBalance.Text)
 
-        'Dim webClient As New System.Net.WebClient
+        '   Dim webClient As New System.Net.WebClient
+        '   strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from="
+        '   strResult=strResult & 
+
+
         'Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_05:31:01&date_to=2017-11-02_05:31:01&prefix=99234")
 
         'If Not result Is Nothing AndAlso Not result.Length = 0 Then
@@ -81,7 +85,7 @@
 
         '    Dim strArr() As String
 
-        '    strArr = result.Split("|")
+        '    strArr = result.Split(CChar("|"))
         '    If Not strArr.Count = 0 Then
         '        intTotalCalls = CInt(strArr(0))
         '        dblTalkTime = CDbl(strArr(1))

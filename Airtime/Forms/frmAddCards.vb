@@ -45,7 +45,7 @@
             If validation() Then
                 Me.btnSave.Enabled = False
                 FillObject()
-                '  boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
+                'boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
                 boolError = odbaccess.InsertCards(Sql.ToString)
                 If boolError Then
                     MsgBox("Operation done successfully.", , "Airtime System")

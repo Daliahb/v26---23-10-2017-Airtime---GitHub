@@ -18,9 +18,9 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        '  oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
+        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
     End Sub
 
     Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
@@ -3959,7 +3959,7 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetCorrectedCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lLocationID As Integer, lDeviceID As Integer, ByVal strCardNo As String, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date) As DataSet
+    Public Function GetCorrectedCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lLocationID As Integer, lDeviceID As Integer, ByVal strCardNo As String, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date, ByVal boolDeviceSet As Boolean, ByVal boolDeviceSetYes As Boolean) As DataSet
         ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
@@ -4040,6 +4040,20 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "lUserID"
                 .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "boolDeviceSet"
+                .Value = boolDeviceSet
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "boolDeviceSetYes"
+                .Value = boolDeviceSetYes
             End With
             oSelectCommand.Parameters.Add(oParam)
 
