@@ -147,7 +147,7 @@
         If CheckOperatorLimit(intLimit) Then
             'check if he gets more than 32 cards using Hold Slot.
             If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
-                If (Me.ocolDevices.FindGetByIDAndAdd1(lCurrentDeviceSlotID)) >= 32 Then
+                If (Me.ocolDevices.FindGetByIDAndAdd1(lCurrentDeviceSlotID)) >= 33 Then
                     MsgBox("Hold Slot cannot get more than 32 card." & vbCrLf & "You can 'Start' the slot then get more cards.")
                     Return
                 End If
