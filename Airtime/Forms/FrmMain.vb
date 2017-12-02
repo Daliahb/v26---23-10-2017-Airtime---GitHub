@@ -29,7 +29,16 @@ Public Class FrmMain
             Me.IiiToolStripMenuItem.Visible = True
             Me.AddSimCardsOrdersToolStripMenuItem.Enabled = True
             ViewSimCardsOrdersToolStripMenuItem.Enabled = True
-            Me.ReportsToolStripMenuItem.Visible = False
+            Me.ReportsToolStripMenuItem.Visible = True
+            SlotDetailsReportToolStripMenuItem.Visible = False
+            InsertedByProviderReportToolStripMenuItem.Visible = False
+            ProviderCardsReportToolStripMenuItem.Visible = False
+            CardsLessThanLimitToolStripMenuItem.Visible = False
+            ProvidersBalancesToolStripMenuItem.Visible = False
+            ShiftReportToolStripMenuItem.Visible = False
+            CardsStatusToolStripMenuItem.Visible = False
+            CardsValuesUsedPerSlotToolStripMenuItem.Visible = False
+            DevicePerformanceToolStripMenuItem1.Enabled = True
             '  FillDataSets()
 
         ElseIf gUser.type = Enumerators.UsersTypes.Supervisor Then
@@ -43,8 +52,9 @@ Public Class FrmMain
             Me.AddSimCardsOrdersToolStripMenuItem.Enabled = True
             ViewSimCardsOrdersToolStripMenuItem.Enabled = True
             Me.ReportsToolStripMenuItem.Visible = True
-            ToolStripMenuItem1.Enabled = True
+            DevicePerformanceToolStripMenuItem1.Enabled = True
             SlotDetailsReportToolStripMenuItem.Enabled = True
+            CardsValuesUsedPerSlotToolStripMenuItem.Enabled = True
 
         ElseIf gUser.type = Enumerators.UsersTypes.Audit Then
             Me.PanelCardsUser.Visible = False
@@ -64,8 +74,9 @@ Public Class FrmMain
             ViewProviderPayementsToolStripMenuItem.Enabled = True
             Me.CardsStatusToolStripMenuItem.Visible = True
             Me.ReportsToolStripMenuItem.Visible = True
-            ToolStripMenuItem1.Enabled = True
+            DevicePerformanceToolStripMenuItem1.Enabled = True
             SlotDetailsReportToolStripMenuItem.Enabled = True
+            CardsValuesUsedPerSlotToolStripMenuItem.Enabled = True
 
         ElseIf gUser.type = Enumerators.UsersTypes.Provider Then
             Me.PanelCardsUser.Visible = False
@@ -105,7 +116,7 @@ Public Class FrmMain
             ShiftReportsFolderToolStripMenuItem.Visible = True
             Me.CardsStatusToolStripMenuItem.Visible = True
             Me.ReportsToolStripMenuItem.Visible = True
-            ToolStripMenuItem1.Enabled = True
+            DevicePerformanceToolStripMenuItem1.Enabled = True
             SlotDetailsReportToolStripMenuItem.Enabled = True
             InsertedByProviderReportToolStripMenuItem.Enabled = True
             ProviderCardsReportToolStripMenuItem.Enabled = True
@@ -113,6 +124,7 @@ Public Class FrmMain
             ProvidersBalancesToolStripMenuItem.Enabled = True
             ShiftReportToolStripMenuItem.Enabled = True
             CardsStatusToolStripMenuItem.Enabled = True
+            CardsValuesUsedPerSlotToolStripMenuItem.Enabled = True
 
         End If
     End Sub
@@ -625,8 +637,8 @@ Public Class FrmMain
         End If
     End Sub
 
-   
-    Private Sub ToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItem1.Click
+
+    Private Sub ToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles DevicePerformanceToolStripMenuItem1.Click
         If Application.OpenForms().OfType(Of frmSlotsInfoReport).Any Then
             For Each frm As Form In Application.OpenForms
                 If frm.Name.Equals("frmSlotsInfoReport") Then
@@ -669,5 +681,18 @@ Public Class FrmMain
         '    '        dblACD = CDbl(strArr(2))
         '    '        dblASR = CDbl(strArr(3))
         'End If
+    End Sub
+
+    Private Sub CardsValuesUsedPerSlotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CardsValuesUsedPerSlotToolStripMenuItem.Click
+        If Application.OpenForms().OfType(Of frmSlotDetailsUsersValuesReport).Any Then
+            For Each frm As Form In Application.OpenForms
+                If frm.Name.Equals("frmSlotDetailsUsersValuesReport") Then
+                    frm.WindowState = FormWindowState.Maximized
+                End If
+            Next
+        Else
+            Dim frm As New frmSlotDetailsUsersValuesReport()
+            frm.Show()
+        End If
     End Sub
 End Class

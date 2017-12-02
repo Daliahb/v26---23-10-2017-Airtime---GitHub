@@ -61,7 +61,7 @@
         Me.lblCardsNo.Text = "0"
         lCurrentCardIndex = 0
 
-        ds = odbaccess.GetCardUsersCategories()
+        ds = odbaccess.GetCardUsersCategories(lShiftID)
         If Not ds Is Nothing AndAlso Not ds.Tables().Count = 0 Then
             For Each dr As DataRow In ds.Tables(0).Rows
                 Try
@@ -376,7 +376,7 @@
                         strSlot = CStr(Me.DataGridView1.Rows(e.RowIndex).Cells(18).Value)
 
 
-                        Dim ofrm As New frmCutDeviceSlot(strOperator, strDevice, lDeviceSlotId, strSlot)
+                        Dim ofrm As New frmCutDeviceSlot(strOperator, strDevice, lDeviceSlotId, strSlot, Now())
                         ofrm.ShowDialog()
                         If ofrm.boolCut = True Then
                             'Remove Slot from Hold to Old, and make Hold=none and Old=Slot

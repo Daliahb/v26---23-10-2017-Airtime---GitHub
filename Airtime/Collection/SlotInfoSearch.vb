@@ -21,6 +21,9 @@
     Public dDateFrom, dDateTo As Date
     Public boolDifference As Boolean
     Public dblDifferenceFrom, dblDifferenceTo As Double
+    Public boolBurnedBalance As Boolean
+    Public dblBurnedFrom, dblBurnedTo As Double
     Public lCreatedBy As Integer
     Public lChargedBy As Integer
+    Public lShiftID As Integer
 End Class

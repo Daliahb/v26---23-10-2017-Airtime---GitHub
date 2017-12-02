@@ -283,6 +283,13 @@
                     .boolDifference = False
                 End If
 
+                If Me.chkBurenedBalance.Checked Then
+                    .boolBurnedBalance = True
+                    .dblBurnedFrom = CInt(Me.txtBurnedFrom.Text)
+                    .dblBurnedTo = CInt(Me.txtBurnedTo.Text)
+                Else
+                    .boolBurnedBalance = False
+                End If
             End With
         Catch ex As Exception
 
@@ -423,11 +430,14 @@
         End If
     End Sub
 
-    Private Sub txtDifferenceFrom_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles txtDifferenceFrom.KeyPress, txtDifferenceFrom.KeyPress
+    Private Sub txtDifferenceFrom_KeyPress(sender As System.Object, e As System.Windows.Forms.KeyPressEventArgs) Handles txtDifferenceFrom.KeyPress
         If Not Char.IsControl(e.KeyChar) AndAlso Not IsNumeric(e.KeyChar) AndAlso Not e.KeyChar = "." AndAlso Not e.KeyChar = "-" Then
             e.Handled = True
         End If
     End Sub
 
-
+    Private Sub chkBurenedBalance_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkBurenedBalance.CheckedChanged
+        Me.txtBalanceFrom.Enabled = chkBurenedBalance.Checked
+        Me.txtBalanceTo.Enabled = chkBurenedBalance.Checked
+    End Sub
 End Class

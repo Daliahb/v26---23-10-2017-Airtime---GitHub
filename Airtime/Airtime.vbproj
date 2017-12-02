@@ -192,6 +192,12 @@
     <Compile Include="Forms\frmUseCards.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Reports\frmSlotDetailsUsersValuesReport.Designer.vb">
+      <DependentUpon>frmSlotDetailsUsersValuesReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Reports\frmSlotDetailsUsersValuesReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Reports\frmSlotDetailsReport.Designer.vb">
       <DependentUpon>frmSlotDetailsReport.vb</DependentUpon>
     </Compile>
@@ -526,6 +532,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\frmUseCards.resx">
       <DependentUpon>frmUseCards.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reports\frmSlotDetailsUsersValuesReport.resx">
+      <DependentUpon>frmSlotDetailsUsersValuesReport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Reports\frmSlotDetailsReport.resx">
       <DependentUpon>frmSlotDetailsReport.vb</DependentUpon>

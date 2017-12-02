@@ -18,10 +18,11 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        ' oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
-    End Sub
+        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
+   
+ End Sub
 
     Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
         Dim intCount As Integer
@@ -619,6 +620,28 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "boolBurned"
+                .Value = oSlotInfoSearch.boolBurnedBalance
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblBurnedFrom"
+                .Value = oSlotInfoSearch.dblBurnedFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblBurnedTo"
+                .Value = oSlotInfoSearch.dblBurnedTo
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
@@ -733,6 +756,72 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+            Return ds
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function GetSlotDetailsUserValuesReport(oSlotInfoSearch As SlotInfoSearch) As DataSet
+        ds = New DataSet
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetSlotDetailsUserValuesReport"
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = oSlotInfoSearch.lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperator"
+                .Value = oSlotInfoSearch.lOperator
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceID"
+                .Value = oSlotInfoSearch.lDeviceID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSlotID"
+                .Value = oSlotInfoSearch.lSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dShiftDate"
+                .Value = oSlotInfoSearch.dDateFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lChargedBy"
+                .Value = oSlotInfoSearch.lChargedBy
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftID"
+                .Value = oSlotInfoSearch.lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
 
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
@@ -4579,12 +4668,19 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetCardUsersCategories() As DataSet
+    Public Function GetCardUsersCategories(lShiftID As Long) As DataSet
         ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
             oSelectCommand.CommandText = "GetCardUsersCategories"
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftID"
+                .Value = lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam

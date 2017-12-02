@@ -123,6 +123,12 @@ Partial Class frmSlotsInfoReport
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DataTable1TableAdapter1 = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txtBurnedFrom = New System.Windows.Forms.TextBox()
+        Me.txtBurnedTo = New System.Windows.Forms.TextBox()
+        Me.chkBurenedBalance = New System.Windows.Forms.CheckBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,6 +143,12 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Controls.Add(Me.Label18)
+        Me.Panel1.Controls.Add(Me.Label16)
+        Me.Panel1.Controls.Add(Me.txtBurnedFrom)
+        Me.Panel1.Controls.Add(Me.txtBurnedTo)
+        Me.Panel1.Controls.Add(Me.chkBurenedBalance)
+        Me.Panel1.Controls.Add(Me.Label17)
         Me.Panel1.Controls.Add(Me.Label14)
         Me.Panel1.Controls.Add(Me.Label13)
         Me.Panel1.Controls.Add(Me.Label12)
@@ -202,7 +214,7 @@ Partial Class frmSlotsInfoReport
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(854, 93)
+        Me.Label14.Location = New System.Drawing.Point(898, 93)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(39, 16)
         Me.Label14.TabIndex = 150
@@ -211,7 +223,7 @@ Partial Class frmSlotsInfoReport
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(854, 65)
+        Me.Label13.Location = New System.Drawing.Point(898, 65)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(39, 16)
         Me.Label13.TabIndex = 150
@@ -220,7 +232,7 @@ Partial Class frmSlotsInfoReport
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(854, 38)
+        Me.Label12.Location = New System.Drawing.Point(898, 38)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(39, 16)
         Me.Label12.TabIndex = 150
@@ -229,7 +241,7 @@ Partial Class frmSlotsInfoReport
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(854, 10)
+        Me.Label11.Location = New System.Drawing.Point(898, 10)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(39, 16)
         Me.Label11.TabIndex = 149
@@ -238,7 +250,7 @@ Partial Class frmSlotsInfoReport
         'txtACDFrom
         '
         Me.txtACDFrom.Enabled = False
-        Me.txtACDFrom.Location = New System.Drawing.Point(893, 62)
+        Me.txtACDFrom.Location = New System.Drawing.Point(937, 62)
         Me.txtACDFrom.Name = "txtACDFrom"
         Me.txtACDFrom.Size = New System.Drawing.Size(68, 23)
         Me.txtACDFrom.TabIndex = 148
@@ -246,7 +258,7 @@ Partial Class frmSlotsInfoReport
         'txtASRFrom
         '
         Me.txtASRFrom.Enabled = False
-        Me.txtASRFrom.Location = New System.Drawing.Point(893, 90)
+        Me.txtASRFrom.Location = New System.Drawing.Point(937, 90)
         Me.txtASRFrom.Name = "txtASRFrom"
         Me.txtASRFrom.Size = New System.Drawing.Size(68, 23)
         Me.txtASRFrom.TabIndex = 148
@@ -254,7 +266,7 @@ Partial Class frmSlotsInfoReport
         'txtDurationFrom
         '
         Me.txtDurationFrom.Enabled = False
-        Me.txtDurationFrom.Location = New System.Drawing.Point(893, 35)
+        Me.txtDurationFrom.Location = New System.Drawing.Point(937, 35)
         Me.txtDurationFrom.Name = "txtDurationFrom"
         Me.txtDurationFrom.Size = New System.Drawing.Size(68, 23)
         Me.txtDurationFrom.TabIndex = 148
@@ -262,7 +274,7 @@ Partial Class frmSlotsInfoReport
         'txtBalanceFrom
         '
         Me.txtBalanceFrom.Enabled = False
-        Me.txtBalanceFrom.Location = New System.Drawing.Point(893, 7)
+        Me.txtBalanceFrom.Location = New System.Drawing.Point(937, 7)
         Me.txtBalanceFrom.Name = "txtBalanceFrom"
         Me.txtBalanceFrom.Size = New System.Drawing.Size(68, 23)
         Me.txtBalanceFrom.TabIndex = 148
@@ -286,7 +298,7 @@ Partial Class frmSlotsInfoReport
         'txtACDTo
         '
         Me.txtACDTo.Enabled = False
-        Me.txtACDTo.Location = New System.Drawing.Point(996, 62)
+        Me.txtACDTo.Location = New System.Drawing.Point(1040, 62)
         Me.txtACDTo.Name = "txtACDTo"
         Me.txtACDTo.Size = New System.Drawing.Size(68, 23)
         Me.txtACDTo.TabIndex = 147
@@ -294,7 +306,7 @@ Partial Class frmSlotsInfoReport
         'txtASRTo
         '
         Me.txtASRTo.Enabled = False
-        Me.txtASRTo.Location = New System.Drawing.Point(996, 90)
+        Me.txtASRTo.Location = New System.Drawing.Point(1040, 90)
         Me.txtASRTo.Name = "txtASRTo"
         Me.txtASRTo.Size = New System.Drawing.Size(68, 23)
         Me.txtASRTo.TabIndex = 147
@@ -302,7 +314,7 @@ Partial Class frmSlotsInfoReport
         'txtDurationTo
         '
         Me.txtDurationTo.Enabled = False
-        Me.txtDurationTo.Location = New System.Drawing.Point(996, 35)
+        Me.txtDurationTo.Location = New System.Drawing.Point(1040, 35)
         Me.txtDurationTo.Name = "txtDurationTo"
         Me.txtDurationTo.Size = New System.Drawing.Size(68, 23)
         Me.txtDurationTo.TabIndex = 147
@@ -310,7 +322,7 @@ Partial Class frmSlotsInfoReport
         'txtBalanceTo
         '
         Me.txtBalanceTo.Enabled = False
-        Me.txtBalanceTo.Location = New System.Drawing.Point(996, 7)
+        Me.txtBalanceTo.Location = New System.Drawing.Point(1040, 7)
         Me.txtBalanceTo.Name = "txtBalanceTo"
         Me.txtBalanceTo.Size = New System.Drawing.Size(68, 23)
         Me.txtBalanceTo.TabIndex = 147
@@ -334,7 +346,7 @@ Partial Class frmSlotsInfoReport
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(1103, 125)
+        Me.Label1.Location = New System.Drawing.Point(1147, 149)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(23, 16)
         Me.Label1.TabIndex = 145
@@ -345,7 +357,7 @@ Partial Class frmSlotsInfoReport
         Me.dtpToDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpToDate.Enabled = False
         Me.dtpToDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpToDate.Location = New System.Drawing.Point(1129, 122)
+        Me.dtpToDate.Location = New System.Drawing.Point(1173, 146)
         Me.dtpToDate.Name = "dtpToDate"
         Me.dtpToDate.Size = New System.Drawing.Size(201, 23)
         Me.dtpToDate.TabIndex = 142
@@ -355,7 +367,7 @@ Partial Class frmSlotsInfoReport
         Me.dtpFromDate.CustomFormat = "dddd  dd/MM/yyyy"
         Me.dtpFromDate.Enabled = False
         Me.dtpFromDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpFromDate.Location = New System.Drawing.Point(893, 122)
+        Me.dtpFromDate.Location = New System.Drawing.Point(937, 146)
         Me.dtpFromDate.Name = "dtpFromDate"
         Me.dtpFromDate.Size = New System.Drawing.Size(201, 23)
         Me.dtpFromDate.TabIndex = 143
@@ -363,11 +375,11 @@ Partial Class frmSlotsInfoReport
         'chkDate
         '
         Me.chkDate.AutoSize = True
-        Me.chkDate.Location = New System.Drawing.Point(765, 123)
+        Me.chkDate.Location = New System.Drawing.Point(765, 147)
         Me.chkDate.Name = "chkDate"
-        Me.chkDate.Size = New System.Drawing.Size(131, 20)
+        Me.chkDate.Size = New System.Drawing.Size(96, 20)
         Me.chkDate.TabIndex = 146
-        Me.chkDate.Text = "Start Date From"
+        Me.chkDate.Text = "Start Date"
         Me.chkDate.UseVisualStyleBackColor = True
         '
         'chkSlot
@@ -568,7 +580,7 @@ Partial Class frmSlotsInfoReport
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(967, 65)
+        Me.Label10.Location = New System.Drawing.Point(1011, 65)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(23, 16)
         Me.Label10.TabIndex = 126
@@ -587,7 +599,7 @@ Partial Class frmSlotsInfoReport
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(967, 93)
+        Me.Label9.Location = New System.Drawing.Point(1011, 93)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(23, 16)
         Me.Label9.TabIndex = 126
@@ -606,7 +618,7 @@ Partial Class frmSlotsInfoReport
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(967, 38)
+        Me.Label7.Location = New System.Drawing.Point(1011, 38)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(23, 16)
         Me.Label7.TabIndex = 126
@@ -625,7 +637,7 @@ Partial Class frmSlotsInfoReport
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(967, 10)
+        Me.Label5.Location = New System.Drawing.Point(1011, 10)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(23, 16)
         Me.Label5.TabIndex = 126
@@ -985,6 +997,59 @@ Partial Class frmSlotsInfoReport
         '
         Me.DataTable1TableAdapter1.ClearBeforeFill = True
         '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(898, 121)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(39, 16)
+        Me.Label16.TabIndex = 155
+        Me.Label16.Text = "From"
+        '
+        'txtBurnedFrom
+        '
+        Me.txtBurnedFrom.Enabled = False
+        Me.txtBurnedFrom.Location = New System.Drawing.Point(937, 118)
+        Me.txtBurnedFrom.Name = "txtBurnedFrom"
+        Me.txtBurnedFrom.Size = New System.Drawing.Size(68, 23)
+        Me.txtBurnedFrom.TabIndex = 154
+        '
+        'txtBurnedTo
+        '
+        Me.txtBurnedTo.Enabled = False
+        Me.txtBurnedTo.Location = New System.Drawing.Point(1040, 118)
+        Me.txtBurnedTo.Name = "txtBurnedTo"
+        Me.txtBurnedTo.Size = New System.Drawing.Size(68, 23)
+        Me.txtBurnedTo.TabIndex = 153
+        '
+        'chkBurenedBalance
+        '
+        Me.chkBurenedBalance.AutoSize = True
+        Me.chkBurenedBalance.Location = New System.Drawing.Point(765, 119)
+        Me.chkBurenedBalance.Name = "chkBurenedBalance"
+        Me.chkBurenedBalance.Size = New System.Drawing.Size(135, 20)
+        Me.chkBurenedBalance.TabIndex = 152
+        Me.chkBurenedBalance.Text = "Burened Balance"
+        Me.chkBurenedBalance.UseVisualStyleBackColor = True
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(1011, 121)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(23, 16)
+        Me.Label17.TabIndex = 151
+        Me.Label17.Text = "To"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(898, 149)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(39, 16)
+        Me.Label18.TabIndex = 156
+        Me.Label18.Text = "From"
+        '
         'frmSlotsInfoReport
         '
         Me.AcceptButton = Me.btnSearch
@@ -1108,5 +1173,11 @@ Partial Class frmSlotsInfoReport
     Friend WithEvents txtDifferenceTo As System.Windows.Forms.TextBox
     Friend WithEvents chkDifference As System.Windows.Forms.CheckBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents txtBurnedFrom As System.Windows.Forms.TextBox
+    Friend WithEvents txtBurnedTo As System.Windows.Forms.TextBox
+    Friend WithEvents chkBurenedBalance As System.Windows.Forms.CheckBox
+    Friend WithEvents Label17 As System.Windows.Forms.Label
 
 End Class

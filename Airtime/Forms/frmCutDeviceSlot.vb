@@ -5,8 +5,9 @@
     Dim strNote As String, dblBurnedBalance As Double
     Dim dblTalkTime, dblACD, dblASR As Double
     Dim intTotalCalls As Integer
+    Dim dCreateDate As DateTime
 
-    Public Sub New(ByVal strOperator As String, ByVal strDevice As String, lDeviceSlotID As Long, StrSlot As String)
+    Public Sub New(ByVal strOperator As String, ByVal strDevice As String, lDeviceSlotID As Long, StrSlot As String, dCreateDate As DateTime)
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -14,6 +15,7 @@
         Me.lblOperator.Text = strOperator
 
         Me.lDeviceSlotID = lDeviceSlotID
+        Me.dCreateDate = dCreateDate
     End Sub
 
     Private Sub frmAddCompany_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -94,6 +96,9 @@
         '    End If
 
         'End If
+        Dim dCreatedDateTime, dCutDateTime As String
+        Dim strPrefix As String
+        dCutDateTime = CDate(Now()).ToString("yyyy-MM-dd_HH:mm:ss")
 
         dblTalkTime = 0
         dblACD = 0

@@ -81,7 +81,7 @@
     End Sub
 
     Public Sub FillData()
-        Dim colUsers As ColUser = odbaccess.GetUsers(2)
+        Dim colUsers As ColUser = odbaccess.GetUsers(5)
         If Not colUsers Is Nothing Then
             Me.cmbUsers.DataSource = colUsers
             Me.cmbUsers.DisplayMember = "Username"
