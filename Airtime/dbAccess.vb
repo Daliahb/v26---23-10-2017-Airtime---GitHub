@@ -3284,7 +3284,7 @@ Public Class DBAccess
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "checkCardExists"
+            oSelectCommand.CommandText = "GetSlotCreateDate_Prefix"
             oSelectCommand.Connection = oConnection
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
@@ -3294,10 +3294,6 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
 
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection

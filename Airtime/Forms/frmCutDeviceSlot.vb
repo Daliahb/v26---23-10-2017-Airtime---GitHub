@@ -22,8 +22,12 @@
         Dim ds As DataSet
         ds = odbaccess.GetSlotCreateDate_Prefix(lDeviceSlotID)
         If Not ds Is Nothing AndAlso Not ds.tables.count = 0 AndAlso Not ds.tables(0).rows.count = 0 Then
-            dCreateDate = CDate(ds.Tables(0).Rows(0).Item("create_date"))
-            strPrefix = CStr(ds.Tables(0).Rows(0).Item("Prefix"))
+            dCreateDate = CDate(ds.Tables(0).Rows(0).Item("created_time"))
+if not ds.Tables(0).Rows(0).Item("Prefix") is DBNull.Value then
+                strPrefix = CStr(ds.Tables(0).Rows(0).Item("Prefix"))
+            Else
+                strPrefix = ""
+            End If
         Else
             MsgBox("Cannot get Created Time from server!")
         End If
@@ -91,6 +95,8 @@
         dblACD = 0
         dblASR = 0
         intTotalCalls = 0
+        Try
+
 
         If Not dCreateDate = Nothing And Not strPrefix.Length = 0 Then
             ' Get Slot created time, Slot cut time, Device Prefix
@@ -101,7 +107,7 @@
             Dim webClient As New System.Net.WebClient
             strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & dCreatedDateTime & "&"
             strResult = strResult & "date_to=" & dCutDateTime & "&"
-            strResult = strResult & "Prefix=" & strPrefix
+            strResult = strResult & "prefix=" & strPrefix
 
             Dim result As String = webClient.DownloadString(strResult)
 
@@ -112,23 +118,29 @@
 
                 strArr = result.Split(CChar("|"))
                 If Not strArr.Count = 0 Then
-                    If Not Str(strArr(0)).Length = 0 Then
+                    If IsNumeric(strArr(0)) Then
                         intTotalCalls = CInt(strArr(0))
                     End If
-                    If Not Str(strArr(1)).Length = 0 Then
-                        dblTalkTime = CDbl(strArr(1))
-                    End If
-                    If Not Str(strArr(1)).Length = 0 Then
-                        dblACD = CDbl(strArr(2))
-                    End If
-                    If Not Str(strArr(3)).Length = 0 Then
-                        dblASR = CDbl(strArr(3))
+                     
+    '                    intTotalCalls = CInt(strArr(0))
+                        If IsNumeric(strArr(1)) Then
+                            dblTalkTime = CDbl(strArr(1))
+                        End If
+                            If IsNumeric(strArr(2)) Then
+                                dblACD = CDbl(strArr(2))
+                            End If
+                            If IsNumeric(strArr(3)) Then
+                                dblASR = CDbl(strArr(3))
+                            End If
+                        End If
+                    Else
+                        MsgBox("Couldn't get data from SPO server.")
                     End If
                 End If
-            Else
-                MsgBox("Couldn't get data from SPO server.")
-            End If
-        End If
+        Catch ex As Exception
+            MsgBox(ex.Message & "  " & ex.StackTrace)
+
+        End Try
     End Sub
 
 
