@@ -32,6 +32,12 @@ Partial Class frmSlotsInfoReport
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSlotsInfoReport))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txtBurnedFrom = New System.Windows.Forms.TextBox()
+        Me.txtBurnedTo = New System.Windows.Forms.TextBox()
+        Me.chkBurenedBalance = New System.Windows.Forms.CheckBox()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -123,12 +129,6 @@ Partial Class frmSlotsInfoReport
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.DataTable1TableAdapter1 = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.txtBurnedFrom = New System.Windows.Forms.TextBox()
-        Me.txtBurnedTo = New System.Windows.Forms.TextBox()
-        Me.chkBurenedBalance = New System.Windows.Forms.CheckBox()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -210,6 +210,59 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1411, 658)
         Me.Panel1.TabIndex = 0
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(898, 149)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(39, 16)
+        Me.Label18.TabIndex = 156
+        Me.Label18.Text = "From"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(898, 121)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(39, 16)
+        Me.Label16.TabIndex = 155
+        Me.Label16.Text = "From"
+        '
+        'txtBurnedFrom
+        '
+        Me.txtBurnedFrom.Enabled = False
+        Me.txtBurnedFrom.Location = New System.Drawing.Point(937, 118)
+        Me.txtBurnedFrom.Name = "txtBurnedFrom"
+        Me.txtBurnedFrom.Size = New System.Drawing.Size(68, 23)
+        Me.txtBurnedFrom.TabIndex = 154
+        '
+        'txtBurnedTo
+        '
+        Me.txtBurnedTo.Enabled = False
+        Me.txtBurnedTo.Location = New System.Drawing.Point(1040, 118)
+        Me.txtBurnedTo.Name = "txtBurnedTo"
+        Me.txtBurnedTo.Size = New System.Drawing.Size(68, 23)
+        Me.txtBurnedTo.TabIndex = 153
+        '
+        'chkBurenedBalance
+        '
+        Me.chkBurenedBalance.AutoSize = True
+        Me.chkBurenedBalance.Location = New System.Drawing.Point(765, 119)
+        Me.chkBurenedBalance.Name = "chkBurenedBalance"
+        Me.chkBurenedBalance.Size = New System.Drawing.Size(127, 20)
+        Me.chkBurenedBalance.TabIndex = 152
+        Me.chkBurenedBalance.Text = "Burned Balance"
+        Me.chkBurenedBalance.UseVisualStyleBackColor = True
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(1011, 121)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(23, 16)
+        Me.Label17.TabIndex = 151
+        Me.Label17.Text = "To"
         '
         'Label14
         '
@@ -996,59 +1049,6 @@ Partial Class frmSlotsInfoReport
         'DataTable1TableAdapter1
         '
         Me.DataTable1TableAdapter1.ClearBeforeFill = True
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(898, 121)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(39, 16)
-        Me.Label16.TabIndex = 155
-        Me.Label16.Text = "From"
-        '
-        'txtBurnedFrom
-        '
-        Me.txtBurnedFrom.Enabled = False
-        Me.txtBurnedFrom.Location = New System.Drawing.Point(937, 118)
-        Me.txtBurnedFrom.Name = "txtBurnedFrom"
-        Me.txtBurnedFrom.Size = New System.Drawing.Size(68, 23)
-        Me.txtBurnedFrom.TabIndex = 154
-        '
-        'txtBurnedTo
-        '
-        Me.txtBurnedTo.Enabled = False
-        Me.txtBurnedTo.Location = New System.Drawing.Point(1040, 118)
-        Me.txtBurnedTo.Name = "txtBurnedTo"
-        Me.txtBurnedTo.Size = New System.Drawing.Size(68, 23)
-        Me.txtBurnedTo.TabIndex = 153
-        '
-        'chkBurenedBalance
-        '
-        Me.chkBurenedBalance.AutoSize = True
-        Me.chkBurenedBalance.Location = New System.Drawing.Point(765, 119)
-        Me.chkBurenedBalance.Name = "chkBurenedBalance"
-        Me.chkBurenedBalance.Size = New System.Drawing.Size(135, 20)
-        Me.chkBurenedBalance.TabIndex = 152
-        Me.chkBurenedBalance.Text = "Burened Balance"
-        Me.chkBurenedBalance.UseVisualStyleBackColor = True
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(1011, 121)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(23, 16)
-        Me.Label17.TabIndex = 151
-        Me.Label17.Text = "To"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(898, 149)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(39, 16)
-        Me.Label18.TabIndex = 156
-        Me.Label18.Text = "From"
         '
         'frmSlotsInfoReport
         '

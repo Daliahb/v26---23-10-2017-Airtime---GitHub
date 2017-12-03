@@ -437,7 +437,7 @@
     End Sub
 
     Private Sub chkBurenedBalance_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkBurenedBalance.CheckedChanged
-        Me.txtBalanceFrom.Enabled = chkBurenedBalance.Checked
-        Me.txtBalanceTo.Enabled = chkBurenedBalance.Checked
+        Me.txtBurnedFrom.Enabled = chkBurenedBalance.Checked
+        Me.txtBurnedTo.Enabled = chkBurenedBalance.Checked
     End Sub
 End Class
