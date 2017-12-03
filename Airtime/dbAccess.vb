@@ -3279,7 +3279,7 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetCreateDate(lDeviceSlotID As Long) As DateTime
+    Public Function GetSlotCreateDate_Prefix(lDeviceSlotID As Long) As DataSet
         Dim dCreateDate As DateTime
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
@@ -3299,10 +3299,10 @@ Public Class DBAccess
                 oConnection.Open()
             End If
 
-            dCreateDate = CDate(oSelectCommand.ExecuteScalar)
-            oConnection.Close()
-
-            Return dCreateDate
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+            Return ds
         Catch ex As Exception
             MsgBox(ex.Message & ex.StackTrace)
             oConnection.Close()
