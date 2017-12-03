@@ -19,7 +19,10 @@
     End Sub
 
     Private Sub frmAddCompany_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
+        dCreateDate = odbaccess.GetCreateDate(lDeviceSlotID)
+        If dCreateDate = Nothing Then
+            MsgBox("Cannot get Created Time from server!")
+        End If
     End Sub
 
     Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
@@ -82,28 +85,56 @@
 
         'Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_05:31:01&date_to=2017-11-02_05:31:01&prefix=99234")
 
-        'If Not result Is Nothing AndAlso Not result.Length = 0 Then
-        '    result.Trim()
 
-        '    Dim strArr() As String
 
-        '    strArr = result.Split(CChar("|"))
-        '    If Not strArr.Count = 0 Then
-        '        intTotalCalls = CInt(strArr(0))
-        '        dblTalkTime = CDbl(strArr(1))
-        '        dblACD = CDbl(strArr(2))
-        '        dblASR = CDbl(strArr(3))
-        '    End If
+        If Not dCreateDate = Nothing Then
+            ' Get Slot created time, Slot cut time, Device Prefix
+            Dim dCreatedDateTime, dCutDateTime As String
+            Dim strPrefix As String
+            dCutDateTime = CDate(Now()).ToString("yyyy-MM-dd_HH:mm:ss")
+            dCreatedDateTime = dCreateDate.ToString("yyyy-MM-dd_HH:mm:ss")
 
-        'End If
+            Dim webClient As New System.Net.WebClient
+            strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & dCreatedDateTime & "&"
+            strResult = strResult & "date_to=" & dCutDateTime & "&"
+            strResult = strResult & "Prefix=" & strPrefix
+
+            Dim result As String = webClient.DownloadString(strResult)
+
+            If Not result Is Nothing AndAlso Not result.Length = 0 Then
+                result.Trim()
+
+                Dim strArr() As String
+
+                strArr = result.Split(CChar("|"))
+                If Not strArr.Count = 0 Then
+                    If Not Str(strArr(0)).Length = 0 Then
+                        intTotalCalls = CInt(strArr(0))
+                    End If
+                    If Not Str(strArr(1)).Length=0 then
+                        dblTalkTime = CDbl(strArr(1))
+end if
+                    If Not Str(strArr(1)).Length = 0 Then
+                        dblACD = CDbl(strArr(2))
+                    End If
+
+                    dblACD = CDbl(strArr(2))
+                    dblASR = CDbl(strArr(3))
+                End If
+            Else
+                MsgBox("Couldn't get data from SPO server.")
+
+            End If
+        Else
+            dblTalkTime = 0
+            dblACD = 0
+            dblASR = 0
+            intTotalCalls = 0
+        End If
         Dim dCreatedDateTime, dCutDateTime As String
         Dim strPrefix As String
         dCutDateTime = CDate(Now()).ToString("yyyy-MM-dd_HH:mm:ss")
 
-        dblTalkTime = 0
-        dblACD = 0
-        dblASR = 0
-        intTotalCalls = 0
     End Sub
 
 

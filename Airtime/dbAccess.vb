@@ -833,6 +833,7 @@ Public Class DBAccess
         End Try
     End Function
 
+
     'Public Function GetDevices() As DataSet
     '    ds = New DataSet
     '    Try
@@ -3275,6 +3276,37 @@ Public Class DBAccess
             oConnection.Close()
             Return False
 
+        End Try
+    End Function
+
+    Public Function GetCreateDate(lDeviceSlotID As Long) As DateTime
+        Dim dCreateDate As DateTime
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "checkCardExists"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            dCreateDate = CDate(oSelectCommand.ExecuteScalar)
+            oConnection.Close()
+
+            Return dCreateDate
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return Nothing
         End Try
     End Function
 

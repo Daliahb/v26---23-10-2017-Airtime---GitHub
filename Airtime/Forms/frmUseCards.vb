@@ -521,50 +521,6 @@
 
     End Sub
 
-    'Private Sub WrongScratchNumberToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WrongScratchNumberToolStripMenuItem.Click
-    '    If Not Me.ListView1.SelectedItems(0).SubItems(0).Text = "" Then
-    '        Dim lItemIndex As Integer = Me.ListView1.SelectedItems(0).Index
-    '        '1- act as set as used
-
-    '        lCardId = CInt(arOnHold(lItemIndex, 0))
-    '        If Not lCardId = 0 Then
-    '            odbaccess.SetAsWrongCard(lCardId, Enumerators.WrongCardTypes.WrongScratchNo, 0)
-    '        End If
-
-    '        '2- empty the listview
-    '        Me.ListView1.SelectedItems(0).SubItems(0).Text = ""
-
-    '        '3- empty the array
-    '        arOnHold(lItemIndex, 0) = 0
-    '        arOnHold(lItemIndex, 1) = ""
-
-    '        '4- decrement lOnHold
-    '        lOnHold -= 1
-    '    End If
-    'End Sub
-
-    'Private Sub AlreadyUsedCardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AlreadyUsedCardToolStripMenuItem.Click
-    '    If Not Me.ListView1.SelectedItems(0).SubItems(0).Text = "" Then
-    '        Dim lItemIndex As Integer = Me.ListView1.SelectedItems(0).Index
-    '        '1- act as set as used
-
-    '        lCardId = CInt(arOnHold(lItemIndex, 0))
-    '        If Not lCardId = 0 Then
-    '            odbaccess.SetAsWrongCard(lCardId, Enumerators.WrongCardTypes.AlreadyUsedCard, 0)
-    '        End If
-
-    '        '2- empty the listview
-    '        Me.ListView1.SelectedItems(0).SubItems(0).Text = ""
-
-    '        '3- empty the array
-    '        arOnHold(lItemIndex, 0) = 0
-    '        arOnHold(lItemIndex, 1) = ""
-
-    '        '4- decrement lOnHold
-    '        lOnHold -= 1
-    '    End If
-    'End Sub
-
     Public Function CheckOperatorLimit(ByRef intLimit As Integer) As Boolean
         '  For Each operator as operator in Me.oColOperatorAlreadyUsedByUser
         'Dim intLimit As Integer
