@@ -2,6 +2,8 @@
 
 Public Class frmLogin
 
+    Dim txtLink As String
+
     Private Sub btnCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancel.Click
         Me.Close()
         Application.Exit()
@@ -12,36 +14,35 @@ Public Class frmLogin
 
         Dim ds As DataSet
         Try
+            ds = odbaccess.CheckLogin(Me.txtUserName.Text, Me.txtPassword.Text)
 
-      
-        ds = odbaccess.CheckLogin(Me.txtUserName.Text, Me.txtPassword.Text)
+            If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
+                gUser.setProperties(ds.Tables(0).Rows(0), ds.Tables(1))
 
-        If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
-            gUser.setProperties(ds.Tables(0).Rows(0), ds.Tables(1))
-           
-            If Not ds.Tables(1).Rows.Count = 0 Then
-                Dim dr As DataRow = ds.Tables(1).Rows(0)
-                With dr
-                    If (CInt(dr.Item("Major")) = Assembly.GetExecutingAssembly().GetName().Version().Major) And (CInt(dr.Item("Minor")) = Assembly.GetExecutingAssembly().GetName().Version().Minor) Then
-                        Dim frmMain As New FrmMain
-                        Me.Visible = False
-                        Me.Hide()
-                        frmMain.Show()
-                    Else
-                        Me.lblError.Visible = True
-                        Me.lblError.Text = "Please install the updated version!"
-                        Me.lblURL.Text = dr.Item("NewSetupLink").ToString
-                        Me.lblURL.Visible = True
-                    End If
-                End With
+                If Not ds.Tables(1).Rows.Count = 0 Then
+                    Dim dr As DataRow = ds.Tables(1).Rows(0)
+                    With dr
+                        If (CInt(dr.Item("Major")) = Assembly.GetExecutingAssembly().GetName().Version().Major) And (CInt(dr.Item("Minor")) = Assembly.GetExecutingAssembly().GetName().Version().Minor) Then
+                            Dim frmMain As New FrmMain
+                            Me.Visible = False
+                            Me.Hide()
+                            frmMain.Show()
+                        Else
+                            Me.lblError.Visible = True
+                            Me.lblError.Text = "Please install the updated version!"
+                            txtLink = dr.Item("NewSetupLink").ToString
+                            Me.lblURL.Visible = True
 
+                        End If
+                    End With
+
+                End If
+
+
+            Else
+                Me.lblError.Visible = True
+                Me.lblError.Text = "Wrong Username or Password!"
             End If
-
-
-        Else
-            Me.lblError.Visible = True
-            Me.lblError.Text = "Wrong Username or Password!"
-        End If
         Catch ex As Exception
             MsgBox(ex.Message + vbCrLf + ex.StackTrace)
         End Try
@@ -61,6 +62,8 @@ Public Class frmLogin
     End Sub
 
     Private Sub lblURL_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lblURL.LinkClicked
-        System.Diagnostics.Process.Start(Me.lblURL.Text)
+        System.Diagnostics.Process.Start(txtLink)
     End Sub
+
+
 End Class

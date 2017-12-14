@@ -5,9 +5,9 @@
     Dim strNote As String, dblBurnedBalance As Double
     Dim dblTalkTime, dblACD, dblASR As Double
     Dim intTotalCalls As Integer
-    Dim dCreateDate As DateTime
+    Dim dStartDate As DateTime
 
-    Public Sub New(ByVal strOperator As String, ByVal strDevice As String, lDeviceSlotID As Long, StrSlot As String, dCreateDate As DateTime)
+    Public Sub New(ByVal strOperator As String, ByVal strDevice As String, lDeviceSlotID As Long, StrSlot As String)
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -15,15 +15,21 @@
         Me.lblOperator.Text = strOperator
 
         Me.lDeviceSlotID = lDeviceSlotID
-        Me.dCreateDate = dCreateDate
+
     End Sub
 
     Private Sub frmAddCompany_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim ds As DataSet
-        ds = odbaccess.GetSlotCreateDate_Prefix(lDeviceSlotID)
-        If Not ds Is Nothing AndAlso Not ds.tables.count = 0 AndAlso Not ds.tables(0).rows.count = 0 Then
-            dCreateDate = CDate(ds.Tables(0).Rows(0).Item("created_time"))
-if not ds.Tables(0).Rows(0).Item("Prefix") is DBNull.Value then
+        ds = odbaccess.GetSlotStartDate_Prefix(lDeviceSlotID)
+        If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
+            If Not ds.Tables(0).Rows(0).Item("Start_time") Is DBNull.Value Then
+                dStartDate = CDate(ds.Tables(0).Rows(0).Item("Start_time"))
+            Else
+                dStartDate = DateTime.UtcNow
+                ' ToUniversalTime()
+            End If
+
+            If Not ds.Tables(0).Rows(0).Item("Prefix") Is DBNull.Value Then
                 strPrefix = CStr(ds.Tables(0).Rows(0).Item("Prefix"))
             Else
                 strPrefix = ""
@@ -31,7 +37,7 @@ if not ds.Tables(0).Rows(0).Item("Prefix") is DBNull.Value then
         Else
             MsgBox("Cannot get Created Time from server!")
         End If
-        If dCreateDate = Nothing Then
+        If dStartDate = Nothing Then
             MsgBox("Cannot get Created Time from server!")
         End If
     End Sub
@@ -96,50 +102,47 @@ if not ds.Tables(0).Rows(0).Item("Prefix") is DBNull.Value then
         dblASR = 0
         intTotalCalls = 0
         Try
+            If Not dStartDate = Nothing And Not strPrefix.Length = 0 Then
+                ' Get Slot created time, Slot cut time, Device Prefix
+                Dim dStartDateTime, dCutDateTime As String
+                dCutDateTime = CDate(DateTime.UtcNow).ToString("yyyy-MM-dd_HH:mm:ss")
+                dStartDateTime = dStartDate.ToString("yyyy-MM-dd_HH:mm:ss")
 
+                Dim webClient As New System.Net.WebClient
+                strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & dStartDateTime & "&"
+                strResult = strResult & "date_to=" & dCutDateTime & "&"
+                strResult = strResult & "prefix=" & strPrefix
 
-        If Not dCreateDate = Nothing And Not strPrefix.Length = 0 Then
-            ' Get Slot created time, Slot cut time, Device Prefix
-            Dim dCreatedDateTime, dCutDateTime As String
-            dCutDateTime = CDate(Now()).ToString("yyyy-MM-dd_HH:mm:ss")
-            dCreatedDateTime = dCreateDate.ToString("yyyy-MM-dd_HH:mm:ss")
+                Dim result As String = webClient.DownloadString(strResult)
 
-            Dim webClient As New System.Net.WebClient
-            strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & dCreatedDateTime & "&"
-            strResult = strResult & "date_to=" & dCutDateTime & "&"
-            strResult = strResult & "prefix=" & strPrefix
+                If Not result Is Nothing AndAlso Not result.Length = 0 Then
+                    result.Trim()
 
-            Dim result As String = webClient.DownloadString(strResult)
+                    Dim strArr() As String
 
-            If Not result Is Nothing AndAlso Not result.Length = 0 Then
-                result.Trim()
+                    strArr = result.Split(CChar("|"))
+                    If Not strArr.Count = 0 Then
+                        If IsNumeric(strArr(0)) Then
+                            intTotalCalls = CInt(strArr(0))
+                        End If
 
-                Dim strArr() As String
-
-                strArr = result.Split(CChar("|"))
-                If Not strArr.Count = 0 Then
-                    If IsNumeric(strArr(0)) Then
-                        intTotalCalls = CInt(strArr(0))
-                    End If
-                     
-    '                    intTotalCalls = CInt(strArr(0))
+                        '                    intTotalCalls = CInt(strArr(0))
                         If IsNumeric(strArr(1)) Then
                             dblTalkTime = CDbl(strArr(1))
                         End If
-                            If IsNumeric(strArr(2)) Then
-                                dblACD = CDbl(strArr(2))
-                            End If
-                            If IsNumeric(strArr(3)) Then
-                                dblASR = CDbl(strArr(3))
-                            End If
+                        If IsNumeric(strArr(2)) Then
+                            dblACD = CDbl(strArr(2))
                         End If
-                    Else
-                        MsgBox("Couldn't get data from SPO server.")
+                        If IsNumeric(strArr(3)) Then
+                            dblASR = CDbl(strArr(3))
+                        End If
                     End If
+                Else
+                    MsgBox("Couldn't get data from SPO server.")
                 End If
+            End If
         Catch ex As Exception
             MsgBox(ex.Message & "  " & ex.StackTrace)
-
         End Try
     End Sub
 
@@ -149,6 +152,4 @@ if not ds.Tables(0).Rows(0).Item("Prefix") is DBNull.Value then
             e.Handled = True
         End If
     End Sub
-
-
 End Class

@@ -827,8 +827,7 @@ Namespace dsCardsResourcesTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Private Sub InitConnection()
             Me._connection = New Global.MySql.Data.MySqlClient.MySqlConnection()
-            Me._connection.ConnectionString = gConnectionString '"server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com; port=3337; User Id=airtime_user; Password=nahVeifuath8vu5Kai6kei8i; Persist Security Info=True;database=Airtime_system"
-            ' Me._connection.ConnectionString = "server=localhost;User Id=root;Password=root;Persist Security Info=True;database=cards_system"
+            Me._connection.ConnectionString = gConnectionString 'Global.WindowsApplication1.My.MySettings.Default.cards_systemConnectionString
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

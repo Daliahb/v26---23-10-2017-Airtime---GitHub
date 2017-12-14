@@ -24,6 +24,7 @@ Partial Class frmLogin
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLogin))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblURL = New System.Windows.Forms.LinkLabel()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.lblUserName = New System.Windows.Forms.Label()
         Me.btnLogin = New System.Windows.Forms.Button()
@@ -31,15 +32,14 @@ Partial Class frmLogin
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.lblError = New System.Windows.Forms.Label()
         Me.txtUserName = New System.Windows.Forms.TextBox()
-        Me.lblURL = New System.Windows.Forms.LinkLabel()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.Controls.Add(Me.lblURL)
         Me.Panel1.Controls.Add(Me.btnCancel)
         Me.Panel1.Controls.Add(Me.lblUserName)
@@ -53,6 +53,17 @@ Partial Class frmLogin
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(265, 150)
         Me.Panel1.TabIndex = 0
+        '
+        'lblURL
+        '
+        Me.lblURL.AutoSize = True
+        Me.lblURL.Location = New System.Drawing.Point(10, 97)
+        Me.lblURL.Name = "lblURL"
+        Me.lblURL.Size = New System.Drawing.Size(218, 16)
+        Me.lblURL.TabIndex = 11
+        Me.lblURL.TabStop = True
+        Me.lblURL.Text = "Click here to downlaod setup file"
+        Me.lblURL.Visible = False
         '
         'btnCancel
         '
@@ -125,17 +136,6 @@ Partial Class frmLogin
         Me.txtUserName.Name = "txtUserName"
         Me.txtUserName.Size = New System.Drawing.Size(148, 23)
         Me.txtUserName.TabIndex = 10
-        '
-        'lblURL
-        '
-        Me.lblURL.AutoSize = True
-        Me.lblURL.Location = New System.Drawing.Point(10, 97)
-        Me.lblURL.Name = "lblURL"
-        Me.lblURL.Size = New System.Drawing.Size(75, 16)
-        Me.lblURL.TabIndex = 11
-        Me.lblURL.TabStop = True
-        Me.lblURL.Text = "LinkLabel1"
-        Me.lblURL.Visible = False
         '
         'frmLogin
         '

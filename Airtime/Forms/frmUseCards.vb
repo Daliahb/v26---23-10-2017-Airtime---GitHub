@@ -376,7 +376,7 @@
                         strSlot = CStr(Me.DataGridView1.Rows(e.RowIndex).Cells(18).Value)
 
 
-                        Dim ofrm As New frmCutDeviceSlot(strOperator, strDevice, lDeviceSlotId, strSlot, Now())
+                        Dim ofrm As New frmCutDeviceSlot(strOperator, strDevice, lDeviceSlotId, strSlot)
                         ofrm.ShowDialog()
                         If ofrm.boolCut = True Then
                             'Remove Slot from Hold to Old, and make Hold=none and Old=Slot

@@ -18,9 +18,9 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        ' oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
+        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
    
  End Sub
 
@@ -80,6 +80,13 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "strNote"
                 .Value = strNote
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dCreateTime"
+                .Value = Now()
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -3279,12 +3286,12 @@ Public Class DBAccess
         End Try
     End Function
 
-    Public Function GetSlotCreateDate_Prefix(lDeviceSlotID As Long) As DataSet
+    Public Function GetSlotStartDate_Prefix(lDeviceSlotID As Long) As DataSet
         Dim dCreateDate As DateTime
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetSlotCreateDate_Prefix"
+            oSelectCommand.CommandText = "GetSlotStartDate_Prefix"
             oSelectCommand.Connection = oConnection
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
