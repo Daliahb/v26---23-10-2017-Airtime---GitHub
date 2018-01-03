@@ -831,10 +831,11 @@
 
     Private Sub AddNoteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AddNoteToolStripMenuItem.Click
         If Me.DataGridView1.SelectedCells.Count > 0 Then
-            lDeviceSlotId = CLng(Me.DataGridView1.SelectedRows(0).Cells(17).Value)
+            Dim rowIndex As Integer = Me.DataGridView1.SelectedCells(0).RowIndex
+            lDeviceSlotId = CLng(Me.DataGridView1.Rows(rowIndex).Cells(17).Value)
             If Not lDeviceSlotId = 0 Then
                 Dim frm As New AddSlotNote(lDeviceSlotId)
-                frm.showdialog()
+                frm.ShowDialog()
             Else
                 MsgBox("You should select a slot before you add a note.")
             End If

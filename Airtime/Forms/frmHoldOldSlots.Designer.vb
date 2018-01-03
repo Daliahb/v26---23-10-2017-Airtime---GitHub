@@ -34,7 +34,6 @@ Partial Class frmHoldOldSlots
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.clID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.clNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -44,8 +43,9 @@ Partial Class frmHoldOldSlots
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewButtonColumn1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.DataGridViewButtonColumn1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Panel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +61,7 @@ Partial Class frmHoldOldSlots
         Me.Panel1.Location = New System.Drawing.Point(3, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(922, 235)
+        Me.Panel1.Size = New System.Drawing.Size(1004, 235)
         Me.Panel1.TabIndex = 0
         '
         'Button1
@@ -108,12 +108,8 @@ Partial Class frmHoldOldSlots
         DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         Me.DataGridView1.RowsDefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(914, 177)
+        Me.DataGridView1.Size = New System.Drawing.Size(996, 177)
         Me.DataGridView1.TabIndex = 37
-        '
-        'ErrorProvider1
-        '
-        Me.ErrorProvider1.ContainerControl = Me
         '
         'clID
         '
@@ -185,13 +181,6 @@ Partial Class frmHoldOldSlots
         Me.Column6.ReadOnly = True
         Me.Column6.Visible = False
         '
-        'DataGridViewButtonColumn1
-        '
-        Me.DataGridViewButtonColumn1.HeaderText = "Select"
-        Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
-        Me.DataGridViewButtonColumn1.ReadOnly = True
-        Me.DataGridViewButtonColumn1.Width = 80
-        '
         'Column5
         '
         Me.Column5.HeaderText = "Select"
@@ -199,12 +188,23 @@ Partial Class frmHoldOldSlots
         Me.Column5.ReadOnly = True
         Me.Column5.Width = 80
         '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
+        'DataGridViewButtonColumn1
+        '
+        Me.DataGridViewButtonColumn1.HeaderText = "Select"
+        Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
+        Me.DataGridViewButtonColumn1.ReadOnly = True
+        Me.DataGridViewButtonColumn1.Width = 80
+        '
         'frmHoldOldSlots
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(926, 240)
+        Me.ClientSize = New System.Drawing.Size(1008, 240)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D

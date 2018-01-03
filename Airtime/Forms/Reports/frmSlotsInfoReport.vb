@@ -101,6 +101,20 @@
                             .Cells("dgHumanBehaviour").Value = getHumanBehaviour(dr.Item("HumanBehaviour").ToString)
                             .Cells("dgOwner").Value = dr.Item("Owner")
                             .Cells("dgOperator").Value = dr.Item("Operator")
+
+                            If Not dr.Item("Cut_Time") Is DBNull.Value Then
+                                .Cells("dgCutTime").Value = CDate(dr.Item("Cut_Time")).ToString("dd-MM-yyyy HH:mmm")
+                            End If
+
+                            If Not dr.Item("First_Start_Time") Is DBNull.Value Then
+                                .Cells("dgFirstStartTime").Value = CDate(dr.Item("First_Start_Time")).ToString("dd-MM-yyyy HH:mmm")
+                            End If
+                            If Not dr.Item("First_Cut_Time") Is DBNull.Value Then
+                                .Cells("dgFirstCutTime").Value = CDate(dr.Item("First_Cut_Time")).ToString("dd-MM-yyyy HH:mmm")
+                            End If
+                            If Not dr.Item("Note") Is DBNull.Value Then
+                                .Cells("dgNote").Value = dr.Item("Note").ToString
+                            End If
                             intCounter += 1
                         End With
                     Catch ex As Exception

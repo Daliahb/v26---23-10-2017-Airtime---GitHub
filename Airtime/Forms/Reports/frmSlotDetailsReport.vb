@@ -57,6 +57,19 @@
                                 .Cells("dgCutBy").Value = dr.Item("CutBy")
                             End If
 
+                            If Not dr.Item("First_Start_Time") Is DBNull.Value Then
+                                .Cells("dgFirstStartTime").Value = CDate(dr.Item("First_Start_Time")).ToString("dd-MM-yyyy HH:mmm:ss")
+                            End If
+                            If Not dr.Item("FirstStartUser") Is DBNull.Value Then
+                                .Cells("dgFirstStartBy").Value = dr.Item("FirstStartUser")
+                            End If
+
+                            If Not dr.Item("First_Cut_Time") Is DBNull.Value Then
+                                .Cells("dgFirstCutTime").Value = CDate(dr.Item("First_Cut_Time")).ToString("dd-MM-yyyy HH:mmm:ss")
+                            End If
+                            If Not dr.Item("FirstCutUser") Is DBNull.Value Then
+                                .Cells("dgFirstCutBy").Value = dr.Item("FirstCutUser")
+                            End If
                             intCounter += 1
                         End With
                     Catch ex As Exception

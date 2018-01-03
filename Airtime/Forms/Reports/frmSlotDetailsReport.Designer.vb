@@ -51,17 +51,6 @@ Partial Class frmSlotDetailsReport
         Me.dtpFromDate = New System.Windows.Forms.DateTimePicker()
         Me.chkDate = New System.Windows.Forms.CheckBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.dgCountry = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgDevice = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgOperator = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgSlot = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgCreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgCreatedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgStartedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgCutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgRechargedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgCutBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.EditCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -77,6 +66,21 @@ Partial Class frmSlotDetailsReport
         Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
         Me.DataTable1TableAdapter = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
+        Me.dgCountry = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgDevice = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgOperator = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgSlot = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgCreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgCreatedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgFirstStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgFirstStartBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgFirstCutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgFirstCutBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgStartedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgCutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgRechargedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgCutBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
         CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsSlots, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -114,7 +118,7 @@ Partial Class frmSlotDetailsReport
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1185, 580)
+        Me.Panel1.Size = New System.Drawing.Size(1677, 580)
         Me.Panel1.TabIndex = 0
         '
         'cmbUsersCharged
@@ -316,7 +320,7 @@ Partial Class frmSlotDetailsReport
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgCountry, Me.dgDevice, Me.dgOperator, Me.dgSlot, Me.dgCreateTime, Me.dgCreatedBy, Me.dgStartTime, Me.dgStartedBy, Me.dgCutTime, Me.dgRechargedBy, Me.dgCutBy})
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgCountry, Me.dgDevice, Me.dgOperator, Me.dgSlot, Me.dgCreateTime, Me.dgCreatedBy, Me.dgFirstStartTime, Me.dgFirstStartBy, Me.dgFirstCutTime, Me.dgFirstCutBy, Me.dgStartTime, Me.dgStartedBy, Me.dgCutTime, Me.dgRechargedBy, Me.dgCutBy})
         Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
         DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.LemonChiffon
@@ -332,8 +336,90 @@ Partial Class frmSlotDetailsReport
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1177, 471)
+        Me.DataGridView1.Size = New System.Drawing.Size(1669, 471)
         Me.DataGridView1.TabIndex = 37
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditCategoryToolStripMenuItem, Me.DeleteCategoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(134, 76)
+        '
+        'EditCategoryToolStripMenuItem
+        '
+        Me.EditCategoryToolStripMenuItem.Name = "EditCategoryToolStripMenuItem"
+        Me.EditCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.EditCategoryToolStripMenuItem.Text = "Edit Category"
+        '
+        'DeleteCategoryToolStripMenuItem
+        '
+        Me.DeleteCategoryToolStripMenuItem.Name = "DeleteCategoryToolStripMenuItem"
+        Me.DeleteCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DeleteCategoryToolStripMenuItem.Text = "Delete Category"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(130, 6)
+        '
+        'ExportToExcelToolStripMenuItem
+        '
+        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
+        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
+        '
+        'btnSearch
+        '
+        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(1537, 7)
+        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
+        Me.btnSearch.TabIndex = 36
+        Me.btnSearch.Text = "Filter"
+        Me.btnSearch.UseVisualStyleBackColor = True
+        '
+        'ShiftsBindingSource
+        '
+        Me.ShiftsBindingSource.DataMember = "shifts"
+        Me.ShiftsBindingSource.DataSource = Me.DsShifts
+        '
+        'DsShifts
+        '
+        Me.DsShifts.DataSetName = "dsShifts"
+        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'ContextMenuStripHideColumn
+        '
+        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
+        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
+        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
+        '
+        'HideColumnToolStripMenuItem
+        '
+        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
+        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
+        '
+        'ShowAllColumnsToolStripMenuItem
+        '
+        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
+        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
+        'ShiftsTableAdapter
+        '
+        Me.ShiftsTableAdapter.ClearBeforeFill = True
+        '
+        'DataTable1TableAdapter
+        '
+        Me.DataTable1TableAdapter.ClearBeforeFill = True
         '
         'dgCountry
         '
@@ -384,6 +470,32 @@ Partial Class frmSlotDetailsReport
         Me.dgCreatedBy.Name = "dgCreatedBy"
         Me.dgCreatedBy.ReadOnly = True
         '
+        'dgFirstStartTime
+        '
+        Me.dgFirstStartTime.HeaderText = "First Start Time"
+        Me.dgFirstStartTime.Name = "dgFirstStartTime"
+        Me.dgFirstStartTime.ReadOnly = True
+        Me.dgFirstStartTime.Width = 150
+        '
+        'dgFirstStartBy
+        '
+        Me.dgFirstStartBy.HeaderText = "First Start By"
+        Me.dgFirstStartBy.Name = "dgFirstStartBy"
+        Me.dgFirstStartBy.ReadOnly = True
+        '
+        'dgFirstCutTime
+        '
+        Me.dgFirstCutTime.HeaderText = "First Cut Time"
+        Me.dgFirstCutTime.Name = "dgFirstCutTime"
+        Me.dgFirstCutTime.ReadOnly = True
+        Me.dgFirstCutTime.Width = 150
+        '
+        'dgFirstCutBy
+        '
+        Me.dgFirstCutBy.HeaderText = "First Cut By"
+        Me.dgFirstCutBy.Name = "dgFirstCutBy"
+        Me.dgFirstCutBy.ReadOnly = True
+        '
         'dgStartTime
         '
         Me.dgStartTime.HeaderText = "Start Time"
@@ -417,95 +529,13 @@ Partial Class frmSlotDetailsReport
         Me.dgCutBy.Name = "dgCutBy"
         Me.dgCutBy.ReadOnly = True
         '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditCategoryToolStripMenuItem, Me.DeleteCategoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(134, 76)
-        '
-        'EditCategoryToolStripMenuItem
-        '
-        Me.EditCategoryToolStripMenuItem.Name = "EditCategoryToolStripMenuItem"
-        Me.EditCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.EditCategoryToolStripMenuItem.Text = "Edit Category"
-        '
-        'DeleteCategoryToolStripMenuItem
-        '
-        Me.DeleteCategoryToolStripMenuItem.Name = "DeleteCategoryToolStripMenuItem"
-        Me.DeleteCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.DeleteCategoryToolStripMenuItem.Text = "Delete Category"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(130, 6)
-        '
-        'ExportToExcelToolStripMenuItem
-        '
-        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
-        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
-        '
-        'btnSearch
-        '
-        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1045, 7)
-        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
-        Me.btnSearch.TabIndex = 36
-        Me.btnSearch.Text = "Filter"
-        Me.btnSearch.UseVisualStyleBackColor = True
-        '
-        'ShiftsBindingSource
-        '
-        Me.ShiftsBindingSource.DataMember = "shifts"
-        Me.ShiftsBindingSource.DataSource = Me.DsShifts
-        '
-        'DsShifts
-        '
-        Me.DsShifts.DataSetName = "dsShifts"
-        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ContextMenuStripHideColumn
-        '
-        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
-        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
-        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
-        '
-        'HideColumnToolStripMenuItem
-        '
-        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
-        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
-        '
-        'ShowAllColumnsToolStripMenuItem
-        '
-        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
-        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
-        '
-        'ErrorProvider1
-        '
-        Me.ErrorProvider1.ContainerControl = Me
-        '
-        'ShiftsTableAdapter
-        '
-        Me.ShiftsTableAdapter.ClearBeforeFill = True
-        '
-        'DataTable1TableAdapter
-        '
-        Me.DataTable1TableAdapter.ClearBeforeFill = True
-        '
         'frmSlotDetailsReport
         '
         Me.AcceptButton = Me.btnSearch
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(1189, 585)
+        Me.ClientSize = New System.Drawing.Size(1681, 585)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -544,17 +574,6 @@ Partial Class frmSlotDetailsReport
     Friend WithEvents ShiftsBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents ShiftsTableAdapter As WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter
     Friend WithEvents PrintDocument1 As System.Drawing.Printing.PrintDocument
-    Friend WithEvents dgCountry As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgDevice As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgOperator As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCreateTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCreatedBy As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgStartedBy As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgRechargedBy As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCutBy As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents dtpToDate As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtpFromDate As System.Windows.Forms.DateTimePicker
@@ -574,5 +593,20 @@ Partial Class frmSlotDetailsReport
     Friend WithEvents cmbUsersCreate As System.Windows.Forms.ComboBox
     Friend WithEvents chkUsersCharged As System.Windows.Forms.CheckBox
     Friend WithEvents chkUserCreated As System.Windows.Forms.CheckBox
+    Friend WithEvents dgCountry As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgDevice As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgOperator As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCreateTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCreatedBy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstStartBy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstCutBy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgStartedBy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgRechargedBy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCutBy As System.Windows.Forms.DataGridViewTextBoxColumn
 
 End Class

@@ -52,7 +52,6 @@ Partial Class AddSlotNote
         Me.txtNote.Location = New System.Drawing.Point(13, 10)
         Me.txtNote.Multiline = True
         Me.txtNote.Name = "txtNote"
-        Me.txtNote.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtNote.Size = New System.Drawing.Size(288, 100)
         Me.txtNote.TabIndex = 0
         '

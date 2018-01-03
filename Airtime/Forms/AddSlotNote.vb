@@ -18,6 +18,7 @@
     Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
         If odbaccess.SaveSlotNote(lDeviceSlotId, Me.txtNote.Text) Then
             MsgBox("Note added successfully.")
+            Me.Close()
         Else
             MsgBox("An error occured!")
         End If
@@ -27,6 +28,5 @@
         Me.Close()
     End Sub
    
-
 End Class
 

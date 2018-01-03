@@ -32,6 +32,9 @@ Partial Class frmSlotsInfoReport
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSlotsInfoReport))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.txtBurnedFrom = New System.Windows.Forms.TextBox()
@@ -94,7 +97,12 @@ Partial Class frmSlotsInfoReport
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lblTotalSims = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.DataTable1TableAdapter1 = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
         Me.dgDeviceSlotID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgDeviceID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgCountry = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -121,19 +129,14 @@ Partial Class frmSlotsInfoReport
         Me.dgTotalCalls = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgHumanBehaviour = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgOwner = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.DataTable1TableAdapter1 = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
+        Me.dgFirstStartTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgFirstCutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgNote = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
-        CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStripHideColumn.SuspendLayout()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -143,6 +146,7 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
         Me.Panel1.Controls.Add(Me.Label18)
         Me.Panel1.Controls.Add(Me.Label16)
         Me.Panel1.Controls.Add(Me.txtBurnedFrom)
@@ -203,13 +207,61 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.lblTotalSims)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.DataGridView1)
         Me.Panel1.Controls.Add(Me.btnSearch)
         Me.Panel1.Location = New System.Drawing.Point(3, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1538, 658)
         Me.Panel1.TabIndex = 0
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.AllowUserToOrderColumns = True
+        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgDeviceSlotID, Me.dgDeviceID, Me.dgCountry, Me.dgShift, Me.dgDevice, Me.dgSlot, Me.dgNoOfSims, Me.dgCreatedTime, Me.dgCreateNote, Me.dgStartTime, Me.dgOffer, Me.dgMinuteCost, Me.dgCutTime, Me.dgCutNote, Me.dgBurnedBalance, Me.dgBalance, Me.dgExpectedUsage, Me.dgDifference, Me.dgDuration, Me.dgOperator, Me.dgTrafficType, Me.dgACD, Me.dgASR, Me.dgTotalCalls, Me.dgHumanBehaviour, Me.dgOwner, Me.dgFirstStartTime, Me.dgFirstCutTime, Me.dgNote})
+        Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LemonChiffon
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle7
+        Me.DataGridView1.Location = New System.Drawing.Point(4, 193)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(4)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(1530, 461)
+        Me.DataGridView1.TabIndex = 37
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportToExcelToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(126, 26)
+        '
+        'ExportToExcelToolStripMenuItem
+        '
+        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
+        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
         '
         'Label18
         '
@@ -786,41 +838,43 @@ Partial Class frmSlotsInfoReport
         Me.Label2.TabIndex = 120
         Me.Label2.Text = "Total Sims:"
         '
-        'DataGridView1
+        'btnSearch
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AllowUserToOrderColumns = True
-        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.dgDeviceSlotID, Me.dgDeviceID, Me.dgCountry, Me.dgShift, Me.dgDevice, Me.dgSlot, Me.dgNoOfSims, Me.dgCreatedTime, Me.dgCreateNote, Me.dgStartTime, Me.dgOffer, Me.dgMinuteCost, Me.dgCutTime, Me.dgCutNote, Me.dgBurnedBalance, Me.dgBalance, Me.dgExpectedUsage, Me.dgDifference, Me.dgDuration, Me.dgOperator, Me.dgTrafficType, Me.dgACD, Me.dgASR, Me.dgTotalCalls, Me.dgHumanBehaviour, Me.dgOwner})
-        Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LemonChiffon
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle7
-        Me.DataGridView1.Location = New System.Drawing.Point(4, 193)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(4)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1530, 461)
-        Me.DataGridView1.TabIndex = 37
+        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(1398, 7)
+        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
+        Me.btnSearch.TabIndex = 36
+        Me.btnSearch.Text = "Filter"
+        Me.btnSearch.UseVisualStyleBackColor = True
+        '
+        'ContextMenuStripHideColumn
+        '
+        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
+        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
+        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
+        '
+        'HideColumnToolStripMenuItem
+        '
+        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
+        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
+        '
+        'ShowAllColumnsToolStripMenuItem
+        '
+        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
+        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
+        'DataTable1TableAdapter1
+        '
+        Me.DataTable1TableAdapter1.ClearBeforeFill = True
         '
         'dgDeviceSlotID
         '
@@ -999,56 +1053,26 @@ Partial Class frmSlotsInfoReport
         Me.dgOwner.Name = "dgOwner"
         Me.dgOwner.ReadOnly = True
         '
-        'ContextMenuStrip1
+        'dgFirstStartTime
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExportToExcelToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(126, 26)
+        Me.dgFirstStartTime.HeaderText = "First Start Time"
+        Me.dgFirstStartTime.Name = "dgFirstStartTime"
+        Me.dgFirstStartTime.ReadOnly = True
+        Me.dgFirstStartTime.Width = 150
         '
-        'ExportToExcelToolStripMenuItem
+        'dgFirstCutTime
         '
-        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
-        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
-        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
+        Me.dgFirstCutTime.HeaderText = "First Cut Time"
+        Me.dgFirstCutTime.Name = "dgFirstCutTime"
+        Me.dgFirstCutTime.ReadOnly = True
+        Me.dgFirstCutTime.Width = 150
         '
-        'btnSearch
+        'dgNote
         '
-        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1398, 7)
-        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
-        Me.btnSearch.TabIndex = 36
-        Me.btnSearch.Text = "Filter"
-        Me.btnSearch.UseVisualStyleBackColor = True
-        '
-        'ContextMenuStripHideColumn
-        '
-        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
-        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
-        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
-        '
-        'HideColumnToolStripMenuItem
-        '
-        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
-        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
-        '
-        'ShowAllColumnsToolStripMenuItem
-        '
-        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
-        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
-        '
-        'ErrorProvider1
-        '
-        Me.ErrorProvider1.ContainerControl = Me
-        '
-        'DataTable1TableAdapter1
-        '
-        Me.DataTable1TableAdapter1.ClearBeforeFill = True
+        Me.dgNote.HeaderText = "Note"
+        Me.dgNote.Name = "dgNote"
+        Me.dgNote.ReadOnly = True
+        Me.dgNote.Width = 200
         '
         'frmSlotsInfoReport
         '
@@ -1068,10 +1092,10 @@ Partial Class frmSlotsInfoReport
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsSlots1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStripHideColumn.ResumeLayout(False)
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1088,32 +1112,6 @@ Partial Class frmSlotsInfoReport
     Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
     Friend WithEvents DsShifts As WindowsApplication1.dsShifts
     Friend WithEvents ShiftsTableAdapter As WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter
-    Friend WithEvents dgDeviceSlotID As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgDeviceID As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCountry As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgShift As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgDevice As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgNoOfSims As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCreatedTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCreateNote As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgOffer As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgMinuteCost As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgCutNote As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgBurnedBalance As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgBalance As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgExpectedUsage As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgDifference As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgDuration As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgOperator As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgTrafficType As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgACD As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgASR As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgTotalCalls As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgHumanBehaviour As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents dgOwner As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents lblTotalCalls As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents lblTotalBalance As System.Windows.Forms.Label
@@ -1179,5 +1177,34 @@ Partial Class frmSlotsInfoReport
     Friend WithEvents txtBurnedTo As System.Windows.Forms.TextBox
     Friend WithEvents chkBurenedBalance As System.Windows.Forms.CheckBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents dgDeviceSlotID As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgDeviceID As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCountry As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgShift As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgDevice As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgNoOfSims As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCreatedTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCreateNote As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgOffer As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgMinuteCost As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgCutNote As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgBurnedBalance As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgBalance As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgExpectedUsage As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgDifference As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgDuration As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgOperator As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgTrafficType As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgACD As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgASR As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgTotalCalls As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgHumanBehaviour As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgOwner As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstStartTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgFirstCutTime As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dgNote As System.Windows.Forms.DataGridViewTextBoxColumn
 
 End Class
