@@ -18,9 +18,9 @@ Public Class DBAccess
 
     Public Sub New()
         'Real DB
-        oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
+        'oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        ' oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
+        oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
    
  End Sub
 
@@ -316,6 +316,57 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "intTotalCalls"
                 .Value = intTotalCalls
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+
+        End Try
+    End Function
+
+    Public Function ChangeSlotFromOldToHold(lDeviceSlotId As Long, dCutTime As Date, dblTalkTime As Double) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangeFromOldToHold"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dCutTime"
+                .Value = dCutTime
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTalkTime"
+                .Value = dblTalkTime
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -840,7 +891,6 @@ Public Class DBAccess
         End Try
     End Function
 
-
     'Public Function GetDevices() As DataSet
     '    ds = New DataSet
     '    Try
@@ -865,7 +915,6 @@ Public Class DBAccess
     '        Return Nothing
     '    End Try
     'End Function
-
 
     Public Function GetSimcardsOrders(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lSimCardType As Integer, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date, ByVal isCheckIsSentToExpenses As Boolean, ByVal isCheckIsSentToExpensesYes As Boolean) As ColSimcardsOrder
         ds = New DataSet
@@ -3286,8 +3335,39 @@ Public Class DBAccess
         End Try
     End Function
 
+    Public Function CheckIfSlotChangedFromOldToHold(ByVal lDeviceSlotID As Long) As Boolean
+
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CheckIfSlotChangedFromOldToHold"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            Return CBool(oSelectCommand.ExecuteScalar)
+
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+
+        End Try
+    End Function
+
     Public Function GetSlotStartDate_Prefix(lDeviceSlotID As Long) As DataSet
         Dim dCreateDate As DateTime
+        Dim ds As New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
@@ -5246,6 +5326,86 @@ Public Class DBAccess
             With oParam
                 .ParameterName = "lCountryID"
                 .Value = lCountry
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+
+        End Try
+    End Function
+
+    Public Function GetSlotNote(ByVal lDeviceSlotId As Long) As String
+        Dim strNote As String
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetSlotNote"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotId"
+                .Value = lDeviceSlotId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            strNote = CStr(oSelectCommand.ExecuteScalar)
+            oConnection.Close()
+
+            If Not strNote Is Nothing Then
+                Return strNote
+            Else
+                Return ""
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return ""
+        End Try
+    End Function
+
+    Public Function SaveSlotNote(ByVal lDeviceSlotId As Long, strNote As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "SaveSlotNote"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotId"
+                .Value = lDeviceSlotId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strNote"
+                .Value = strNote
             End With
             oSelectCommand.Parameters.Add(oParam)
 

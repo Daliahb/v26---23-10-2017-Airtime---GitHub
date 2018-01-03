@@ -80,6 +80,9 @@ Partial Class frmUseCards
         Me.dgAddSimsBtn = New WindowsApplication1.DataGridViewDisableButtonColumn()
         Me.dgDeviceSlotID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgSlot = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ChangeFromOldToHoldToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddNoteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnPutOnHold = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -104,6 +107,7 @@ Partial Class frmUseCards
         Me.Panel2.SuspendLayout()
         CType(Me.dgOnHold, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -374,6 +378,7 @@ Partial Class frmUseCards
         Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.clID, Me.Column3, Me.clNo, Me.Category, Me.Column2, Me.Column4, Me.Column6, Me.Column7, Me.Column5, Me.dgOldBtn, Me.dgHoldBtn, Me.dgCreateBtn, Me.dgGetBtn, Me.dgStartBtn, Me.dgCutBtn, Me.dgAddSimsBtn, Me.dgDeviceSlotID, Me.dgSlot})
+        Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip2
         DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle14.BackColor = System.Drawing.Color.LemonChiffon
         DataGridViewCellStyle14.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -554,6 +559,24 @@ Partial Class frmUseCards
         Me.dgSlot.ReadOnly = True
         Me.dgSlot.Visible = False
         '
+        'ContextMenuStrip2
+        '
+        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeFromOldToHoldToolStripMenuItem, Me.AddNoteToolStripMenuItem})
+        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(210, 70)
+        '
+        'ChangeFromOldToHoldToolStripMenuItem
+        '
+        Me.ChangeFromOldToHoldToolStripMenuItem.Name = "ChangeFromOldToHoldToolStripMenuItem"
+        Me.ChangeFromOldToHoldToolStripMenuItem.Size = New System.Drawing.Size(209, 22)
+        Me.ChangeFromOldToHoldToolStripMenuItem.Text = "Change from Old to Hold"
+        '
+        'AddNoteToolStripMenuItem
+        '
+        Me.AddNoteToolStripMenuItem.Name = "AddNoteToolStripMenuItem"
+        Me.AddNoteToolStripMenuItem.Size = New System.Drawing.Size(209, 22)
+        Me.AddNoteToolStripMenuItem.Text = "Add Note"
+        '
         'btnPutOnHold
         '
         Me.btnPutOnHold.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -721,6 +744,7 @@ Partial Class frmUseCards
         Me.Panel2.PerformLayout()
         CType(Me.dgOnHold, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip2.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -783,4 +807,7 @@ Partial Class frmUseCards
     Friend WithEvents dgAddSimsBtn As WindowsApplication1.DataGridViewDisableButtonColumn
     Friend WithEvents dgDeviceSlotID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dgSlot As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ContextMenuStrip2 As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents ChangeFromOldToHoldToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents AddNoteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

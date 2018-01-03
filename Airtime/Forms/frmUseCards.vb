@@ -690,4 +690,154 @@
     End Sub
 
 
+    Private Sub ChangeFromOldToHoldToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromOldToHoldToolStripMenuItem.Click
+        Dim strResult, strPrefix As String
+        Dim dStartDate As Date
+        Dim dblTalkTime As Double
+        Dim boolRight As Boolean
+        'Dim lDeviceSlotId As Long
+        Dim rowIndex As Integer
+
+        Try
+            '1- check if Old is chozen
+            If Me.DataGridView1.SelectedCells.Count > 0 Then
+                ' Dim dr As DataGridViewRow =
+                rowIndex = Me.DataGridView1.SelectedCells(0).RowIndex
+                Dim dr As DataGridViewRow = Me.DataGridView1.Rows(rowIndex)
+                If CStr(dr.Cells("dgHoldBtn").Value) = "None" AndAlso CLng(dr.Cells(17).Value) > 0 Then
+                    lDeviceSlotId = CLng(dr.Cells(17).Value)
+                    boolRight = True
+                End If
+            End If
+
+            '2- check if this is the first time to change
+            If boolRight And odbaccess.CheckIfSlotChangedFromOldToHold(lDeviceSlotId) Then
+                MsgBox("You already Changed from Old to Hold before, you cannot change twice.")
+                Return
+            End If
+
+            '3- get Talk Time
+            If boolRight Then
+                Dim ds As DataSet
+                ds = odbaccess.GetSlotStartDate_Prefix(lDeviceSlotId)
+                If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
+                    If Not ds.Tables(0).Rows(0).Item("Start_Time") Is DBNull.Value Then
+                        dStartDate = CDate(ds.Tables(0).Rows(0).Item("Start_Time")).ToUniversalTime
+
+                    Else
+                        dStartDate = DateTime.UtcNow
+                    End If
+
+                    If Not ds.Tables(0).Rows(0).Item("Prefix") Is DBNull.Value Then
+                        strPrefix = CStr(ds.Tables(0).Rows(0).Item("Prefix"))
+                    Else
+                        strPrefix = ""
+                    End If
+                Else
+                    MsgBox("Cannot get Created Time from server!")
+                End If
+                If dStartDate = Nothing Then
+                    MsgBox("Cannot get Created Time from server!")
+                End If
+
+                If Not dStartDate = Nothing And Not strPrefix.Length = 0 Then
+                    ' Get Slot created time, Slot cut time, Device Prefix
+                    Dim dStartDateTime, dCutDateTime As String
+                    dCutDateTime = CDate(DateTime.UtcNow).ToString("yyyy-MM-dd_HH:mm:ss")
+                    dStartDateTime = dStartDate.ToString("yyyy-MM-dd_HH:mm:ss")
+
+                    Dim webClient As New System.Net.WebClient
+                    strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & dStartDateTime & "&"
+                    strResult = strResult & "date_to=" & dCutDateTime & "&"
+                    strResult = strResult & "prefix=" & strPrefix
+
+                    Dim result As String = webClient.DownloadString(strResult)
+
+                    If Not result Is Nothing AndAlso Not result.Length = 0 Then
+                        result.Trim()
+
+                        Dim strArr() As String
+
+                        strArr = result.Split(CChar("|"))
+                        If Not strArr.Count = 0 Then
+        
+                            If IsNumeric(strArr(1)) Then
+                                dblTalkTime = CDbl(strArr(1))
+                            End If
+                           
+                        End If
+                    Else
+                        MsgBox("Couldn't get data from SPO server.")
+                    End If
+                Else
+                    dblTalkTime = 0
+
+                End If
+
+                '4- change in DB from Old to Hold
+                If odbaccess.ChangeSlotFromOldToHold(lDeviceSlotId, Now(), dblTalkTime) Then
+                    MsgBox("Operation done successfully.")
+
+                    ' Add Hold device to ocolDevices
+                    Dim oDevice As New Device
+                    oDevice.DeviceID = CLng(Me.DataGridView1.Rows(rowIndex).Cells(17).Value)
+                    'get sent cards using this device from Database
+                    Dim ocolDeviceTemp As New ColDevice
+                    ocolDeviceTemp = odbaccess.GetOnHoldDevices_UsedCards
+                    If Not ocolDeviceTemp Is Nothing Then
+                        For Each Obj As Device In Me.ocolDevices
+                            If Obj.DeviceID = oDevice.DeviceID Then
+                                oDevice.NoOfSentCards = Obj.NoOfSentCards
+                                Exit For
+                            End If
+                        Next
+                    End If
+                    ocolDevices.Add(oDevice)
+
+                    ' Handle Datagrid from selected Old slot to None 
+                    HandleDataGridAfterChangeFromOldToHold(rowIndex)
+
+
+
+                Else
+                    MsgBox("An error occured!")
+                End If
+            Else
+                MsgBox("There is no Old Slot selected.")
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message & "  " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub HandleDataGridAfterChangeFromOldToHold(RowIndex As Integer)
+        Me.DataGridView1.Rows(RowIndex).Cells("dgOldBtn").Value = "None" ' already slot in Old was chosen, don't take an action untill Old is none
+        '   Me.lOldDeviceSpotID = ofrm.lDeviceSlotID
+        ' If (CStr(Me.DataGridView1.Rows(rowIndex).Cells("dgHoldBtn").Value) = "None" Or CStr(Me.DataGridView1.Rows(rowIndex).Cells("dgHoldBtn").Value) = "Check") Then ' if old is also none then change the slotID to 0
+        Me.DataGridView1.Rows(RowIndex).Cells(17).Value = 0
+        Me.DataGridView1.Rows(RowIndex).Cells(18).Value = "None"
+        ' End If
+
+        If (CStr(Me.DataGridView1.Rows(RowIndex).Cells("dgHoldBtn").Value) = "None" Or CStr(Me.DataGridView1.Rows(RowIndex).Cells("dgHoldBtn").Value) = "Check") And _
+                                  (CStr(Me.DataGridView1.Rows(RowIndex).Cells("dgOldBtn").Value) = "None" Or CStr(Me.DataGridView1.Rows(RowIndex).Cells("dgOldBtn").Value) = "Check") Then
+            '  CType(Me.DataGridView1.Rows(rowIndex).Cells("dgCreateBtn"), DataGridViewDisableButtonCell).Enabled = True
+            CType(Me.DataGridView1.Rows(RowIndex).Cells("dgGetBtn"), DataGridViewDisableButtonCell).Enabled = False
+            CType(Me.DataGridView1.Rows(RowIndex).Cells("dgStartBtn"), DataGridViewDisableButtonCell).Enabled = False
+            CType(Me.DataGridView1.Rows(RowIndex).Cells("dgCutBtn"), DataGridViewDisableButtonCell).Enabled = False
+            CType(Me.DataGridView1.Rows(RowIndex).Cells("dgAddSimsBtn"), DataGridViewDisableButtonCell).Enabled = False
+        End If
+    End Sub
+
+    Private Sub AddNoteToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles AddNoteToolStripMenuItem.Click
+        If Me.DataGridView1.SelectedCells.Count > 0 Then
+            lDeviceSlotId = CLng(Me.DataGridView1.SelectedRows(0).Cells(17).Value)
+            If Not lDeviceSlotId = 0 Then
+                Dim frm As New AddSlotNote(lDeviceSlotId)
+                frm.showdialog()
+            Else
+                MsgBox("You should select a slot before you add a note.")
+            End If
+        End If
+    End Sub
 End Class

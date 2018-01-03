@@ -22,8 +22,9 @@
         Dim ds As DataSet
         ds = odbaccess.GetSlotStartDate_Prefix(lDeviceSlotID)
         If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
-            If Not ds.Tables(0).Rows(0).Item("Start_time") Is DBNull.Value Then
-                dStartDate = CDate(ds.Tables(0).Rows(0).Item("Start_time"))
+            If Not ds.Tables(0).Rows(0).Item("Start_Time") Is DBNull.Value Then
+                dStartDate = CDate(ds.Tables(0).Rows(0).Item("Start_Time")).ToUniversalTime
+
             Else
                 dStartDate = DateTime.UtcNow
                 ' ToUniversalTime()
@@ -68,18 +69,18 @@
     Public Function validation() As Boolean
         boolError = True
         Try
-            If Me.txtNote.Text.Length = 0 Then
-                ErrorProvider1.SetError(txtNote, "Please insert a valid value in Offer field.")
-                boolError = False
-            Else
-                ErrorProvider1.SetError(txtNote, "")
-            End If
+            'If Me.txtNote.Text.Length = 0 Then
+            '    ErrorProvider1.SetError(txtNote, "Please insert a valid value in Offer field.")
+            '    boolError = False
+            'Else
+            '    ErrorProvider1.SetError(txtNote, "")
+            'End If
 
             If Not IsNumeric(Me.txtBurnedBalance.Text) Then
-                ErrorProvider1.SetError(txtNote, "Please insert a valid value in Minute Cost field.")
+                ErrorProvider1.SetError(txtBurnedBalance, "Please insert a valid value in Burned Balance field.")
                 boolError = False
             Else
-                ErrorProvider1.SetError(txtNote, "")
+                ErrorProvider1.SetError(txtBurnedBalance, "")
             End If
             Return boolError
         Catch ex As Exception
@@ -126,7 +127,6 @@
                             intTotalCalls = CInt(strArr(0))
                         End If
 
-                        '                    intTotalCalls = CInt(strArr(0))
                         If IsNumeric(strArr(1)) Then
                             dblTalkTime = CDbl(strArr(1))
                         End If

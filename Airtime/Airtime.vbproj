@@ -186,6 +186,12 @@
       <DependentUpon>dsUsers.xsd</DependentUpon>
     </Compile>
     <Compile Include="Enumerators.vb" />
+    <Compile Include="Forms\AddSlotNote.Designer.vb">
+      <DependentUpon>AddSlotNote.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddSlotNote.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmUseCards.Designer.vb">
       <DependentUpon>frmUseCards.vb</DependentUpon>
     </Compile>
@@ -530,6 +536,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AddSlotNote.resx">
+      <DependentUpon>AddSlotNote.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmUseCards.resx">
       <DependentUpon>frmUseCards.vb</DependentUpon>
     </EmbeddedResource>

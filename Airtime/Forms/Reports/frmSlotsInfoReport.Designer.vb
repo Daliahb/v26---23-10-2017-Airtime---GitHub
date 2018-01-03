@@ -208,7 +208,7 @@ Partial Class frmSlotsInfoReport
         Me.Panel1.Location = New System.Drawing.Point(3, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1411, 658)
+        Me.Panel1.Size = New System.Drawing.Size(1538, 658)
         Me.Panel1.TabIndex = 0
         '
         'Label18
@@ -819,7 +819,7 @@ Partial Class frmSlotsInfoReport
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1403, 461)
+        Me.DataGridView1.Size = New System.Drawing.Size(1530, 461)
         Me.DataGridView1.TabIndex = 37
         '
         'dgDeviceSlotID
@@ -1016,7 +1016,7 @@ Partial Class frmSlotsInfoReport
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1271, 7)
+        Me.btnSearch.Location = New System.Drawing.Point(1398, 7)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(136, 34)
@@ -1056,7 +1056,7 @@ Partial Class frmSlotsInfoReport
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(1412, 663)
+        Me.ClientSize = New System.Drawing.Size(1539, 663)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

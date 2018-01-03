@@ -166,7 +166,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\Airtime Setup-14-12-2017.msi"
+        "OutputFilename" = "8:Release\\Airtime Setup-21-12-2017.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -335,6 +335,11 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_456348DE6901CE025ACAB8CADA140EC5"
+                    {
+                    "Name" = "8:Microsoft.VisualBasic.PowerPacks.Vs.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Microsoft.VisualBasic.PowerPacks.Vs.dll"
             "TargetName" = "8:"
@@ -392,6 +397,11 @@
             "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.1.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_7F2B441C80A205E6D12C31CEBD96BE5D"
+                    {
+                    "Name" = "8:MySql.Data.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:MySql.Data.DLL"
             "TargetName" = "8:"
@@ -518,15 +528,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Airtime System"
-        "ProductCode" = "8:{2495D619-9964-4543-ABA2-C5DABFF090DF}"
-        "PackageCode" = "8:{F36AECC6-CBDF-4345-AFB1-5F5C43D29BEB}"
+        "ProductCode" = "8:{5EFA62BC-56AD-4ADA-9176-E75904E66858}"
+        "PackageCode" = "8:{007193A8-5287-45AB-8674-FED49CB03A93}"
         "UpgradeCode" = "8:{509215C4-01A4-498F-AB5C-0CBCA87835DB}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.11.1"
+        "ProductVersion" = "8:1.12.1"
         "Manufacturer" = "8:Maple Telecommunications"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

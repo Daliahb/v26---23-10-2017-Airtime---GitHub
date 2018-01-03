@@ -114,7 +114,7 @@ Partial Class frmSlotDetailsReport
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1241, 580)
+        Me.Panel1.Size = New System.Drawing.Size(1185, 580)
         Me.Panel1.TabIndex = 0
         '
         'cmbUsersCharged
@@ -332,7 +332,7 @@ Partial Class frmSlotDetailsReport
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1233, 471)
+        Me.DataGridView1.Size = New System.Drawing.Size(1177, 471)
         Me.DataGridView1.TabIndex = 37
         '
         'dgCountry
@@ -451,7 +451,7 @@ Partial Class frmSlotDetailsReport
         '
         Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1101, 7)
+        Me.btnSearch.Location = New System.Drawing.Point(1045, 7)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(136, 34)
@@ -505,7 +505,7 @@ Partial Class frmSlotDetailsReport
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
-        Me.ClientSize = New System.Drawing.Size(1245, 585)
+        Me.ClientSize = New System.Drawing.Size(1189, 585)
         Me.ContextMenuStrip = Me.ContextMenuStrip1
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))

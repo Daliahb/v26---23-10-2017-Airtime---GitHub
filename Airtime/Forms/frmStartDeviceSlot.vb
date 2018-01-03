@@ -72,10 +72,10 @@
             End If
 
             If Not IsNumeric(Me.txtMinuteCost.Text) Then
-                ErrorProvider1.SetError(txtOffer, "Please insert a valid value in Minute Cost field.")
+                ErrorProvider1.SetError(txtMinuteCost, "Please insert a valid value in Minute Cost field.")
                 boolError = False
             Else
-                ErrorProvider1.SetError(txtOffer, "")
+                ErrorProvider1.SetError(txtMinuteCost, "")
             End If
             Return boolError
         Catch ex As Exception
