@@ -681,6 +681,24 @@ Public Class FrmMain
         '    '        dblACD = CDbl(strArr(2))
         '    '        dblASR = CDbl(strArr(3))
         'End If
+
+      
+
+        'Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_05:31:01&date_to=2017-11-02_05:31:01&prefix=19249")
+
+        Dim dStartDateTime, dCutDateTime, strResult As String
+        
+
+        Dim webClient As New System.Net.WebClient
+        strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & "2018-02-05_12:07:01&"
+        strResult = strResult & "date_to=2018-02-05_13:17:59&" ' & dCutDateTime & "&"
+        strResult = strResult & "prefix=19249" ' & strPrefix
+
+        Dim result As String = webClient.DownloadString(strResult)
+
+        If Not result Is Nothing AndAlso Not result.Length = 0 Then
+            MsgBox(result)
+        End If
     End Sub
 
     Private Sub CardsValuesUsedPerSlotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CardsValuesUsedPerSlotToolStripMenuItem.Click

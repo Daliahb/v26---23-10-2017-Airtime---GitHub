@@ -492,7 +492,7 @@
             End If
 
         Catch ex As Exception
-
+            MsgBox(ex.Message & "  " & ex.StackTrace)
         End Try
     End Sub
 
@@ -610,7 +610,7 @@
             Me.btnSetAsUsed.Enabled = True
             Me.chkSelectClear.Checked = False
         Catch ex As Exception
-
+            MsgBox(ex.Message & "  " & ex.StackTrace)
         End Try
     End Sub
 

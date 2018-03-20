@@ -518,13 +518,13 @@ Partial Class FrmMain
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(461, 174)
+        Me.Button1.Location = New System.Drawing.Point(432, 174)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 115
         Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = true
-        Me.Button1.Visible = false
+        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'btnShiftEndUsersDevices
         '

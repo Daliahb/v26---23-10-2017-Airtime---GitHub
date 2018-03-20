@@ -39,27 +39,13 @@
     End Sub
 
     Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
-
-        Dim boolError As Boolean
         Try
             If validation() Then
                 Me.btnSave.Enabled = False
-                FillObject()
-                'boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
-                boolError = odbaccess.InsertCards(Sql.ToString)
-                If boolError Then
-                    MsgBox("Operation done successfully.", , "Airtime System")
-                    If Me.enumEditAdd = Enumerators.EditAdd.Edit Then
-                        Me.Close()
-                    Else
-                        Me.ResetForm()
-                    End If
-                Else
-                    MsgBox("Error occured!", , "Airtime System")
-                End If
-                Me.btnSave.Enabled = True
-            End If
 
+                SaveCards()
+
+            End If
         Catch ex As Exception
             MsgBox(ex.Message & "  " & ex.StackTrace)
         End Try
@@ -149,6 +135,26 @@
     End Sub
 
     Public Sub SetControls()
+
+    End Sub
+
+    Public Sub SaveCards()
+
+        Dim boolError As Boolean
+        FillObject()
+        'boolError = odbaccess.InsertCards(lCountryID, lProviderID, lOperatorID, lCategoryID, lGetCardFrom, strCards.ToString, strLastCard)
+        boolError = odbaccess.InsertCards(Sql.ToString)
+        If boolError Then
+            MsgBox("Operation done successfully.", , "Airtime System")
+            If Me.enumEditAdd = Enumerators.EditAdd.Edit Then
+                Me.Close()
+            Else
+                Me.ResetForm()
+            End If
+        Else
+            MsgBox("Error occured!", , "Airtime System")
+        End If
+        Me.btnSave.Enabled = True
 
     End Sub
 
