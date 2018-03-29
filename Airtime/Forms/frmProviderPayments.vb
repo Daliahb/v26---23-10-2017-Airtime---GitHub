@@ -4,7 +4,7 @@
     Dim lCountryID, lProviderID, lSimCardType, lInsertedByID As Integer
     Dim FromDate, ToDate As Date
     Dim boolCheckDate, isloaded, isCheckIsSentToExpenses, isCheckIsSentToExpensesYes As Boolean
-    Dim dsCountries As DataSet
+    ' Dim dsCountries As DataSet
     Dim dblTotalAmount As Double = 0.0
     Dim oColSimcardsOrder As New ColSimcardsOrder
 
@@ -140,11 +140,18 @@
 
     Private Sub cmbCountries_SelectedValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbCountries.SelectedValueChanged
         If isloaded Then
-            Dim dsProvider As DataSet = odbaccess.GetProviders(True, CInt(Me.cmbCountries.SelectedValue))
-            If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
-                Me.cmbProviders.DataSource = dsProvider.Tables(0)
+            'Dim dsProvider As DataSet = odbaccess.GetProviders(True, CInt(Me.cmbCountries.SelectedValue))
+            'If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbProviders.DataSource = dsProvider.Tables(0)
+            '    Me.cmbProviders.DisplayMember = "Provider"
+            '    Me.cmbProviders.ValueMember = "ID"
+            'End If
+            If Not gdsProviders Is Nothing AndAlso Not gdsProviders.Tables.Count = 0 Then
+                Dim dvProvider As New DataView(gdsProviders.Tables(0))
+                dvProvider.RowFilter = "FK_Country = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                Me.cmbProviders.DataSource = dvProvider
+                Me.cmbProviders.ValueMember = "Id"
                 Me.cmbProviders.DisplayMember = "Provider"
-                Me.cmbProviders.ValueMember = "ID"
             End If
         End If
     End Sub
@@ -165,13 +172,11 @@
 
     Public Sub FillTypes()
         Try
-            dsCountries = odbaccess.GetCountriesDS
-            If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-                Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+                Me.cmbCountries.DataSource = gdsCountries.Tables(0)
                 Me.cmbCountries.DisplayMember = "Country"
                 Me.cmbCountries.ValueMember = "ID"
             End If
-
         Catch ex As Exception
 
         End Try

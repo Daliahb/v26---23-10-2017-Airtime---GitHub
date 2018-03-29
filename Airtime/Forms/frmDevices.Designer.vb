@@ -34,9 +34,13 @@ Partial Class frmDevices
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmbLocations = New System.Windows.Forms.ComboBox()
-        Me.LocationsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DsLocations1 = New WindowsApplication1.dsLocations()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.clID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.clNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Category = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.EditDeviceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDeviceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -49,16 +53,7 @@ Partial Class frmDevices
         Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.TableAdapterManager = New WindowsApplication1.dsLocationsTableAdapters.TableAdapterManager()
-        Me.LocationsTableAdapter1 = New WindowsApplication1.dsLocationsTableAdapters.LocationsTableAdapter()
-        Me.clID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.clNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Category = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
-        CType(Me.LocationsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsLocations1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ContextMenuStripHideColumn.SuspendLayout()
@@ -96,8 +91,7 @@ Partial Class frmDevices
         'cmbLocations
         '
         Me.cmbLocations.BackColor = System.Drawing.Color.LemonChiffon
-        Me.cmbLocations.DataSource = Me.LocationsBindingSource
-        Me.cmbLocations.DisplayMember = "Location"
+        Me.cmbLocations.DisplayMember = "ID"
         Me.cmbLocations.DropDownHeight = 400
         Me.cmbLocations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLocations.DropDownWidth = 200
@@ -109,16 +103,6 @@ Partial Class frmDevices
         Me.cmbLocations.Size = New System.Drawing.Size(202, 24)
         Me.cmbLocations.TabIndex = 83
         Me.cmbLocations.ValueMember = "ID"
-        '
-        'LocationsBindingSource
-        '
-        Me.LocationsBindingSource.DataMember = "Locations"
-        Me.LocationsBindingSource.DataSource = Me.DsLocations1
-        '
-        'DsLocations1
-        '
-        Me.DsLocations1.DataSetName = "dsLocations"
-        Me.DsLocations1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'DataGridView1
         '
@@ -157,6 +141,58 @@ Partial Class frmDevices
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView1.Size = New System.Drawing.Size(569, 418)
         Me.DataGridView1.TabIndex = 37
+        '
+        'clID
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.clID.DefaultCellStyle = DataGridViewCellStyle2
+        Me.clID.HeaderText = "ID"
+        Me.clID.Name = "clID"
+        Me.clID.ReadOnly = True
+        Me.clID.Visible = False
+        Me.clID.Width = 80
+        '
+        'clNo
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.clNo.DefaultCellStyle = DataGridViewCellStyle3
+        Me.clNo.HeaderText = "No."
+        Me.clNo.Name = "clNo"
+        Me.clNo.ReadOnly = True
+        Me.clNo.Width = 40
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Device"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.Width = 200
+        '
+        'Category
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Category.DefaultCellStyle = DataGridViewCellStyle4
+        Me.Category.HeaderText = "Location"
+        Me.Category.Name = "Category"
+        Me.Category.ReadOnly = True
+        Me.Category.Width = 200
+        '
+        'Column1
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Column1.HeaderText = "Location_Id"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.Visible = False
+        Me.Column1.Width = 120
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Prefix"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        Me.Column3.Width = 110
         '
         'ContextMenuStrip1
         '
@@ -239,62 +275,6 @@ Partial Class frmDevices
         Me.TableAdapterManager.LocationsTableAdapter = Nothing
         Me.TableAdapterManager.UpdateOrder = WindowsApplication1.dsLocationsTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete
         '
-        'LocationsTableAdapter1
-        '
-        Me.LocationsTableAdapter1.ClearBeforeFill = True
-        '
-        'clID
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.clID.DefaultCellStyle = DataGridViewCellStyle2
-        Me.clID.HeaderText = "ID"
-        Me.clID.Name = "clID"
-        Me.clID.ReadOnly = True
-        Me.clID.Visible = False
-        Me.clID.Width = 80
-        '
-        'clNo
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.clNo.DefaultCellStyle = DataGridViewCellStyle3
-        Me.clNo.HeaderText = "No."
-        Me.clNo.Name = "clNo"
-        Me.clNo.ReadOnly = True
-        Me.clNo.Width = 40
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Device"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.Width = 200
-        '
-        'Category
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Category.DefaultCellStyle = DataGridViewCellStyle4
-        Me.Category.HeaderText = "Location"
-        Me.Category.Name = "Category"
-        Me.Category.ReadOnly = True
-        Me.Category.Width = 200
-        '
-        'Column1
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Column1.HeaderText = "Location_Id"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        Me.Column1.Visible = False
-        Me.Column1.Width = 120
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Prefix"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        Me.Column3.Width = 110
-        '
         'frmDevices
         '
         Me.AcceptButton = Me.btnSearch
@@ -312,8 +292,6 @@ Partial Class frmDevices
         Me.Text = "Devices"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.LocationsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsLocations1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ContextMenuStripHideColumn.ResumeLayout(False)
@@ -339,9 +317,6 @@ Partial Class frmDevices
     Friend WithEvents DsLocations As WindowsApplication1.dsLocations
     Friend WithEvents LocationsTableAdapter As WindowsApplication1.dsLocationsTableAdapters.LocationsTableAdapter
     Friend WithEvents TableAdapterManager As WindowsApplication1.dsLocationsTableAdapters.TableAdapterManager
-    Friend WithEvents DsLocations1 As WindowsApplication1.dsLocations
-    Friend WithEvents LocationsBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents LocationsTableAdapter1 As WindowsApplication1.dsLocationsTableAdapters.LocationsTableAdapter
     Friend WithEvents clID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents clNo As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn

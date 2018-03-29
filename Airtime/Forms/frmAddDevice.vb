@@ -17,7 +17,13 @@
 
     Private Sub frmAddCompany_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'TODO: This line of code loads data into the 'DsLocations.Locations' table. You can move, or remove it, as needed.
-        Me.LocationsTableAdapter.Fill(Me.DsLocations.Locations)
+        ' Me.LocationsTableAdapter.Fill(Me.DsLocations.Locations)
+
+        If Not gdsLocations Is Nothing AndAlso Not gdsLocations.Tables.Count = 0 AndAlso Not gdsLocations.Tables(0).Rows.Count = 0 Then
+            Me.cmbLocation.DataSource = gdsLocations.Tables(0)
+            Me.cmbLocation.DisplayMember = "Location"
+            Me.cmbLocation.ValueMember = "ID"
+        End If
 
         If Me.enumEditAdd = Enumerators.EditAdd.Edit Then
             Me.Text = "Edit Device"

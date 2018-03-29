@@ -117,6 +117,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Airtime_system_devDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Airtime_system_devDataSet1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Airtime_system_devDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Collection\Card.vb" />
     <Compile Include="Collection\DisabledEnabledCell.vb" />
     <Compile Include="Collection\SimcardsOrder.vb" />
@@ -719,6 +724,17 @@
     </None>
     <None Include="Airtime_system_devDataSet.xss">
       <DependentUpon>Airtime_system_devDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Airtime_system_devDataSet1.xsc">
+      <DependentUpon>Airtime_system_devDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Airtime_system_devDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Airtime_system_devDataSet1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Airtime_system_devDataSet1.xss">
+      <DependentUpon>Airtime_system_devDataSet1.xsd</DependentUpon>
     </None>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />

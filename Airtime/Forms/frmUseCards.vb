@@ -95,35 +95,6 @@
         End If
     End Sub
 
-    Private Sub btnSetAsWrongCard_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If Not Me.txtCardNumber.Text.Length = 0 Then
-            If MsgBox("Are you sure you want to set this card as a 'Wrong card'", vbYesNo, "Airtime System") = MsgBoxResult.Yes Then
-                lCardId = CInt(Me.dsUserCards.Tables(0).Rows(Me.lCurrentCardIndex).Item("id"))
-                Dim lCategoryID As Integer = 0
-                Dim enumWrongType As New Enumerators.WrongCardTypes
-
-                If Me.rbWrongValue.Checked Then
-                    enumWrongType = Enumerators.WrongCardTypes.WrongValue
-                    lCategoryID = CInt(Me.cmbCategory.SelectedValue)
-                ElseIf rbWrongName.Checked Then
-                    enumWrongType = Enumerators.WrongCardTypes.WrongScratchNo
-                ElseIf Me.rbAlreadyUsedCard.Checked Then
-                    enumWrongType = Enumerators.WrongCardTypes.AlreadyUsedCard
-                End If
-
-                odbaccess.SetAsWrongCard(lCardId, enumWrongType, lCategoryID)
-                Me.lCurrentCardIndex += 1
-                Me.lUsersCardsNo -= 1
-                Me.lblCardsNo.Text = lUsersCardsNo.ToString
-                Me.txtCardNumber.Text = ""
-                'Me.btnSetAsUsed.Enabled = False
-                'Me.btnPutOnHold.Enabled = False
-                'Me.Panel1.Enabled = False
-            End If
-        End If
-
-    End Sub
-
     Private Sub btnRefreshTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRefreshTable.Click
         Me.txtCardNumber.Text = ""
 
@@ -553,7 +524,17 @@
     End Function
 
     Private Sub btnSetAsUsed_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSetAsUsed.Click
-        '------------------------newm----------------------------
+        'Dim oSetAsUsedThread As Threading.Thread
+        'oSetAsUsedThread = New Threading.Thread(AddressOf SetAsUsedCards)
+        'oSetAsUsedThread.Start()
+
+        '  Me.chkSelectClear.Checked = False
+        SetAsUsedCards()
+    End Sub
+
+    Public Sub SetAsUsedCards()
+        Dim strCardIds As New System.Text.StringBuilder
+        Dim intSumCategoryValue As Integer = 0
         Try
             If isThereCheckedRows() Then
                 ErrorProvider1.SetError(Me.dgOnHold, "")
@@ -563,7 +544,8 @@
                 ErrorProvider1.SetError(Me.dgOnHold, "Please choose cards")
                 Return
             End If
-            Me.btnSetAsUsed.Enabled = False
+
+            ' SetControlEnabled(btnSetAsUsed, False)
 
             If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
                 If (Me.ocolDevices.GetNoOfUsedCards(lCurrentDeviceSlotID)) >= 32 Then
@@ -573,91 +555,150 @@
                     Return
                 End If
             End If
-            For j = dgOnHold.RowCount - 1 To 0 Step -1
-                If CBool(dgOnHold.Rows(j).Cells(1).Value) = True Then
-                    lCardId = CInt(dgOnHold.Rows(j).Cells(0).Value)
-                    '1- act as set as used
-                    If Not odbaccess.UseCard(lCardId, lShiftID, lCurrentDeviceSlotID) Then
-                        MsgBox("An error occured.", , "Airtime System")
-                    Else
-                        For Each lOperator As Operators In Me.oColOperatorAlreadyUsedByUser
-                            If lOperator.OperatorID = lOperatorID Then
-                                lOperator.UserLimit += lCategoryValue
-                                Exit For
-                            End If
-                        Next
 
-                        '2- empty the listview  
-                        Me.dgOnHold.Rows.RemoveAt(j)
-
-                        '4- decrement lOnHold
-                        lOnHold -= 1
-
-                        '5- add used cards to ocolDevices column to check if it reached 32
-                        If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
-                            If (Me.ocolDevices.FindByIDAndAdd1(lCurrentDeviceSlotID)) >= 32 Then
-                                MsgBox("Hold Slot cannot use more than 32 card." & vbCrLf & "You can 'Start' the slot then use the remaining cards.")
-                                Exit For
-                            End If
-                        End If
-
-                    End If
+            Dim countCheckedOnHold As Integer = 0
+            For i As Integer = 0 To dgOnHold.Rows.Count - 1
+                If CBool(dgOnHold.Rows(i).Cells(1).Value) = True Then
+                    countCheckedOnHold += 1
+                    strCardIds.Append(dgOnHold.Rows(i).Cells(0).Value.ToString & ",")
+                    intSumCategoryValue += lCategoryValue
                 End If
             Next
+
+            'add used cards to ocolDevices column to check if it reached 32
+            If enumCurrentStatus = Enumerators.HoldOldCut.Hold Then
+                If (Me.ocolDevices.FindByIDAndAdd1(lCurrentDeviceSlotID) - 1 + countCheckedOnHold) >= 32 Then
+                    MsgBox("Hold Slot cannot use more than 32 card." & vbCrLf & "You can 'Start' the slot then use the holding cards.")
+                    Exit Sub
+                End If
+            End If
+
+            Me.btnSetAsUsed.Enabled = False
+            If Not odbaccess.UseCards(strCardIds.ToString, lShiftID, lCurrentDeviceSlotID) Then
+                MsgBox("An error occured.", , "Airtime System")
+            Else
+                For Each lOperator As Operators In Me.oColOperatorAlreadyUsedByUser
+                    If lOperator.OperatorID = lOperatorID Then
+                        lOperator.UserLimit += intSumCategoryValue
+                        Exit For
+                    End If
+                Next
+
+                RemoveRowsFromDG()
+                'For j = dgOnHold.RowCount - 1 To 0 Step -1
+                '    '2- empty the listview  
+                '    Me.dgOnHold.Rows.RemoveAt(j)
+
+                '    '4- decrement lOnHold
+                '    lOnHold -= 1
+                'Next
+            End If
+
             If Me.dgOnHold.Rows.Count = 0 Then
                 Me.Panel3.Enabled = False
+                '  SetControlEnabled(Panel3, False)
             End If
             Me.btnSetAsUsed.Enabled = True
+            Me.btnSetAsUsed.Focus()
+            '  SetControlEnabled(btnSetAsUsed, True)
+
             Me.chkSelectClear.Checked = False
+
         Catch ex As Exception
-            MsgBox(ex.Message & "  " & ex.StackTrace)
+            '   MsgBox(ex.Message & "  " & ex.StackTrace)
         End Try
     End Sub
 
-    Private Sub btnSetAsWrongCard_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSetAsWrongCard.Click
-        If isThereCheckedRows() Then
-            ErrorProvider1.SetError(Me.dgOnHold, "")
-            Me.lblExceedLimit.Visible = False
+    Private Sub SetControlEnabled(ByVal ctl As Control, ByVal enabled As Boolean)
+        If ctl.InvokeRequired Then
+            ctl.BeginInvoke(New Action(Of Control, Boolean)(AddressOf SetControlEnabled), ctl, enabled)
         Else
-            ErrorProvider1.SetIconAlignment(dgOnHold, System.Windows.Forms.ErrorIconAlignment.TopLeft)
-            ErrorProvider1.SetError(Me.dgOnHold, "Please choose cards")
-            Return
+            ctl.Enabled = enabled
         End If
-        If MsgBox("Are you sure you want to set this card as a 'Wrong card'", vbYesNo, "Airtime System") = MsgBoxResult.Yes Then
-            Dim lCategoryID As Integer = 0
-            Dim enumWrongType As New Enumerators.WrongCardTypes
+    End Sub
 
-            Me.btnSetAsWrongCard.Enabled = False
+    Public Sub RemoveRowsFromDG()
+        'If dgOnHold.InvokeRequired Then
+        '    dgOnHold.BeginInvoke(New Action(AddressOf RemoveRowsFromDG))
+        'Else
+        For j = dgOnHold.RowCount - 1 To 0 Step -1
+            If CBool(dgOnHold.Rows(j).Cells(1).Value) = True Then
+                '- empty the listview  
+                Me.dgOnHold.Rows.RemoveAt(j)
 
-            If Me.rbWrongValue.Checked Then
-                enumWrongType = Enumerators.WrongCardTypes.WrongValue
-                lCategoryID = CInt(Me.cmbCategory.SelectedValue)
-            ElseIf rbWrongName.Checked Then
-                enumWrongType = Enumerators.WrongCardTypes.WrongScratchNo
-            ElseIf Me.rbAlreadyUsedCard.Checked Then
-                enumWrongType = Enumerators.WrongCardTypes.AlreadyUsedCard
+                '- decrement lOnHold
+                lOnHold -= 1
             End If
-            For j = dgOnHold.RowCount - 1 To 0 Step -1
-                If CBool(dgOnHold.Rows(j).Cells(1).Value) = True Then
-                    lCardId = CInt(dgOnHold.Rows(j).Cells(0).Value)
+        Next
+        'End If
+    End Sub
 
-                    If Not lCardId = 0 Then
-                        odbaccess.SetAsWrongCard(lCardId, enumWrongType, lCategoryID)
-                    End If
+    Private Sub btnSetAsWrongCard_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSetAsWrongCard.Click
+        Dim strCardIds As New System.Text.StringBuilder
+        Try
 
-                    '2- empty the listview  
-                    Me.dgOnHold.Rows.RemoveAt(j)
 
-                    '4- decrement lOnHold
-                    lOnHold -= 1
+            If isThereCheckedRows() Then
+                ErrorProvider1.SetError(Me.dgOnHold, "")
+                Me.lblExceedLimit.Visible = False
+            Else
+                ErrorProvider1.SetIconAlignment(dgOnHold, System.Windows.Forms.ErrorIconAlignment.TopLeft)
+                ErrorProvider1.SetError(Me.dgOnHold, "Please choose cards")
+                Return
+            End If
+            If MsgBox("Are you sure you want to set this card as a 'Wrong card'", vbYesNo, "Airtime System") = MsgBoxResult.Yes Then
+                Dim lCategoryID As Integer = 0
+                Dim enumWrongType As New Enumerators.WrongCardTypes
+
+                Me.btnSetAsWrongCard.Enabled = False
+
+                If Me.rbWrongValue.Checked Then
+                    enumWrongType = Enumerators.WrongCardTypes.WrongValue
+                    lCategoryID = CInt(Me.cmbCategory.SelectedValue)
+                ElseIf rbWrongName.Checked Then
+                    enumWrongType = Enumerators.WrongCardTypes.WrongScratchNo
+                ElseIf Me.rbAlreadyUsedCard.Checked Then
+                    enumWrongType = Enumerators.WrongCardTypes.AlreadyUsedCard
                 End If
-            Next
-            If Me.dgOnHold.Rows.Count = 0 Then
-                Me.Panel3.Enabled = False
+
+                Dim countCheckedOnHold As Integer = 0
+                For i As Integer = 0 To dgOnHold.Rows.Count - 1
+                    If CBool(dgOnHold.Rows(i).Cells(1).Value) = True Then
+                        countCheckedOnHold += 1
+                        strCardIds.Append(dgOnHold.Rows(i).Cells(0).Value.ToString & ",")
+                        ' intSumCategoryValue += lCategoryValue
+                    End If
+                Next
+
+                If odbaccess.SetAsWrongCards(strCardIds.ToString, enumWrongType, lCategoryID) Then
+                    'decrement(lOnHold)
+                    lOnHold -= countCheckedOnHold
+                    For j = dgOnHold.RowCount - 1 To 0 Step -1
+                        If CBool(dgOnHold.Rows(j).Cells(1).Value) = True Then
+                            ' lCardId = CInt(dgOnHold.Rows(j).Cells(0).Value)
+
+                            'If Not lCardId = 0 Then
+                            '    odbaccess.SetAsWrongCard(lCardId, enumWrongType, lCategoryID)
+                            'End If
+
+                            '2- empty the listview  
+                            Me.dgOnHold.Rows.RemoveAt(j)
+
+                            '4- 
+
+                        End If
+                    Next
+                End If
+
+                If Me.dgOnHold.Rows.Count = 0 Then
+                    Me.Panel3.Enabled = False
+                End If
+                Me.btnSetAsWrongCard.Enabled = True
+                Me.chkSelectClear.Checked = False
             End If
-            Me.btnSetAsWrongCard.Enabled = True
-            Me.chkSelectClear.Checked = False
-        End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Public Function isThereCheckedRows() As Boolean
@@ -687,8 +728,8 @@
                 dr.Cells(1).Value = True
             Next
         End If
-    End Sub
 
+    End Sub
 
     Private Sub ChangeFromOldToHoldToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ChangeFromOldToHoldToolStripMenuItem.Click
         Dim strResult, strPrefix As String
@@ -760,11 +801,11 @@
 
                         strArr = result.Split(CChar("|"))
                         If Not strArr.Count = 0 Then
-        
+
                             If IsNumeric(strArr(1)) Then
                                 dblTalkTime = CDbl(strArr(1))
                             End If
-                           
+
                         End If
                     Else
                         MsgBox("Couldn't get data from SPO server.")

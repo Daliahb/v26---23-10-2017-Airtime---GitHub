@@ -5,7 +5,7 @@
     Public boolSaved, boolError, isLoaded, boolStarted As Boolean
     Public strHumanBehaiviour As String
     Dim lTrafficeType As Long, strOffer As String, dblMinuteCost As Double
-
+    Dim AddedRowIndex As Int32
 
     Public Sub New(ByVal strOperator As String, ByVal strDevice As String, lDeviceSlotID As Long, StrSlot As String, lCountryID As Integer)
         ' This call is required by the designer.
@@ -17,17 +17,33 @@
         Me.lDeviceSlotID = lDeviceSlotID
     End Sub
 
-    Private Sub frmAddCompany_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub frmStartDeviceSlot_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        If Not AddedRowIndex = 0 Then
+            gdsOperators.Tables(0).Rows.RemoveAt(AddedRowIndex)
+        End If
+    End Sub
+
+    Private Sub frmStartDeviceSlot_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         boolSaved = True
 
-        Dim ds As DataSet
-        ds = odbaccess.GetOperators(True, lCountryID)
-        If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
-            ds.Tables(0).Rows.Add(0, "All")
-            Me.cmbTrafficType.DataSource = ds.Tables(0)
+        If Not gdsOperators Is Nothing AndAlso Not gdsOperators.Tables.Count = 0 AndAlso Not gdsOperators.Tables(0).Rows.Count = 0 Then
+            gdsOperators.Tables(0).Rows.Add(0, "All", lCountryID)
+
+            Dim rows = gdsOperators.Tables(0).Select("ID = 0")
+            If rows.Count > 0 Then
+                AddedRowIndex = gdsOperators.Tables(0).Rows.IndexOf(rows(0))
+            End If
+
+            Dim dv As New DataView(gdsOperators.Tables(0))
+            dv.RowFilter = "FK_Country = " & lCountryID.ToString
+
+            Me.cmbTrafficType.DataSource = dv
             Me.cmbTrafficType.DisplayMember = "Operator"
             Me.cmbTrafficType.ValueMember = "ID"
+
+            Me.cmbTrafficType.Text = "All"
         End If
+
         isLoaded = True
     End Sub
 
@@ -42,6 +58,8 @@
                 If boolError Then
                     MsgBox("The operation done successfuly.")
                     boolStarted = True
+
+
                     Me.Close()
                 Else
                     MsgBox("An error occured.")

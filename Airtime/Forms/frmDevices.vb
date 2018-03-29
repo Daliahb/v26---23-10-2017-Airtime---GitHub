@@ -7,8 +7,12 @@
 
     Private Sub Events_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'TODO: This line of code loads data into the 'DsLocations1.Locations' table. You can move, or remove it, as needed.
-        Me.LocationsTableAdapter1.Fill(Me.DsLocations1.Locations)
-
+        ' Me.LocationsTableAdapter1.Fill(Me.DsLocations1.Locations)
+        If Not gdsLocations Is Nothing AndAlso Not gdsLocations.Tables.Count = 0 AndAlso Not gdsLocations.Tables(0).Rows.Count = 0 Then
+            Me.cmbLocations.DataSource = gdsLocations.Tables(0)
+            Me.cmbLocations.DisplayMember = "Location"
+            Me.cmbLocations.ValueMember = "ID"
+        End If
     End Sub
 
     Private Sub btnSearch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearch.Click

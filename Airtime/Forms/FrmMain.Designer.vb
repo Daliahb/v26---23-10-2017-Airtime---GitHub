@@ -78,7 +78,7 @@ Partial Class FrmMain
         Me.btnReturnCards = New System.Windows.Forms.Button()
         Me.btnUseCards = New System.Windows.Forms.Button()
         Me.PanelDistributor = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnReturnShiftCards = New System.Windows.Forms.Button()
         Me.btnShiftEndUsersDevices = New System.Windows.Forms.Button()
         Me.btnDistributedCards = New System.Windows.Forms.Button()
         Me.btnShiftEndUsers = New System.Windows.Forms.Button()
@@ -90,13 +90,13 @@ Partial Class FrmMain
         Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PrintForm1 = New Microsoft.VisualBasic.PowerPacks.Printing.PrintForm(Me.components)
-        Me.MenuStrip1.SuspendLayout
-        Me.PanelCardsUser.SuspendLayout
-        CType(Me.ShiftsBindingSource,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.DsShifts,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.PanelDistributor.SuspendLayout
-        CType(Me.PictureBox1,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.SuspendLayout
+        Me.MenuStrip1.SuspendLayout()
+        Me.PanelCardsUser.SuspendLayout()
+        CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelDistributor.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'SettingToolStripMenuItem
         '
@@ -180,7 +180,7 @@ Partial Class FrmMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditToolStripMenuItem, Me.SettingToolStripMenuItem, Me.ReportsToolStripMenuItem, Me.IiiToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(507, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(505, 24)
         Me.MenuStrip1.TabIndex = 9
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -202,7 +202,7 @@ Partial Class FrmMain
         Me.ShiftReportsFolderToolStripMenuItem.Name = "ShiftReportsFolderToolStripMenuItem"
         Me.ShiftReportsFolderToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
         Me.ShiftReportsFolderToolStripMenuItem.Text = "Set Shift Reports Folder"
-        Me.ShiftReportsFolderToolStripMenuItem.Visible = false
+        Me.ShiftReportsFolderToolStripMenuItem.Visible = False
         '
         'ReportsToolStripMenuItem
         '
@@ -213,43 +213,43 @@ Partial Class FrmMain
         '
         'InsertedByProviderReportToolStripMenuItem
         '
-        Me.InsertedByProviderReportToolStripMenuItem.Enabled = false
+        Me.InsertedByProviderReportToolStripMenuItem.Enabled = False
         Me.InsertedByProviderReportToolStripMenuItem.Name = "InsertedByProviderReportToolStripMenuItem"
         Me.InsertedByProviderReportToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.InsertedByProviderReportToolStripMenuItem.Text = "Inserted by Provider Report"
-        Me.InsertedByProviderReportToolStripMenuItem.Visible = false
+        Me.InsertedByProviderReportToolStripMenuItem.Visible = False
         '
         'ProviderCardsReportToolStripMenuItem
         '
-        Me.ProviderCardsReportToolStripMenuItem.Enabled = false
+        Me.ProviderCardsReportToolStripMenuItem.Enabled = False
         Me.ProviderCardsReportToolStripMenuItem.Name = "ProviderCardsReportToolStripMenuItem"
         Me.ProviderCardsReportToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.ProviderCardsReportToolStripMenuItem.Text = "Providers-Cards Report"
-        Me.ProviderCardsReportToolStripMenuItem.Visible = false
+        Me.ProviderCardsReportToolStripMenuItem.Visible = False
         '
         'CardsLessThanLimitToolStripMenuItem
         '
-        Me.CardsLessThanLimitToolStripMenuItem.Enabled = false
+        Me.CardsLessThanLimitToolStripMenuItem.Enabled = False
         Me.CardsLessThanLimitToolStripMenuItem.Name = "CardsLessThanLimitToolStripMenuItem"
         Me.CardsLessThanLimitToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.CardsLessThanLimitToolStripMenuItem.Text = "Cards less than limit"
-        Me.CardsLessThanLimitToolStripMenuItem.Visible = false
+        Me.CardsLessThanLimitToolStripMenuItem.Visible = False
         '
         'ProvidersBalancesToolStripMenuItem
         '
-        Me.ProvidersBalancesToolStripMenuItem.Enabled = false
+        Me.ProvidersBalancesToolStripMenuItem.Enabled = False
         Me.ProvidersBalancesToolStripMenuItem.Name = "ProvidersBalancesToolStripMenuItem"
         Me.ProvidersBalancesToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.ProvidersBalancesToolStripMenuItem.Text = "Providers Balances"
-        Me.ProvidersBalancesToolStripMenuItem.Visible = false
+        Me.ProvidersBalancesToolStripMenuItem.Visible = False
         '
         'ShiftReportToolStripMenuItem
         '
-        Me.ShiftReportToolStripMenuItem.Enabled = false
+        Me.ShiftReportToolStripMenuItem.Enabled = False
         Me.ShiftReportToolStripMenuItem.Name = "ShiftReportToolStripMenuItem"
         Me.ShiftReportToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.ShiftReportToolStripMenuItem.Text = "Shift Report"
-        Me.ShiftReportToolStripMenuItem.Visible = false
+        Me.ShiftReportToolStripMenuItem.Visible = False
         '
         'ToolStripSeparator6
         '
@@ -258,29 +258,29 @@ Partial Class FrmMain
         '
         'CardsStatusToolStripMenuItem
         '
-        Me.CardsStatusToolStripMenuItem.Enabled = false
+        Me.CardsStatusToolStripMenuItem.Enabled = False
         Me.CardsStatusToolStripMenuItem.Name = "CardsStatusToolStripMenuItem"
         Me.CardsStatusToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.CardsStatusToolStripMenuItem.Text = "Cards Status"
-        Me.CardsStatusToolStripMenuItem.Visible = false
+        Me.CardsStatusToolStripMenuItem.Visible = False
         '
         'DevicePerformanceToolStripMenuItem1
         '
-        Me.DevicePerformanceToolStripMenuItem1.Enabled = false
+        Me.DevicePerformanceToolStripMenuItem1.Enabled = False
         Me.DevicePerformanceToolStripMenuItem1.Name = "DevicePerformanceToolStripMenuItem1"
         Me.DevicePerformanceToolStripMenuItem1.Size = New System.Drawing.Size(249, 22)
         Me.DevicePerformanceToolStripMenuItem1.Text = "Device Performance Report"
         '
         'SlotDetailsReportToolStripMenuItem
         '
-        Me.SlotDetailsReportToolStripMenuItem.Enabled = false
+        Me.SlotDetailsReportToolStripMenuItem.Enabled = False
         Me.SlotDetailsReportToolStripMenuItem.Name = "SlotDetailsReportToolStripMenuItem"
         Me.SlotDetailsReportToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.SlotDetailsReportToolStripMenuItem.Text = "Slot Details Report"
         '
         'CardsValuesUsedPerSlotToolStripMenuItem
         '
-        Me.CardsValuesUsedPerSlotToolStripMenuItem.Enabled = false
+        Me.CardsValuesUsedPerSlotToolStripMenuItem.Enabled = False
         Me.CardsValuesUsedPerSlotToolStripMenuItem.Name = "CardsValuesUsedPerSlotToolStripMenuItem"
         Me.CardsValuesUsedPerSlotToolStripMenuItem.Size = New System.Drawing.Size(249, 22)
         Me.CardsValuesUsedPerSlotToolStripMenuItem.Text = "Cards Values used per Slot Report"
@@ -294,14 +294,14 @@ Partial Class FrmMain
         '
         'AddExpensesAirtimeCardsToolStripMenuItem
         '
-        Me.AddExpensesAirtimeCardsToolStripMenuItem.Enabled = false
+        Me.AddExpensesAirtimeCardsToolStripMenuItem.Enabled = False
         Me.AddExpensesAirtimeCardsToolStripMenuItem.Name = "AddExpensesAirtimeCardsToolStripMenuItem"
         Me.AddExpensesAirtimeCardsToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.AddExpensesAirtimeCardsToolStripMenuItem.Text = "Add Expenses - Airtime Cards"
         '
         'AddExpensesOthersToolStripMenuItem
         '
-        Me.AddExpensesOthersToolStripMenuItem.Enabled = false
+        Me.AddExpensesOthersToolStripMenuItem.Enabled = False
         Me.AddExpensesOthersToolStripMenuItem.Name = "AddExpensesOthersToolStripMenuItem"
         Me.AddExpensesOthersToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.AddExpensesOthersToolStripMenuItem.Text = "Add Expenses - Others"
@@ -313,7 +313,7 @@ Partial Class FrmMain
         '
         'AddSimCardsOrdersToolStripMenuItem
         '
-        Me.AddSimCardsOrdersToolStripMenuItem.Enabled = false
+        Me.AddSimCardsOrdersToolStripMenuItem.Enabled = False
         Me.AddSimCardsOrdersToolStripMenuItem.Name = "AddSimCardsOrdersToolStripMenuItem"
         Me.AddSimCardsOrdersToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.AddSimCardsOrdersToolStripMenuItem.Text = "Add Sim Cards Orders"
@@ -325,7 +325,7 @@ Partial Class FrmMain
         '
         'AddProviderPaymentsToolStripMenuItem
         '
-        Me.AddProviderPaymentsToolStripMenuItem.Enabled = false
+        Me.AddProviderPaymentsToolStripMenuItem.Enabled = False
         Me.AddProviderPaymentsToolStripMenuItem.Name = "AddProviderPaymentsToolStripMenuItem"
         Me.AddProviderPaymentsToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.AddProviderPaymentsToolStripMenuItem.Text = "Add Money Transfers"
@@ -337,21 +337,21 @@ Partial Class FrmMain
         '
         'ViewExpensesToolStripMenuItem
         '
-        Me.ViewExpensesToolStripMenuItem.Enabled = false
+        Me.ViewExpensesToolStripMenuItem.Enabled = False
         Me.ViewExpensesToolStripMenuItem.Name = "ViewExpensesToolStripMenuItem"
         Me.ViewExpensesToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.ViewExpensesToolStripMenuItem.Text = "View Expenses"
         '
         'ViewSimCardsOrdersToolStripMenuItem
         '
-        Me.ViewSimCardsOrdersToolStripMenuItem.Enabled = false
+        Me.ViewSimCardsOrdersToolStripMenuItem.Enabled = False
         Me.ViewSimCardsOrdersToolStripMenuItem.Name = "ViewSimCardsOrdersToolStripMenuItem"
         Me.ViewSimCardsOrdersToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.ViewSimCardsOrdersToolStripMenuItem.Text = "View Sim Cards Orders"
         '
         'ViewProviderPayementsToolStripMenuItem
         '
-        Me.ViewProviderPayementsToolStripMenuItem.Enabled = false
+        Me.ViewProviderPayementsToolStripMenuItem.Enabled = False
         Me.ViewProviderPayementsToolStripMenuItem.Name = "ViewProviderPayementsToolStripMenuItem"
         Me.ViewProviderPayementsToolStripMenuItem.Size = New System.Drawing.Size(229, 22)
         Me.ViewProviderPayementsToolStripMenuItem.Text = "View Money Transfers"
@@ -375,9 +375,9 @@ Partial Class FrmMain
         '
         'btnDeviceConsumption
         '
-        Me.btnDeviceConsumption.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnDeviceConsumption.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnDeviceConsumption.Image = CType(resources.GetObject("btnDeviceConsumption.Image"),System.Drawing.Image)
+        Me.btnDeviceConsumption.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDeviceConsumption.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnDeviceConsumption.Image = CType(resources.GetObject("btnDeviceConsumption.Image"), System.Drawing.Image)
         Me.btnDeviceConsumption.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnDeviceConsumption.Location = New System.Drawing.Point(60, 155)
         Me.btnDeviceConsumption.Name = "btnDeviceConsumption"
@@ -385,12 +385,12 @@ Partial Class FrmMain
         Me.btnDeviceConsumption.TabIndex = 114
         Me.btnDeviceConsumption.Text = "      Devices Consumption"
         Me.btnDeviceConsumption.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnDeviceConsumption.UseVisualStyleBackColor = true
+        Me.btnDeviceConsumption.UseVisualStyleBackColor = True
         '
         'lblError
         '
-        Me.lblError.AutoSize = true
-        Me.lblError.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.lblError.AutoSize = True
+        Me.lblError.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblError.ForeColor = System.Drawing.Color.DarkRed
         Me.lblError.Location = New System.Drawing.Point(19, 76)
         Me.lblError.Name = "lblError"
@@ -399,32 +399,32 @@ Partial Class FrmMain
         '
         'btnShiftEndUsersDevices2
         '
-        Me.btnShiftEndUsersDevices2.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnShiftEndUsersDevices2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnShiftEndUsersDevices2.Image = CType(resources.GetObject("btnShiftEndUsersDevices2.Image"),System.Drawing.Image)
+        Me.btnShiftEndUsersDevices2.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShiftEndUsersDevices2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnShiftEndUsersDevices2.Image = CType(resources.GetObject("btnShiftEndUsersDevices2.Image"), System.Drawing.Image)
         Me.btnShiftEndUsersDevices2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnShiftEndUsersDevices2.Location = New System.Drawing.Point(263, 155)
         Me.btnShiftEndUsersDevices2.Name = "btnShiftEndUsersDevices2"
         Me.btnShiftEndUsersDevices2.Size = New System.Drawing.Size(185, 43)
         Me.btnShiftEndUsersDevices2.TabIndex = 21
         Me.btnShiftEndUsersDevices2.Text = "    Shift End Users' Devices"
-        Me.btnShiftEndUsersDevices2.UseVisualStyleBackColor = true
-        Me.btnShiftEndUsersDevices2.Visible = false
+        Me.btnShiftEndUsersDevices2.UseVisualStyleBackColor = True
+        Me.btnShiftEndUsersDevices2.Visible = False
         '
         'Button3
         '
-        Me.Button3.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Button3.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.Location = New System.Drawing.Point(407, 34)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(59, 23)
         Me.Button3.TabIndex = 111
         Me.Button3.Text = "Check"
-        Me.Button3.UseVisualStyleBackColor = true
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'DateTimePicker1
         '
         Me.DateTimePicker1.CustomFormat = "dddd d/MM/yyyy"
-        Me.DateTimePicker1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.DateTimePicker1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.DateTimePicker1.Location = New System.Drawing.Point(63, 35)
         Me.DateTimePicker1.Name = "DateTimePicker1"
@@ -436,8 +436,8 @@ Partial Class FrmMain
         Me.cmbShifts.DataSource = Me.ShiftsBindingSource
         Me.cmbShifts.DisplayMember = "Shift"
         Me.cmbShifts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbShifts.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.cmbShifts.FormattingEnabled = true
+        Me.cmbShifts.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbShifts.FormattingEnabled = True
         Me.cmbShifts.Location = New System.Drawing.Point(321, 34)
         Me.cmbShifts.Name = "cmbShifts"
         Me.cmbShifts.Size = New System.Drawing.Size(80, 24)
@@ -456,8 +456,8 @@ Partial Class FrmMain
         '
         'Label1
         '
-        Me.Label1.AutoSize = true
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(18, 38)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 16)
@@ -466,8 +466,8 @@ Partial Class FrmMain
         '
         'Label9
         '
-        Me.Label9.AutoSize = true
-        Me.Label9.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(280, 38)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(38, 16)
@@ -476,8 +476,8 @@ Partial Class FrmMain
         '
         'btnReturnCards
         '
-        Me.btnReturnCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnReturnCards.Image = CType(resources.GetObject("btnReturnCards.Image"),System.Drawing.Image)
+        Me.btnReturnCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReturnCards.Image = CType(resources.GetObject("btnReturnCards.Image"), System.Drawing.Image)
         Me.btnReturnCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnReturnCards.Location = New System.Drawing.Point(263, 92)
         Me.btnReturnCards.Name = "btnReturnCards"
@@ -485,24 +485,24 @@ Partial Class FrmMain
         Me.btnReturnCards.TabIndex = 108
         Me.btnReturnCards.Text = "   Return not used cards"
         Me.btnReturnCards.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnReturnCards.UseVisualStyleBackColor = true
+        Me.btnReturnCards.UseVisualStyleBackColor = True
         '
         'btnUseCards
         '
-        Me.btnUseCards.Enabled = false
-        Me.btnUseCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnUseCards.Image = CType(resources.GetObject("btnUseCards.Image"),System.Drawing.Image)
+        Me.btnUseCards.Enabled = False
+        Me.btnUseCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUseCards.Image = CType(resources.GetObject("btnUseCards.Image"), System.Drawing.Image)
         Me.btnUseCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnUseCards.Location = New System.Drawing.Point(60, 92)
         Me.btnUseCards.Name = "btnUseCards"
         Me.btnUseCards.Size = New System.Drawing.Size(186, 43)
         Me.btnUseCards.TabIndex = 107
         Me.btnUseCards.Text = "Get my cards"
-        Me.btnUseCards.UseVisualStyleBackColor = true
+        Me.btnUseCards.UseVisualStyleBackColor = True
         '
         'PanelDistributor
         '
-        Me.PanelDistributor.Controls.Add(Me.Button1)
+        Me.PanelDistributor.Controls.Add(Me.btnReturnShiftCards)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsersDevices)
         Me.PanelDistributor.Controls.Add(Me.btnDistributedCards)
         Me.PanelDistributor.Controls.Add(Me.btnShiftEndUsers)
@@ -516,35 +516,38 @@ Partial Class FrmMain
         Me.PanelDistributor.Size = New System.Drawing.Size(504, 217)
         Me.PanelDistributor.TabIndex = 109
         '
-        'Button1
+        'btnReturnShiftCards
         '
-        Me.Button1.Location = New System.Drawing.Point(432, 174)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 115
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
+        Me.btnReturnShiftCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnReturnShiftCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnReturnShiftCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnReturnShiftCards.Location = New System.Drawing.Point(336, 153)
+        Me.btnReturnShiftCards.Name = "btnReturnShiftCards"
+        Me.btnReturnShiftCards.Size = New System.Drawing.Size(155, 43)
+        Me.btnReturnShiftCards.TabIndex = 115
+        Me.btnReturnShiftCards.Text = "Return Shift Cards"
+        Me.btnReturnShiftCards.UseVisualStyleBackColor = True
+        Me.btnReturnShiftCards.Visible = False
         '
         'btnShiftEndUsersDevices
         '
-        Me.btnShiftEndUsersDevices.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnShiftEndUsersDevices.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnShiftEndUsersDevices.Image = CType(resources.GetObject("btnShiftEndUsersDevices.Image"),System.Drawing.Image)
+        Me.btnShiftEndUsersDevices.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShiftEndUsersDevices.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnShiftEndUsersDevices.Image = CType(resources.GetObject("btnShiftEndUsersDevices.Image"), System.Drawing.Image)
         Me.btnShiftEndUsersDevices.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnShiftEndUsersDevices.Location = New System.Drawing.Point(255, 155)
+        Me.btnShiftEndUsersDevices.Location = New System.Drawing.Point(174, 153)
         Me.btnShiftEndUsersDevices.Name = "btnShiftEndUsersDevices"
         Me.btnShiftEndUsersDevices.Size = New System.Drawing.Size(155, 43)
         Me.btnShiftEndUsersDevices.TabIndex = 114
         Me.btnShiftEndUsersDevices.Text = "    Shift End Users' Devices"
-        Me.btnShiftEndUsersDevices.UseVisualStyleBackColor = true
-        Me.btnShiftEndUsersDevices.Visible = false
+        Me.btnShiftEndUsersDevices.UseVisualStyleBackColor = True
+        Me.btnShiftEndUsersDevices.Visible = False
         '
         'btnDistributedCards
         '
-        Me.btnDistributedCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnDistributedCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnDistributedCards.Image = CType(resources.GetObject("btnDistributedCards.Image"),System.Drawing.Image)
+        Me.btnDistributedCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDistributedCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnDistributedCards.Image = CType(resources.GetObject("btnDistributedCards.Image"), System.Drawing.Image)
         Me.btnDistributedCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnDistributedCards.Location = New System.Drawing.Point(14, 88)
         Me.btnDistributedCards.Name = "btnDistributedCards"
@@ -552,40 +555,40 @@ Partial Class FrmMain
         Me.btnDistributedCards.TabIndex = 18
         Me.btnDistributedCards.Text = "Distributed Cards"
         Me.btnDistributedCards.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnDistributedCards.UseVisualStyleBackColor = true
+        Me.btnDistributedCards.UseVisualStyleBackColor = True
         '
         'btnShiftEndUsers
         '
-        Me.btnShiftEndUsers.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnShiftEndUsers.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnShiftEndUsers.Image = CType(resources.GetObject("btnShiftEndUsers.Image"),System.Drawing.Image)
+        Me.btnShiftEndUsers.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnShiftEndUsers.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnShiftEndUsers.Image = CType(resources.GetObject("btnShiftEndUsers.Image"), System.Drawing.Image)
         Me.btnShiftEndUsers.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnShiftEndUsers.Location = New System.Drawing.Point(94, 155)
+        Me.btnShiftEndUsers.Location = New System.Drawing.Point(12, 153)
         Me.btnShiftEndUsers.Name = "btnShiftEndUsers"
         Me.btnShiftEndUsers.Size = New System.Drawing.Size(155, 43)
         Me.btnShiftEndUsers.TabIndex = 21
         Me.btnShiftEndUsers.Text = "    Shift - End Users"
-        Me.btnShiftEndUsers.UseVisualStyleBackColor = true
-        Me.btnShiftEndUsers.Visible = false
+        Me.btnShiftEndUsers.UseVisualStyleBackColor = True
+        Me.btnShiftEndUsers.Visible = False
         '
         'btnCorrectedCards
         '
-        Me.btnCorrectedCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnCorrectedCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnCorrectedCards.Image = CType(resources.GetObject("btnCorrectedCards.Image"),System.Drawing.Image)
+        Me.btnCorrectedCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCorrectedCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnCorrectedCards.Image = CType(resources.GetObject("btnCorrectedCards.Image"), System.Drawing.Image)
         Me.btnCorrectedCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnCorrectedCards.Location = New System.Drawing.Point(336, 88)
         Me.btnCorrectedCards.Name = "btnCorrectedCards"
         Me.btnCorrectedCards.Size = New System.Drawing.Size(155, 43)
         Me.btnCorrectedCards.TabIndex = 20
         Me.btnCorrectedCards.Text = "     Corrected Cards"
-        Me.btnCorrectedCards.UseVisualStyleBackColor = true
+        Me.btnCorrectedCards.UseVisualStyleBackColor = True
         '
         'btnWrongCards
         '
-        Me.btnWrongCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnWrongCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnWrongCards.Image = CType(resources.GetObject("btnWrongCards.Image"),System.Drawing.Image)
+        Me.btnWrongCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnWrongCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnWrongCards.Image = CType(resources.GetObject("btnWrongCards.Image"), System.Drawing.Image)
         Me.btnWrongCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnWrongCards.Location = New System.Drawing.Point(175, 88)
         Me.btnWrongCards.Name = "btnWrongCards"
@@ -593,13 +596,13 @@ Partial Class FrmMain
         Me.btnWrongCards.TabIndex = 19
         Me.btnWrongCards.Text = "      Wrong Cards"
         Me.btnWrongCards.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnWrongCards.UseVisualStyleBackColor = true
+        Me.btnWrongCards.UseVisualStyleBackColor = True
         '
         'btnSendCards
         '
-        Me.btnSendCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnSendCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnSendCards.Image = CType(resources.GetObject("btnSendCards.Image"),System.Drawing.Image)
+        Me.btnSendCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSendCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnSendCards.Image = CType(resources.GetObject("btnSendCards.Image"), System.Drawing.Image)
         Me.btnSendCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnSendCards.Location = New System.Drawing.Point(336, 23)
         Me.btnSendCards.Name = "btnSendCards"
@@ -607,13 +610,13 @@ Partial Class FrmMain
         Me.btnSendCards.TabIndex = 17
         Me.btnSendCards.Text = "       Send Cards"
         Me.btnSendCards.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSendCards.UseVisualStyleBackColor = true
+        Me.btnSendCards.UseVisualStyleBackColor = True
         '
         'btnNewCards
         '
-        Me.btnNewCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnNewCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnNewCards.Image = CType(resources.GetObject("btnNewCards.Image"),System.Drawing.Image)
+        Me.btnNewCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNewCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnNewCards.Image = CType(resources.GetObject("btnNewCards.Image"), System.Drawing.Image)
         Me.btnNewCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewCards.Location = New System.Drawing.Point(175, 23)
         Me.btnNewCards.Name = "btnNewCards"
@@ -621,74 +624,74 @@ Partial Class FrmMain
         Me.btnNewCards.TabIndex = 17
         Me.btnNewCards.Text = "       New Cards        "
         Me.btnNewCards.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewCards.UseVisualStyleBackColor = true
+        Me.btnNewCards.UseVisualStyleBackColor = True
         '
         'btnAddNewCards
         '
-        Me.btnAddNewCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.btnAddNewCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer), CType(CType(42,Byte),Integer))
-        Me.btnAddNewCards.Image = CType(resources.GetObject("btnAddNewCards.Image"),System.Drawing.Image)
+        Me.btnAddNewCards.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAddNewCards.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer), CType(CType(42, Byte), Integer))
+        Me.btnAddNewCards.Image = CType(resources.GetObject("btnAddNewCards.Image"), System.Drawing.Image)
         Me.btnAddNewCards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnAddNewCards.Location = New System.Drawing.Point(14, 23)
         Me.btnAddNewCards.Name = "btnAddNewCards"
         Me.btnAddNewCards.Size = New System.Drawing.Size(155, 43)
         Me.btnAddNewCards.TabIndex = 16
         Me.btnAddNewCards.Text = " Add New Cards"
-        Me.btnAddNewCards.UseVisualStyleBackColor = true
+        Me.btnAddNewCards.UseVisualStyleBackColor = True
         '
         'ShiftsTableAdapter
         '
-        Me.ShiftsTableAdapter.ClearBeforeFill = true
+        Me.ShiftsTableAdapter.ClearBeforeFill = True
         '
         'PictureBox1
         '
-        Me.PictureBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
-        Me.PictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(1,Byte),Integer), CType(CType(33,Byte),Integer), CType(CType(72,Byte),Integer))
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"),System.Drawing.Image)
+        Me.PictureBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(1, Byte), Integer), CType(CType(33, Byte), Integer), CType(CType(72, Byte), Integer))
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
         Me.PictureBox1.Location = New System.Drawing.Point(0, 27)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(507, 79)
+        Me.PictureBox1.Size = New System.Drawing.Size(505, 79)
         Me.PictureBox1.TabIndex = 110
-        Me.PictureBox1.TabStop = false
+        Me.PictureBox1.TabStop = False
         '
         'PrintForm1
         '
         Me.PrintForm1.DocumentName = "document"
         Me.PrintForm1.Form = Me
         Me.PrintForm1.PrintAction = System.Drawing.Printing.PrintAction.PrintToPrinter
-        Me.PrintForm1.PrinterSettings = CType(resources.GetObject("PrintForm1.PrinterSettings"),System.Drawing.Printing.PrinterSettings)
+        Me.PrintForm1.PrinterSettings = CType(resources.GetObject("PrintForm1.PrinterSettings"), System.Drawing.Printing.PrinterSettings)
         Me.PrintForm1.PrintFileName = Nothing
         '
         'FrmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(232,Byte),Integer), CType(CType(242,Byte),Integer), CType(CType(249,Byte),Integer))
-        Me.ClientSize = New System.Drawing.Size(507, 328)
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(232, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(249, Byte), Integer))
+        Me.ClientSize = New System.Drawing.Size(505, 328)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.PanelDistributor)
         Me.Controls.Add(Me.PanelCardsUser)
         Me.Controls.Add(Me.MenuStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Icon = CType(resources.GetObject("$this.Icon"),System.Drawing.Icon)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.MaximizeBox = false
+        Me.MaximizeBox = False
         Me.Name = "FrmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Airtime System - "
-        Me.MenuStrip1.ResumeLayout(false)
-        Me.MenuStrip1.PerformLayout
-        Me.PanelCardsUser.ResumeLayout(false)
-        Me.PanelCardsUser.PerformLayout
-        CType(Me.ShiftsBindingSource,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.DsShifts,System.ComponentModel.ISupportInitialize).EndInit
-        Me.PanelDistributor.ResumeLayout(false)
-        CType(Me.PictureBox1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
-        Me.PerformLayout
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
+        Me.PanelCardsUser.ResumeLayout(False)
+        Me.PanelCardsUser.PerformLayout()
+        CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelDistributor.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
 
-End Sub
+    End Sub
     Friend WithEvents FolderBrowserDialog1 As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents SettingToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
@@ -753,6 +756,6 @@ End Sub
     Friend WithEvents CardsStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DevicePerformanceToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SlotDetailsReportToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents CardsValuesUsedPerSlotToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents btnReturnShiftCards As System.Windows.Forms.Button
 End Class

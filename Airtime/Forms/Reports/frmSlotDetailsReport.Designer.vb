@@ -51,21 +51,6 @@ Partial Class frmSlotDetailsReport
         Me.dtpFromDate = New System.Windows.Forms.DateTimePicker()
         Me.chkDate = New System.Windows.Forms.CheckBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.EditCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnSearch = New System.Windows.Forms.Button()
-        Me.ShiftsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DsShifts = New WindowsApplication1.dsShifts()
-        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
-        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
-        Me.DataTable1TableAdapter = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
         Me.dgCountry = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgDevice = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgOperator = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -81,6 +66,21 @@ Partial Class frmSlotDetailsReport
         Me.dgCutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgRechargedBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgCutBy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.EditCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteCategoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExportToExcelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.ShiftsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DsShifts = New WindowsApplication1.dsShifts()
+        Me.ContextMenuStripHideColumn = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.HideColumnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowAllColumnsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.DataTable1TableAdapter = New WindowsApplication1.dsSlotsTableAdapters.DataTable1TableAdapter()
         Me.Panel1.SuspendLayout()
         CType(Me.DataTable1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsSlots, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -226,7 +226,7 @@ Partial Class frmSlotDetailsReport
         Me.cmbDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbDevices.Enabled = False
         Me.cmbDevices.FormattingEnabled = True
-        Me.cmbDevices.Location = New System.Drawing.Point(96, 39)
+        Me.cmbDevices.Location = New System.Drawing.Point(97, 39)
         Me.cmbDevices.Name = "cmbDevices"
         Me.cmbDevices.Size = New System.Drawing.Size(216, 24)
         Me.cmbDevices.TabIndex = 153
@@ -339,88 +339,6 @@ Partial Class frmSlotDetailsReport
         Me.DataGridView1.Size = New System.Drawing.Size(1669, 471)
         Me.DataGridView1.TabIndex = 37
         '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditCategoryToolStripMenuItem, Me.DeleteCategoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(134, 76)
-        '
-        'EditCategoryToolStripMenuItem
-        '
-        Me.EditCategoryToolStripMenuItem.Name = "EditCategoryToolStripMenuItem"
-        Me.EditCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.EditCategoryToolStripMenuItem.Text = "Edit Category"
-        '
-        'DeleteCategoryToolStripMenuItem
-        '
-        Me.DeleteCategoryToolStripMenuItem.Name = "DeleteCategoryToolStripMenuItem"
-        Me.DeleteCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.DeleteCategoryToolStripMenuItem.Text = "Delete Category"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(130, 6)
-        '
-        'ExportToExcelToolStripMenuItem
-        '
-        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
-        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
-        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
-        '
-        'btnSearch
-        '
-        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(1537, 7)
-        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
-        Me.btnSearch.TabIndex = 36
-        Me.btnSearch.Text = "Filter"
-        Me.btnSearch.UseVisualStyleBackColor = True
-        '
-        'ShiftsBindingSource
-        '
-        Me.ShiftsBindingSource.DataMember = "shifts"
-        Me.ShiftsBindingSource.DataSource = Me.DsShifts
-        '
-        'DsShifts
-        '
-        Me.DsShifts.DataSetName = "dsShifts"
-        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ContextMenuStripHideColumn
-        '
-        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
-        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
-        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
-        '
-        'HideColumnToolStripMenuItem
-        '
-        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
-        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
-        '
-        'ShowAllColumnsToolStripMenuItem
-        '
-        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
-        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
-        '
-        'ErrorProvider1
-        '
-        Me.ErrorProvider1.ContainerControl = Me
-        '
-        'ShiftsTableAdapter
-        '
-        Me.ShiftsTableAdapter.ClearBeforeFill = True
-        '
-        'DataTable1TableAdapter
-        '
-        Me.DataTable1TableAdapter.ClearBeforeFill = True
-        '
         'dgCountry
         '
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
@@ -528,6 +446,88 @@ Partial Class frmSlotDetailsReport
         Me.dgCutBy.HeaderText = "Cut By"
         Me.dgCutBy.Name = "dgCutBy"
         Me.dgCutBy.ReadOnly = True
+        '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EditCategoryToolStripMenuItem, Me.DeleteCategoryToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(134, 76)
+        '
+        'EditCategoryToolStripMenuItem
+        '
+        Me.EditCategoryToolStripMenuItem.Name = "EditCategoryToolStripMenuItem"
+        Me.EditCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.EditCategoryToolStripMenuItem.Text = "Edit Category"
+        '
+        'DeleteCategoryToolStripMenuItem
+        '
+        Me.DeleteCategoryToolStripMenuItem.Name = "DeleteCategoryToolStripMenuItem"
+        Me.DeleteCategoryToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.DeleteCategoryToolStripMenuItem.Text = "Delete Category"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(130, 6)
+        '
+        'ExportToExcelToolStripMenuItem
+        '
+        Me.ExportToExcelToolStripMenuItem.Name = "ExportToExcelToolStripMenuItem"
+        Me.ExportToExcelToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ExportToExcelToolStripMenuItem.Text = "Export to Excel"
+        '
+        'btnSearch
+        '
+        Me.btnSearch.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSearch.Font = New System.Drawing.Font("Tahoma", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(1537, 7)
+        Me.btnSearch.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(136, 34)
+        Me.btnSearch.TabIndex = 36
+        Me.btnSearch.Text = "Filter"
+        Me.btnSearch.UseVisualStyleBackColor = True
+        '
+        'ShiftsBindingSource
+        '
+        Me.ShiftsBindingSource.DataMember = "shifts"
+        Me.ShiftsBindingSource.DataSource = Me.DsShifts
+        '
+        'DsShifts
+        '
+        Me.DsShifts.DataSetName = "dsShifts"
+        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'ContextMenuStripHideColumn
+        '
+        Me.ContextMenuStripHideColumn.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideColumnToolStripMenuItem, Me.ShowAllColumnsToolStripMenuItem})
+        Me.ContextMenuStripHideColumn.Name = "ContextMenuStripHideColumn"
+        Me.ContextMenuStripHideColumn.Size = New System.Drawing.Size(172, 48)
+        '
+        'HideColumnToolStripMenuItem
+        '
+        Me.HideColumnToolStripMenuItem.Name = "HideColumnToolStripMenuItem"
+        Me.HideColumnToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.HideColumnToolStripMenuItem.Text = "Hide Column"
+        '
+        'ShowAllColumnsToolStripMenuItem
+        '
+        Me.ShowAllColumnsToolStripMenuItem.Name = "ShowAllColumnsToolStripMenuItem"
+        Me.ShowAllColumnsToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+        Me.ShowAllColumnsToolStripMenuItem.Text = "Show All Columns"
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
+        'ShiftsTableAdapter
+        '
+        Me.ShiftsTableAdapter.ClearBeforeFill = True
+        '
+        'DataTable1TableAdapter
+        '
+        Me.DataTable1TableAdapter.ClearBeforeFill = True
         '
         'frmSlotDetailsReport
         '

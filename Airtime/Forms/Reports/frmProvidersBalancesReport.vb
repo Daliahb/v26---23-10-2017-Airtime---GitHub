@@ -4,7 +4,7 @@
     Dim FromDate, ToDate As Date
     Dim isloaded As Boolean
     Dim strCardNo As String
-    Dim dsCountries As DataSet
+    'Dim dsCountries As DataSet
     Dim boolError As Boolean = True
 
     Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -17,9 +17,14 @@
 
         Me.lblHeader.Text += " - " + Now().ToString("dd/MM/yyyy")
 
-        dsCountries = odbaccess.GetCountriesDS
-        If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-            Me.cmbCountries.DataSource = dsCountries.Tables(0)
+        'dsCountries = odbaccess.GetCountriesDS
+        'If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+        '    Me.cmbCountries.DataSource = dsCountries.Tables(0)
+        '    Me.cmbCountries.DisplayMember = "Country"
+        '    Me.cmbCountries.ValueMember = "ID"
+        'End If
+        If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+            Me.cmbCountries.DataSource = gdsCountries.Tables(0)
             Me.cmbCountries.DisplayMember = "Country"
             Me.cmbCountries.ValueMember = "ID"
         End If

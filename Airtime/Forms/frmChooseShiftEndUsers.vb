@@ -254,35 +254,59 @@
             Exit Sub
         End If
 
+        Dim ds As DataSet
+
         Try
+            ErrorProvider1.SetError(cmbShifts, "")
+            ErrorProvider1.SetError(btnSave, "")
+            Me.lblError.Visible = False
             Me.btnSave.Enabled = False
             '1- Get shift ID (either select or insert new), + remove all the end users for this shift + insert new End Users
             strUserIDs = New System.Text.StringBuilder
             For Each oshiftuser As ShiftUser In oShift.ocolSiftUsers
                 strUserIDs.Append(oshiftuser.UserID.ToString + ",")
             Next
-            lShiftID = odbaccess.SaveShiftEndUsers(strUserIDs.ToString, Me.DateTimePicker1.Value, CInt(Me.cmbShifts.SelectedValue))
-            If Not lShiftID = -1 Then
-                '   2- will save each user's limists seperately
-                For Each oshiftuser As ShiftUser In oShift.ocolSiftUsers
-                    strOperationsLimits = New System.Text.StringBuilder
-                    For Each oper As Operators In oshiftuser.ocolOperators
-                        strOperationsLimits.Append(oper.OperatorID.ToString + "-" + oper.UserLimit.ToString + ",")
-                    Next
-                    odbaccess.SaveShiftUsersOperatorsLimits(strOperationsLimits.ToString, lShiftID, oshiftuser.UserID)
-                Next
-                boolSaved = True
-                MsgBox("Users saved successfully.")
+            ds = odbaccess.SaveShiftEndUsers(strUserIDs.ToString, Me.DateTimePicker1.Value, CInt(Me.cmbShifts.SelectedValue))
+            If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
+                Dim intStatus As Integer
+                intStatus = CInt(ds.Tables(0).Rows(0).Item(0))
+                If intStatus = 0 Then
+                    lShiftID = CInt(ds.Tables(0).Rows(0).Item(1))
 
+                Else
+                    lShiftID = -1
+                    Select Case intStatus
+                        Case 2
+                            ErrorProvider1.SetError(cmbShifts, "Selected shift is wrong.. Not in order.")
+                        Case 3
+                            Me.lblError.Visible = True
+                            ErrorProvider1.SetError(btnSave, "Please return all cards before you create a new shift!")
+
+                    End Select
+                End If
+
+                If Not lShiftID = -1 Then
+                    '   2- will save each user's limists seperately
+                    For Each oshiftuser As ShiftUser In oShift.ocolSiftUsers
+                        strOperationsLimits = New System.Text.StringBuilder
+                        For Each oper As Operators In oshiftuser.ocolOperators
+                            strOperationsLimits.Append(oper.OperatorID.ToString + "-" + oper.UserLimit.ToString + ",")
+                        Next
+                        odbaccess.SaveShiftUsersOperatorsLimits(strOperationsLimits.ToString, lShiftID, oshiftuser.UserID)
+                    Next
+                    boolSaved = True
+                    MsgBox("Users saved successfully.")
+
+                End If
             End If
             Me.btnSave.Enabled = True
+
         Catch ex As Exception
             MsgBox(ex.Message + vbCrLf + ex.StackTrace)
         End Try
     End Sub
 
     Private Sub btnGetData_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGetData.Click
-
         If Me.DateTimePicker1.Value < Now().Date Then
             Me.btnSave.Enabled = False
             Me.btnAddUser.Enabled = False
@@ -316,5 +340,10 @@
             Next
         End If
 
+    End Sub
+
+    Private Sub btnCreateNewShift_Click(sender As System.Object, e As System.EventArgs)
+        Dim ds As New DataSet
+        '    ds = odbaccess.CreateNewShift
     End Sub
 End Class

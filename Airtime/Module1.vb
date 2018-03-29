@@ -6,6 +6,7 @@ Module Module1
     Public odbaccess As New DBAccess
     Public gUser As New User
     Public gConnectionString As String
+    Public gdsCountries, gdsProviders, gdsOperators, gdsCategories, gdsDevices, gdsLocations As DataSet
 
     Sub New()
         'Real DB

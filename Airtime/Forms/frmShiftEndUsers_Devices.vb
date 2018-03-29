@@ -6,7 +6,7 @@
     Dim lUserID As Integer
     Dim strDevicesIDs As System.Text.StringBuilder
     Dim strDevices As New System.Text.StringBuilder
-    Dim dsDevices As DataSet
+    'Dim dsDevices As DataSet
     Dim oDevice As Device
 
     Private Sub frmShiftEndUsers_Devices_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -27,9 +27,9 @@
         Me.cmbShifts.ValueMember = "id"
 
         Dim dr As DataRow
-        dsDevices = odbaccess.GetDevices(0)
-        If Not dsDevices Is Nothing AndAlso Not dsDevices.Tables.Count = 0 Then
-            For Each dr In dsDevices.Tables(0).Rows
+        ' dsDevices = odbaccess.GetDevices(0)
+        If Not gdsDevices Is Nothing AndAlso Not gdsDevices.Tables.Count = 0 Then
+            For Each dr In gdsDevices.Tables(0).Rows
                 Me.CheckedListBox1.Items.Add(dr.Item("device").ToString, False)
             Next
         End If
@@ -43,7 +43,7 @@
                 strDevices = New System.Text.StringBuilder
                 For Each item In Me.CheckedListBox1.CheckedItems
                     strDevices.Append(item.ToString + ", ")
-                    For Each dr As DataRow In dsDevices.Tables(0).Rows
+                    For Each dr As DataRow In gdsDevices.Tables(0).Rows
                         If dr.Item("Device").ToString = item.ToString Then
                             oDevice = New Device
                             oDevice.DeviceID = CInt(dr.Item("id"))

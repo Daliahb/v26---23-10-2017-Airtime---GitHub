@@ -141,10 +141,15 @@
 
     Public Sub FillDs()
         Try
-            Dim dsCountries As DataSet = odbaccess.GetCountriesDS
+            'Dim dsCountries As DataSet = odbaccess.GetCountriesDS
 
-            If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-                Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            'If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            '    Me.cmbCountries.DisplayMember = "Country"
+            '    Me.cmbCountries.ValueMember = "ID"
+            'End If
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+                Me.cmbCountries.DataSource = gdsCountries.Tables(0)
                 Me.cmbCountries.DisplayMember = "Country"
                 Me.cmbCountries.ValueMember = "ID"
             End If
@@ -169,11 +174,18 @@
     Private Sub cmbCountries_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCountries.SelectedIndexChanged
         If isLoaded Then
             Me.cmbProviders.DataSource = Nothing
-            Dim dsProvider As DataSet = odbaccess.GetProviders(True, CInt(Me.cmbCountries.SelectedValue))
-            If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
-                Me.cmbProviders.DataSource = dsProvider.Tables(0)
+            'Dim dsProvider As DataSet = odbaccess.GetProviders(True, CInt(Me.cmbCountries.SelectedValue))
+            'If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbProviders.DataSource = dsProvider.Tables(0)
+            '    Me.cmbProviders.DisplayMember = "Provider"
+            '    Me.cmbProviders.ValueMember = "ID"
+            'End If
+            If Not gdsProviders Is Nothing AndAlso Not gdsProviders.Tables.Count = 0 Then
+                Dim dvProvider As New DataView(gdsProviders.Tables(0))
+                dvProvider.RowFilter = "FK_Country = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                Me.cmbProviders.DataSource = dvProvider
+                Me.cmbProviders.ValueMember = "Id"
                 Me.cmbProviders.DisplayMember = "Provider"
-                Me.cmbProviders.ValueMember = "ID"
             End If
 
             Me.cmbSimCardTypes.DataSource = Nothing

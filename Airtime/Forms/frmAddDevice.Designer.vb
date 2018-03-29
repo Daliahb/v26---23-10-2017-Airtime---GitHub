@@ -26,22 +26,17 @@ Partial Class frmAddDevice
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAddDevice))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.cmbLocation = New System.Windows.Forms.ComboBox()
-        Me.LocationsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DsLocations = New WindowsApplication1.dsLocations()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnReset = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtPrefix = New System.Windows.Forms.TextBox()
         Me.txtName = New System.Windows.Forms.TextBox()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.LocationsTableAdapter = New WindowsApplication1.dsLocationsTableAdapters.LocationsTableAdapter()
-        Me.txtPrefix = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
-        CType(Me.LocationsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsLocations, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -67,8 +62,6 @@ Partial Class frmAddDevice
         '
         'cmbLocation
         '
-        Me.cmbLocation.DataSource = Me.LocationsBindingSource
-        Me.cmbLocation.DisplayMember = "Location"
         Me.cmbLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLocation.FormattingEnabled = True
         Me.cmbLocation.Location = New System.Drawing.Point(75, 37)
@@ -76,16 +69,6 @@ Partial Class frmAddDevice
         Me.cmbLocation.Size = New System.Drawing.Size(223, 24)
         Me.cmbLocation.TabIndex = 79
         Me.cmbLocation.ValueMember = "ID"
-        '
-        'LocationsBindingSource
-        '
-        Me.LocationsBindingSource.DataMember = "Locations"
-        Me.LocationsBindingSource.DataSource = Me.DsLocations
-        '
-        'DsLocations
-        '
-        Me.DsLocations.DataSetName = "dsLocations"
-        Me.DsLocations.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'Panel2
         '
@@ -127,6 +110,15 @@ Partial Class frmAddDevice
         Me.btnReset.Text = "Reset"
         Me.btnReset.UseVisualStyleBackColor = True
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(2, 71)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(45, 16)
+        Me.Label2.TabIndex = 76
+        Me.Label2.Text = "Prefix"
+        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -145,6 +137,13 @@ Partial Class frmAddDevice
         Me.Label9.TabIndex = 76
         Me.Label9.Text = "Location"
         '
+        'txtPrefix
+        '
+        Me.txtPrefix.Location = New System.Drawing.Point(75, 68)
+        Me.txtPrefix.Name = "txtPrefix"
+        Me.txtPrefix.Size = New System.Drawing.Size(223, 23)
+        Me.txtPrefix.TabIndex = 0
+        '
         'txtName
         '
         Me.txtName.Location = New System.Drawing.Point(75, 8)
@@ -155,26 +154,6 @@ Partial Class frmAddDevice
         'ErrorProvider1
         '
         Me.ErrorProvider1.ContainerControl = Me
-        '
-        'LocationsTableAdapter
-        '
-        Me.LocationsTableAdapter.ClearBeforeFill = True
-        '
-        'txtPrefix
-        '
-        Me.txtPrefix.Location = New System.Drawing.Point(75, 68)
-        Me.txtPrefix.Name = "txtPrefix"
-        Me.txtPrefix.Size = New System.Drawing.Size(223, 23)
-        Me.txtPrefix.TabIndex = 0
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(2, 71)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 16)
-        Me.Label2.TabIndex = 76
-        Me.Label2.Text = "Prefix"
         '
         'frmAddDevice
         '
@@ -192,8 +171,6 @@ Partial Class frmAddDevice
         Me.Text = "Add Device"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.LocationsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsLocations, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -209,9 +186,6 @@ Partial Class frmAddDevice
     Friend WithEvents txtName As System.Windows.Forms.TextBox
     Friend WithEvents cmbLocation As System.Windows.Forms.ComboBox
     Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
-    Friend WithEvents DsLocations As WindowsApplication1.dsLocations
-    Friend WithEvents LocationsBindingSource As System.Windows.Forms.BindingSource
-    Friend WithEvents LocationsTableAdapter As WindowsApplication1.dsLocationsTableAdapters.LocationsTableAdapter
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents txtPrefix As System.Windows.Forms.TextBox
 End Class

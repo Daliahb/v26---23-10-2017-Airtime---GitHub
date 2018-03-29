@@ -25,8 +25,14 @@
         boolSaved = True
 
         isLoaded = True
-        Me.cmbCountries.SelectedIndex = -1
-        Me.cmbCountries.SelectedIndex = 0
+
+        If Not cmbCountries.Items.Count = 0 Then
+            Me.cmbCountries.SelectedIndex = -1
+            Me.cmbCountries.SelectedIndex = 0
+        Else
+            FillDs()
+        End If
+
         Try
             If gUser.type = Enumerators.UsersTypes.Provider Then
                 Me.cmbGetItBy.SelectedValue = 6
@@ -175,10 +181,15 @@
 
     Public Sub FillDs()
         Try
-            Dim dsCountries As DataSet = odbaccess.GetCountriesDS
+            'Dim dsCountries As DataSet = odbaccess.GetCountriesDS
 
-            If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-                Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            'If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            '    Me.cmbCountries.DisplayMember = "Country"
+            '    Me.cmbCountries.ValueMember = "ID"
+            'End If
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+                Me.cmbCountries.DataSource = gdsCountries.Tables(0)
                 Me.cmbCountries.DisplayMember = "Country"
                 Me.cmbCountries.ValueMember = "ID"
             End If
@@ -233,20 +244,35 @@
 
     Private Sub cmbCountries_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCountries.SelectedIndexChanged
         If isLoaded Then
-            Dim dsOperators As DataSet = odbaccess.GetOperators(True, Me.cmbCountries.SelectedValue)
-            Me.cmbOperators.DataSource = Nothing
-            If Not dsOperators Is Nothing AndAlso Not dsOperators.Tables.Count = 0 AndAlso Not dsOperators.Tables(0).Rows.Count = 0 Then
-                Me.cmbOperators.DataSource = dsOperators.Tables(0)
+            'Dim dsOperators As DataSet = odbaccess.GetOperators(True, Me.cmbCountries.SelectedValue)
+            'Me.cmbOperators.DataSource = Nothing
+            'If Not dsOperators Is Nothing AndAlso Not dsOperators.Tables.Count = 0 AndAlso Not dsOperators.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbOperators.DataSource = dsOperators.Tables(0)
+            '    Me.cmbOperators.DisplayMember = "Operator"
+            '    Me.cmbOperators.ValueMember = "ID"
+            'End If
+            If Not gdsOperators Is Nothing AndAlso Not gdsOperators.Tables.Count = 0 Then
+                Dim dv As New DataView(gdsOperators.Tables(0))
+                dv.RowFilter = "FK_Country = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                Me.cmbOperators.DataSource = dv
+                Me.cmbOperators.ValueMember = "Id"
                 Me.cmbOperators.DisplayMember = "Operator"
-                Me.cmbOperators.ValueMember = "ID"
             End If
 
-            Dim dsProvider As DataSet = odbaccess.GetProviders(True, Me.cmbCountries.SelectedValue)
-            Me.cmbProviders.DataSource = Nothing
-            If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
-                Me.cmbProviders.DataSource = dsProvider.Tables(0)
+
+            'Dim dsProvider As DataSet = odbaccess.GetProviders(True, Me.cmbCountries.SelectedValue)
+            'Me.cmbProviders.DataSource = Nothing
+            'If Not dsProvider Is Nothing AndAlso Not dsProvider.Tables.Count = 0 AndAlso Not dsProvider.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbProviders.DataSource = dsProvider.Tables(0)
+            '    Me.cmbProviders.DisplayMember = "Provider"
+            '    Me.cmbProviders.ValueMember = "ID"
+            'End If
+            If Not gdsProviders Is Nothing AndAlso Not gdsProviders.Tables.Count = 0 Then
+                Dim dvProvider As New DataView(gdsProviders.Tables(0))
+                dvProvider.RowFilter = "FK_Country = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                Me.cmbProviders.DataSource = dvProvider
+                Me.cmbProviders.ValueMember = "Id"
                 Me.cmbProviders.DisplayMember = "Provider"
-                Me.cmbProviders.ValueMember = "ID"
             End If
         End If
 
@@ -254,12 +280,20 @@
 
     Private Sub cmbOperators_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbOperators.SelectedIndexChanged
         If isLoaded Then
-            Dim dsCategory As DataSet = odbaccess.GetCategories(Me.cmbCountries.SelectedValue, Me.cmbOperators.SelectedValue)
-            Me.cmbCategory.DataSource = Nothing
-            If Not dsCategory Is Nothing AndAlso Not dsCategory.Tables.Count = 0 AndAlso Not dsCategory.Tables(0).Rows.Count = 0 Then
-                Me.cmbCategory.DataSource = dsCategory.Tables(0)
+            'Dim dsCategory As DataSet = odbaccess.GetCategories(Me.cmbCountries.SelectedValue, Me.cmbOperators.SelectedValue)
+            'Me.cmbCategory.DataSource = Nothing
+            'If Not dsCategory Is Nothing AndAlso Not dsCategory.Tables.Count = 0 AndAlso Not dsCategory.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbCategory.DataSource = dsCategory.Tables(0)
+            '    Me.cmbCategory.DisplayMember = "Category"
+            '    Me.cmbCategory.ValueMember = "ID"
+            'End If
+            If Not gdsCategories Is Nothing AndAlso Not gdsCategories.Tables.Count = 0 Then
+                Dim dvCategory As New DataView(gdsCategories.Tables(0))
+                dvCategory.RowFilter = "Country_Id = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                dvCategory.RowFilter = "Operator_Id = " & CInt(Me.cmbOperators.SelectedValue).ToString
+                Me.cmbCategory.DataSource = dvCategory
+                Me.cmbCategory.ValueMember = "Id"
                 Me.cmbCategory.DisplayMember = "Category"
-                Me.cmbCategory.ValueMember = "ID"
             End If
         End If
 

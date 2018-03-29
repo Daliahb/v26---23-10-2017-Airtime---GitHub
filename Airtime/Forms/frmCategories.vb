@@ -75,10 +75,15 @@
 
     Public Sub FillTypes()
         Try
-            Dim dsCountries As DataSet = odbaccess.GetCountriesDS
+            'Dim dsCountries As DataSet = odbaccess.GetCountriesDS
 
-            If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-                Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            'If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            '    Me.cmbCountries.DisplayMember = "Country"
+            '    Me.cmbCountries.ValueMember = "ID"
+            'End If
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+                Me.cmbCountries.DataSource = gdsCountries.Tables(0)
                 Me.cmbCountries.DisplayMember = "Country"
                 Me.cmbCountries.ValueMember = "ID"
             End If
@@ -162,14 +167,22 @@
 
     Private Sub cmbCountries_SelectedValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbCountries.SelectedValueChanged
 
-        Dim dsOperators As DataSet = odbaccess.GetOperators(True, CInt(Me.cmbCountries.SelectedValue))
+        'Dim dsOperators As DataSet = odbaccess.GetOperators(True, CInt(Me.cmbCountries.SelectedValue))
 
-        If Not dsOperators Is Nothing AndAlso Not dsOperators.Tables.Count = 0 AndAlso Not dsOperators.Tables(0).Rows.Count = 0 Then
-            Me.cmbOperators.DataSource = dsOperators.Tables(0)
-            Me.cmbOperators.DisplayMember = "Operator"
-            Me.cmbOperators.ValueMember = "ID"
+        'If Not dsOperators Is Nothing AndAlso Not dsOperators.Tables.Count = 0 AndAlso Not dsOperators.Tables(0).Rows.Count = 0 Then
+        '    Me.cmbOperators.DataSource = dsOperators.Tables(0)
+        '    Me.cmbOperators.DisplayMember = "Operator"
+        '    Me.cmbOperators.ValueMember = "ID"
+        'End If
+        If Me.chkCountry.Checked Then
+            If Not gdsOperators Is Nothing AndAlso Not gdsOperators.Tables.Count = 0 Then
+                Dim dv As New DataView(gdsOperators.Tables(0))
+                dv.RowFilter = "FK_Country = " & CInt(Me.cmbCountries.SelectedValue).ToString
+                Me.cmbOperators.DataSource = dv
+                Me.cmbOperators.ValueMember = "Id"
+                Me.cmbOperators.DisplayMember = "Operator"
+            End If
         End If
-
 
     End Sub
 End Class

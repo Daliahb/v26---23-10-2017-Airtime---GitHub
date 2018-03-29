@@ -6,7 +6,8 @@
     Dim dgRow As DataGridViewRow
     Dim strLocationIDs As New System.Text.StringBuilder
     Public strLocations As New System.Text.StringBuilder
-    Dim dsLocations1, dsProvidersLocations As DataSet
+    'Dim dsLocations1 As DataSet
+    Dim dsProvidersLocations As DataSet
 
     Public Sub New(ByVal enumEditAdd As Enumerators.EditAdd, Optional ByVal dgRow As DataGridViewRow = Nothing, Optional ByVal dsProvidersLocations As DataSet = Nothing)
         ' This call is required by the designer.
@@ -109,18 +110,23 @@
 
     Public Sub FillDs()
         Try
-            Dim dsCountries As DataSet = odbaccess.GetCountriesDS
+            'Dim dsCountries As DataSet = odbaccess.GetCountriesDS
 
-            If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
-                Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            'If Not dsCountries Is Nothing AndAlso Not dsCountries.Tables.Count = 0 AndAlso Not dsCountries.Tables(0).Rows.Count = 0 Then
+            '    Me.cmbCountries.DataSource = dsCountries.Tables(0)
+            '    Me.cmbCountries.DisplayMember = "Country"
+            '    Me.cmbCountries.ValueMember = "ID"
+            'End If
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 Then
+                Me.cmbCountries.DataSource = gdsCountries.Tables(0)
                 Me.cmbCountries.DisplayMember = "Country"
                 Me.cmbCountries.ValueMember = "ID"
             End If
 
             Dim dr As DataRow
-            dsLocations1 = odbaccess.GetLocations()
-            If Not dsLocations1 Is Nothing AndAlso Not dsLocations1.Tables.Count = 0 Then
-                For Each dr In dsLocations1.Tables(0).Rows
+            ' dsLocations1 = odbaccess.GetLocations()
+            If Not gdsLocations Is Nothing AndAlso Not gdsLocations.Tables.Count = 0 Then
+                For Each dr In gdsLocations.Tables(0).Rows
                     Me.CheckedListBox1.Items.Add(dr.Item("Location"), False)
                 Next
             End If
@@ -134,7 +140,7 @@
         Try
             Dim dr As DataRow
             For Each item In Me.CheckedListBox1.CheckedItems
-                For Each dr In DsLocations1.Tables(0).Rows
+                For Each dr In gdsLocations.Tables(0).Rows
                     If item.ToString = dr.Item("Location").ToString Then
                         strLocationIDs.Append(dr.Item("id"))
                         strLocationIDs.Append(",")

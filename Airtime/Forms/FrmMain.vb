@@ -21,6 +21,11 @@ Public Class FrmMain
         CheckPermission()
         Me.Text += gUser.UserName
 
+        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        FillGlobalDatasets()
+
+        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
         If gUser.type = Enumerators.UsersTypes.CardsUser Then
             Me.PanelDistributor.Visible = False
             Me.PanelCardsUser.Location = New Point(0, 108)
@@ -59,7 +64,7 @@ Public Class FrmMain
         ElseIf gUser.type = Enumerators.UsersTypes.Audit Then
             Me.PanelCardsUser.Visible = False
             Me.PanelDistributor.Location = New Point(0, 108)
-            Me.btnShiftEndUsers.Location = New Point(175, 155)
+
             Me.btnShiftEndUsers.Visible = True
             Me.ProvidersBalancesToolStripMenuItem.Visible = True
             Me.ShiftReportToolStripMenuItem.Visible = True
@@ -77,6 +82,8 @@ Public Class FrmMain
             DevicePerformanceToolStripMenuItem1.Enabled = True
             SlotDetailsReportToolStripMenuItem.Enabled = True
             CardsValuesUsedPerSlotToolStripMenuItem.Enabled = True
+            btnReturnShiftCards.Visible = True
+            Me.btnReturnShiftCards.Location = New Point(174, 153)
 
         ElseIf gUser.type = Enumerators.UsersTypes.Provider Then
             Me.PanelCardsUser.Visible = False
@@ -97,8 +104,8 @@ Public Class FrmMain
             Me.ManageUsersToolStripMenuItem.Visible = True
             Me.ReportsToolStripMenuItem.Visible = True
             Me.btnShiftEndUsersDevices.Visible = True
-            Me.btnShiftEndUsersDevices.Location = New Point(255, 155)
-            Me.btnShiftEndUsers.Location = New Point(94, 155)
+            'Me.btnShiftEndUsersDevices.Location = New Point(255, 155)
+            'Me.btnShiftEndUsers.Location = New Point(94, 155)
             Me.btnShiftEndUsers.Visible = True
             Me.ProvidersBalancesToolStripMenuItem.Visible = True
             Me.CardsLessThanLimitToolStripMenuItem.Visible = True
@@ -125,7 +132,7 @@ Public Class FrmMain
             ShiftReportToolStripMenuItem.Enabled = True
             CardsStatusToolStripMenuItem.Enabled = True
             CardsValuesUsedPerSlotToolStripMenuItem.Enabled = True
-
+            btnReturnShiftCards.Visible = True
         End If
     End Sub
 
@@ -133,6 +140,64 @@ Public Class FrmMain
 
 
     End Sub
+    '
+    '  Private Sub Public gdsCountries, gdsProviders, gdsOperators, gdsCategories As DataSet
+    Private Sub FillGlobalDatasets()
+        Try
+
+            '     If Not gUser.type = Enumerators.UsersTypes.CardsUser AndAlso Not gUser.type = Enumerators.UsersTypes.Supervisor Then
+            gdsCountries = odbaccess.GetCountriesDS
+            If Not gdsCountries Is Nothing AndAlso Not gdsCountries.Tables.Count = 0 AndAlso Not gdsCountries.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsCountries = odbaccess.GetCountriesDS
+            End If
+
+            gdsProviders = odbaccess.GetProvidersDS
+            If Not gdsProviders Is Nothing AndAlso Not gdsProviders.Tables.Count = 0 AndAlso Not gdsProviders.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsProviders = odbaccess.GetProvidersDS
+            End If
+
+            gdsCategories = odbaccess.GetCategories(0, 0)
+            If Not gdsCategories Is Nothing AndAlso Not gdsCategories.Tables.Count = 0 AndAlso Not gdsCategories.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsCategories = odbaccess.GetCategories(0, 0)
+            End If
+
+            gdsDevices = odbaccess.GetDevices(0)
+            If Not gdsDevices Is Nothing AndAlso Not gdsDevices.Tables.Count = 0 AndAlso Not gdsDevices.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsDevices = odbaccess.GetDevices(0)
+            End If
+
+            gdsLocations = odbaccess.GetLocations()
+            If Not gdsLocations Is Nothing AndAlso Not gdsLocations.Tables.Count = 0 AndAlso Not gdsLocations.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsLocations = odbaccess.GetLocations()
+            End If
+            ' End If
+
+            gdsOperators = odbaccess.GetOperators(False, 0)
+            If Not gdsOperators Is Nothing AndAlso Not gdsOperators.Tables.Count = 0 AndAlso Not gdsOperators.Tables(0).Rows.Count = 0 Then
+
+            Else
+                gdsOperators = odbaccess.GetOperators(False, 0)
+            End If
+            'Dim dv As New DataView(gdsProviders.Tables(0))
+            'dv.RowFilter = "FK_Country = 6"
+            'Me.ComboBox1.DataSource = dv
+            'Me.ComboBox1.ValueMember = "Id"
+            'Me.ComboBox1.DisplayMember = "Provider"
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
 
     Private Sub btnAddNewCards_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddNewCards.Click
         If Application.OpenForms().OfType(Of frmAddCards).Any Then
@@ -353,18 +418,17 @@ Public Class FrmMain
     End Sub
 
     Private Sub LocationsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LocationsToolStripMenuItem.Click
-        If Application.OpenForms().OfType(Of frmLocations).Any Then
+        If Application.OpenForms().OfType(Of FrmLocations).Any Then
             For Each frm As Form In Application.OpenForms
                 If frm.Name.Equals("frmLocations") Then
                     frm.WindowState = FormWindowState.Normal
                 End If
             Next
         Else
-            Dim frm As New frmLocations
+            Dim frm As New FrmLocations
             frm.Show()
         End If
     End Sub
-
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnShiftEndUsers.Click
         If Application.OpenForms().OfType(Of frmChooseShiftEndUsers).Any Then
@@ -540,7 +604,6 @@ Public Class FrmMain
         End If
     End Sub
 
-
     Private Sub AddProviderPaymentsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddProviderPaymentsToolStripMenuItem.Click
         If Application.OpenForms().OfType(Of frmAddProviderPayment).Any Then
             For Each frm As Form In Application.OpenForms
@@ -584,7 +647,6 @@ Public Class FrmMain
         Me.PrintForm1.PrintAction = Printing.PrintAction.PrintToPreview
         Me.PrintForm1.Print()
     End Sub
-
 
     Private Sub btnDeviceConsumption_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDeviceConsumption.Click
         If Application.OpenForms().OfType(Of frmDeviceConsumptionReport).Any Then
@@ -637,7 +699,6 @@ Public Class FrmMain
         End If
     End Sub
 
-
     Private Sub ToolStripMenuItem1_Click(sender As System.Object, e As System.EventArgs) Handles DevicePerformanceToolStripMenuItem1.Click
         If Application.OpenForms().OfType(Of frmSlotsInfoReport).Any Then
             For Each frm As Form In Application.OpenForms
@@ -664,43 +725,6 @@ Public Class FrmMain
         End If
     End Sub
 
-    Private Sub Button1_Click_2(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-        'Dim webClient As New System.Net.WebClient
-        'Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_00:00:00&date_to=2017-11-02_05:31:01&prefix=111")
-
-        'If Not result Is Nothing AndAlso Not result.Length = 0 Then
-        '    MsgBox(result)
-        '    '    result.Trim()
-
-        '    '    Dim strArr() As String
-
-        '    '    strArr = result.Split("|")
-        '    '    If Not strArr.Count = 0 Then
-        '    '        intTotalCalls = CInt(strArr(0))
-        '    '        dblTalkTime = CDbl(strArr(1))
-        '    '        dblACD = CDbl(strArr(2))
-        '    '        dblASR = CDbl(strArr(3))
-        'End If
-
-      
-
-        'Dim result As String = webClient.DownloadString("http://144.76.18.44/nc/api.php?par=cdr&date_from=2017-11-01_05:31:01&date_to=2017-11-02_05:31:01&prefix=19249")
-
-        Dim dStartDateTime, dCutDateTime, strResult As String
-        
-
-        Dim webClient As New System.Net.WebClient
-        strResult = "http://144.76.18.44/nc/api.php?par=cdr&date_from=" & "2018-02-05_12:07:01&"
-        strResult = strResult & "date_to=2018-02-05_13:17:59&" ' & dCutDateTime & "&"
-        strResult = strResult & "prefix=19249" ' & strPrefix
-
-        Dim result As String = webClient.DownloadString(strResult)
-
-        If Not result Is Nothing AndAlso Not result.Length = 0 Then
-            MsgBox(result)
-        End If
-    End Sub
-
     Private Sub CardsValuesUsedPerSlotToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CardsValuesUsedPerSlotToolStripMenuItem.Click
         If Application.OpenForms().OfType(Of frmSlotDetailsUsersValuesReport).Any Then
             For Each frm As Form In Application.OpenForms
@@ -712,5 +736,20 @@ Public Class FrmMain
             Dim frm As New frmSlotDetailsUsersValuesReport()
             frm.Show()
         End If
+    End Sub
+
+    Private Sub btnReturnShiftCards_Click(sender As System.Object, e As System.EventArgs) Handles btnReturnShiftCards.Click
+        If MsgBox("Are you sure you want to return shift cards?", MsgBoxStyle.YesNoCancel) = MsgBoxResult.Yes Then
+            If odbaccess.ReturnShiftCards() Then
+                MsgBox("Cards returned successfully.")
+            Else
+                MsgBox("Please try again.")
+            End If
+        End If
+    End Sub
+
+    Private Sub Button1_Click_2(sender As System.Object, e As System.EventArgs)
+        Dim frm As New frmStartDeviceSlot("n", "n", 1, "h", 15)
+        frm.Show()
     End Sub
 End Class

@@ -10,6 +10,7 @@ Public Class DBAccess
     Dim oParam As New MySql.Data.MySqlClient.MySqlParameter
     Dim oDataAdapter As New MySql.Data.MySqlClient.MySqlDataAdapter
     Public oConnection As New MySql.Data.MySqlClient.MySqlConnection
+
     ' Public oTrans As SqlClient.SqlTransaction
     Public oTrans As MySql.Data.MySqlClient.MySqlTransaction
 
@@ -20,108 +21,11 @@ Public Class DBAccess
         'Real DB
         oConnection.ConnectionString = "server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337;User Id=airtime_user;Password=nahVeifuath8vu5Kai6kei8i;Persist Security Info=True;database=Airtime_system"
         'Test DB
-        ' oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
-   
- End Sub
+        'oConnection.ConnectionString = "User Id=airtime_dev;database=Airtime_system_dev;Password=ia8fie2Theeshohh3oneihah;Persist Security Info=True;server=mapleteletech-tools.cyhrjka02xij.eu-west-1.rds.amazonaws.com;port=3337"
 
-    Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
-        Dim intCount As Integer
-        ds = New DataSet
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "CreateSlot"
-            oSelectCommand.Connection = oConnection
+    End Sub
 
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceID"
-                .Value = lDeviceID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = lOperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSlotID"
-                .Value = lSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftID"
-                .Value = lShiftID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "intNoOfSims"
-                .Value = intNoOfSims
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strHumanBehaiviour"
-                .Value = strHumanBehaiviour
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strNote"
-                .Value = strNote
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dCreateTime"
-                .Value = Now()
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
-                intCount = CInt(ds.Tables(0).Rows(0).Item(0))
-                If Not ds.Tables.Count = 1 AndAlso Not ds.Tables(1).Rows.Count = 0 Then
-                    lDeviceSlotID = CLng(ds.Tables(1).Rows(0).Item(0))
-                End If
-            End If
-            If intCount = 4 Then
-                Return 2
-            ElseIf intCount = -1 Then
-                Return intCount
-            Else
-                Return 1
-            End If
-
-            'Return intCount
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return 0
-        End Try
-    End Function
+#Region "Get"
 
     Public Function GetNoOfSims(lDeviceSlotID As Long) As Integer
         Dim intCount As Integer
@@ -145,12 +49,17 @@ Public Class DBAccess
             intCount = CInt(oSelectCommand.ExecuteScalar)
             oConnection.Close()
 
-            Return intCount
+            ' Return intCount
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             oConnection.Close()
-            Return 0
+            intCount = 0
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return intCount
     End Function
 
     Public Function getHoldOldSlots(lDeviceID As Integer, enumHoldOldCut As Enumerators.HoldOldCut, lOperatorID As Integer) As DataSet
@@ -184,257 +93,16 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function StartSlot(lDeviceSlotID As Long, dStartDate As DateTime, lTrafficeType As Long, strOffer As String, dblMinuteCost As Double) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "StartSlot"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotID"
-                .Value = lDeviceSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dStartDate"
-                .Value = dStartDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lTrafficeType"
-                .Value = lTrafficeType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strOffer"
-                .Value = strOffer
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblMinuteCost"
-                .Value = dblMinuteCost
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
-    End Function
-
-    Public Function CutSlot(lDeviceSlotID As Long, dCutTime As DateTime, strNote As String, dblBurnedBalance As Double, dblTalkTime As Double, dblACD As Double, dblASR As Double, intTotalCalls As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "CutSlot"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotID"
-                .Value = lDeviceSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dCutTime"
-                .Value = dCutTime
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strNote"
-                .Value = strNote
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblBurnedBalance"
-                .Value = dblBurnedBalance
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTalkTime"
-                .Value = dblTalkTime
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblACD"
-                .Value = dblACD
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblASR"
-                .Value = dblASR
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "intTotalCalls"
-                .Value = intTotalCalls
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function ChangeSlotFromOldToHold(lDeviceSlotId As Long, dCutTime As Date, dblTalkTime As Double) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ChangeFromOldToHold"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotID"
-                .Value = lDeviceSlotId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dCutTime"
-                .Value = dCutTime
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTalkTime"
-                .Value = dblTalkTime
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function AddSimsToDeviceSlot(lDeviceSlotID As Long, intNoOfSims As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "AddSimsToDeviceSlot"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotID"
-                .Value = lDeviceSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "intNoOfSims"
-                .Value = intNoOfSims
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
+        Return ds
     End Function
 
     Public Function GetOnHoldDevices_UsedCards() As ColDevice
@@ -461,11 +129,16 @@ Public Class DBAccess
                 ocolDevice.FillProperties(ds)
             End If
 
-            Return ocolDevice
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ocolDevice
     End Function
 
     Public Function GetSlotsReport(oSlotInfoSearch As SlotInfoSearch) As DataSet
@@ -703,11 +376,16 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ds
     End Function
 
     Public Function GetCardsResources() As DataSet
@@ -720,11 +398,16 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            'Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ds
     End Function
 
     Public Function GetLocations() As DataSet
@@ -737,11 +420,16 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ds
     End Function
 
     Public Function GetSlotDetailsReport(oSlotInfoSearch As SlotInfoSearch) As DataSet
@@ -818,11 +506,16 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ds
     End Function
 
     Public Function GetSlotDetailsUserValuesReport(oSlotInfoSearch As SlotInfoSearch) As DataSet
@@ -884,37 +577,17 @@ Public Class DBAccess
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
-            Return ds
+
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+        Return ds
     End Function
-
-    'Public Function GetDevices() As DataSet
-    '    ds = New DataSet
-    '    Try
-    '        'ByVal lLocationID As Integer
-    '        oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-    '        oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-    '        oSelectCommand.CommandText = "GetDevices"
-
-    '        'oParam = New MySql.Data.MySqlClient.MySqlParameter
-    '        'With oParam
-    '        '    .ParameterName = "lLocationID"
-    '        '    .Value = lLocationID
-    '        'End With
-    '        'oSelectCommand.Parameters.Add(oParam)
-
-    '        oDataAdapter.SelectCommand = oSelectCommand
-    '        oSelectCommand.Connection = Me.oConnection
-    '        oDataAdapter.Fill(ds)
-    '        Return ds
-    '    Catch ex As Exception
-    '        MsgBox(ex.Message & ex.StackTrace)
-    '        Return Nothing
-    '    End Try
-    'End Function
 
     Public Function GetSimcardsOrders(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lSimCardType As Integer, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date, ByVal isCheckIsSentToExpenses As Boolean, ByVal isCheckIsSentToExpensesYes As Boolean) As ColSimcardsOrder
         ds = New DataSet
@@ -999,9 +672,14 @@ Public Class DBAccess
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
+            'MsgBox(ex.Message & ex.StackTrace)
+            'Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+
     End Function
 
     Public Function GetExpenses(ByVal lExpenseCategory As Integer, ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lSimCardType As Integer, ByVal lInsertedByID As Integer, ByVal boolCheckDate As Boolean, ByVal FromDate As Date, ByVal ToDate As Date) As ColExpenses
@@ -1110,8 +788,12 @@ Public Class DBAccess
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1150,8 +832,12 @@ Public Class DBAccess
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1177,8 +863,12 @@ Public Class DBAccess
             Return ds
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1219,8 +909,12 @@ Public Class DBAccess
             Return ds
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1268,8 +962,12 @@ Public Class DBAccess
             Return ds
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1296,8 +994,12 @@ Public Class DBAccess
             Return ds
 
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1328,8 +1030,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1368,8 +1074,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -1429,168 +1139,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function insertProvider(ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "insertProvider"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strProviderName"
-                .Value = strProviderName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strLocationIDs"
-                .Value = strLocationIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblWaivedDeductible"
-                .Value = dblWaivedDeductible
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditProvider(ByVal lProviderId As Integer, ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditProvider"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderId"
-                .Value = lProviderId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strProviderName"
-                .Value = strProviderName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strLocationIDs"
-                .Value = strLocationIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblWaivedDeductible"
-                .Value = dblWaivedDeductible
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteProvider(ByVal lProviderId As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteProvider"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderId"
-                .Value = lProviderId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -1629,287 +1183,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function insertOperator(ByVal strOperatorName As String, ByVal lCountryID As Integer, ByVal lLimit As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "insertOperator"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strOperatorName"
-                .Value = strOperatorName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lLimit"
-                .Value = lLimit
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditOperator(ByVal lOperatorId As Integer, ByVal strOperatorName As String, ByVal lCountryID As Integer, ByVal lLimit As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditOperator"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorId"
-                .Value = lOperatorId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strOperatorName"
-                .Value = strOperatorName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lLimit"
-                .Value = lLimit
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteOperator(ByVal lOperatorId As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteOperator"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorId"
-                .Value = lOperatorId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function insertSimType(ByVal strSimType As String, ByVal lCountryID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertSimCardType"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strSimType"
-                .Value = strSimType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditSimType(ByVal lSimTypeId As Integer, ByVal strSimType As String, ByVal lCountryID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditSimCardType"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimTypeId"
-                .Value = lSimTypeId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strSimType"
-                .Value = strSimType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteSimCardType(ByVal lSimTypeId As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteSimCardType"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardTypeId"
-                .Value = lSimTypeId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -1932,154 +1211,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function insertDevice(ByVal strDeviceName As String, ByVal lLocationID As Integer, strPrefix As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "insertDevice"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strDeviceName"
-                .Value = strDeviceName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lLocationID"
-                .Value = lLocationID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strPrefix"
-                .Value = strPrefix
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditDevice(ByVal lDeviceId As Integer, ByVal strDeviceName As String, ByVal lLocationID As Integer, strPrefix As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditDevice"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceId"
-                .Value = lDeviceId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strDeviceName"
-                .Value = strDeviceName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lLocationID"
-                .Value = lLocationID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strPrefix"
-                .Value = strPrefix
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteDevice(ByVal lDeviceId As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteDevice"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceId"
-                .Value = lDeviceId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -2116,8 +1253,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -2133,89 +1274,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function EditWrongCard(ByVal strCardNo As String, ByVal lCardID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditWrongCard"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardNo"
-                .Value = strCardNo
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCardID"
-                .Value = lCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditWrongValue(ByVal lCardID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditWrongValue"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCardID"
-                .Value = lCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -2337,1031 +1401,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function insertCategory(ByVal strCategoryName As String, ByVal lCountryID As Integer, ByVal lOperatorID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "insertCategory"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCategory"
-                .Value = strCategoryName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = lOperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditCategory(ByVal lCategoryId As Integer, ByVal strCategoryName As String, ByVal lCountryID As Integer, ByVal lOperatorID As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditCategory"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryId"
-                .Value = lCategoryId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCategory"
-                .Value = strCategoryName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = lOperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteCategory(ByVal lCategoryId As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteCategory"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryId"
-                .Value = lCategoryId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function DeleteCard(ByVal strCardIDs As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteCards"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardIDs"
-                .Value = strCardIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function ChangeFromWrongCardToUsedCard(ByVal strCardIDs As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ChangeCardsFromWrongCardToUsedCard"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardIDs"
-                .Value = strCardIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function ChangeCardsFromUsedCardToWrongCard(ByVal strCardIDs As String, lWrongCardType As Integer) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ChangeCardsFromUsedCardToWrongCard"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardIDs"
-                .Value = strCardIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lWrongCardType"
-                .Value = lWrongCardType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function GetCountriesDS() As DataSet
-        ds = New DataSet
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetCountriesDS"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-            Return ds
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function LogOut() As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "LogOut"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            '   MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-        End Try
-    End Function
-
-    Public Function InsertHistory(ByVal strNote As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertHistory"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strNote"
-                .Value = strNote
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function CheckLogin(ByVal strUserName As String, ByVal strPassword As String) As DataSet
-        ds = New DataSet
-        Try
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            '(  "set net_write_timeout=99999; set net_read_timeout=99999", oConnection)
-
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "CheckLogin"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strUserName"
-                .Value = strUserName
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strPassword"
-                .Value = strPassword
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            'oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-            Return ds
-        Catch ex As MySql.Data.MySqlClient.MySqlException
-            If ex.Message.EndsWith("Reading from the stream has failed.") Then
-                Return CheckLogin(strUserName, strPassword)
-            Else
-                Return Nothing
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function ChangePassword(ByVal lUserID As Long, ByVal strPassword As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ChangePassword"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lID"
-                .Value = lUserID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strPassword"
-                .Value = strPassword
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-
-    End Function
-
-    Public Function InsertCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lGetCardFrom As Integer, ByVal strCards As String, ByVal strLastCard As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertCards"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = lProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = lOperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryID"
-                .Value = lCategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lGetCardFrom"
-                .Value = lGetCardFrom
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCards"
-                .Value = strCards
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            If ex.Message = "Fatal error encountered during command execution." Then
-                'todo : check if the cards were instered
-                If odbaccess.checkCardExists(strLastCard) Then
-                    Return True
-                Else
-                    Return False
-                End If
-            Else
-                MsgBox(ex.Message & ex.StackTrace)
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
                 oConnection.Close()
-                Return False
             End If
-        End Try
-    End Function
-
-    Public Function InsertCards(sql As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.Text
-            oSelectCommand.CommandText = sql
-            oSelectCommand.Connection = oConnection
-
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            'If ex.Message = "Fatal error encountered during command execution." Then
-            '    'todo : check if the cards were instered
-            '    If odbaccess.checkCardExists(strLastCard) Then
-            '        Return True
-            '    Else
-            '        Return False
-            '    End If
-            'Else
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-            '  End If
-        End Try
-    End Function
-
-    Public Function InsertSimCardOrder(ByVal oSimcardOrder As SimcardsOrder) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertSimCardOrder"
-            oSelectCommand.Connection = oConnection
-
-            'oParam = New MySql.Data.MySqlClient.MySqlParameter
-            'With oParam
-            '    .ParameterName = "lSimCardOrderID"
-            '    .Value = oSimcardOrder.SimCardOrderID
-            'End With
-            'oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = oSimcardOrder.CountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = oSimcardOrder.ProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardType"
-                .Value = oSimcardOrder.SimCardTypeID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNoOfCards"
-                .Value = oSimcardOrder.NoOfCards
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblCardValue"
-                .Value = oSimcardOrder.CardValue
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = oSimcardOrder.TotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dSimsOrderDate"
-                .Value = oSimcardOrder.SimcardOrderDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditSimCardOrder(ByVal oSimcardOrder As SimcardsOrder) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditSimCardOrder"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardOrderID"
-                .Value = oSimcardOrder.SimCardOrderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = oSimcardOrder.CountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = oSimcardOrder.ProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardType"
-                .Value = oSimcardOrder.SimCardTypeID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNoOfCards"
-                .Value = oSimcardOrder.NoOfCards
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblCardValue"
-                .Value = oSimcardOrder.CardValue
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = oSimcardOrder.TotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dSimsOrderDate"
-                .Value = oSimcardOrder.SimcardOrderDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function InsertExpense(ByVal oExpenses As Expenses) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertExpense"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = oExpenses.CountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = oExpenses.ProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = oExpenses.OperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryID"
-                .Value = oExpenses.CategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "enumExpenseType"
-                .Value = oExpenses.enumExpenseType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lExpenseCategory"
-                .Value = oExpenses.ExpenseCategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardType"
-                .Value = oExpenses.SimCardTypeID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardID"
-                .Value = 0
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNoOfCards"
-                .Value = oExpenses.NoOfCards
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblCardValue"
-                .Value = oExpenses.CardValue
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = oExpenses.TotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dExpenseDate"
-                .Value = oExpenses.ExpenseDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditExpense(ByVal oExpenses As Expenses) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditExpense"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lExpenseID"
-                .Value = oExpenses.ExpenseID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = oExpenses.CountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = oExpenses.ProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = oExpenses.OperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryID"
-                .Value = oExpenses.CategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "enumExpenseType"
-                .Value = oExpenses.enumExpenseType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lExpenseCategory"
-                .Value = oExpenses.ExpenseCategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardType"
-                .Value = oExpenses.SimCardType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lSimCardID"
-                .Value = 0
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNoOfCards"
-                .Value = oExpenses.NoOfCards
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblCardValue"
-                .Value = oExpenses.CardValue
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = oExpenses.TotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dExpenseDate"
-                .Value = oExpenses.ExpenseDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-        End Try
-    End Function
-
-    Public Function checkCardExists(ByVal strLastCard As String) As Boolean
-        Dim lID As Integer
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "checkCardExists"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strLastCard"
-                .Value = strLastCard
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            lID = CInt(oSelectCommand.ExecuteScalar)
-            oConnection.Close()
-
-            If lID > 1 Then
-                Return True
-            Else
-                Return False
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function CheckIfSlotChangedFromOldToHold(ByVal lDeviceSlotID As Long) As Boolean
-
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "CheckIfSlotChangedFromOldToHold"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotID"
-                .Value = lDeviceSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            Return CBool(oSelectCommand.ExecuteScalar)
-
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -3387,81 +1432,13 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             oConnection.Close()
             Return Nothing
-        End Try
-    End Function
-
-    Public Function EditCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lGetCardFrom As Integer, ByVal strCardIDs As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditCards"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = lProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lOperatorID"
-                .Value = lOperatorID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCategoryID"
-                .Value = lCategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lGetCardFrom"
-                .Value = lGetCardFrom
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardIDs"
-                .Value = strCardIDs
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -3490,8 +1467,12 @@ Public Class DBAccess
             End If
             Return Nothing
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -3557,8 +1538,12 @@ Public Class DBAccess
 
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -3610,8 +1595,12 @@ Public Class DBAccess
 
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -3642,138 +1631,21 @@ Public Class DBAccess
 
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function InsertPayment(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal dblTotalAmount As Decimal, ByVal dPaymentDate As Date) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertPayment"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = lProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = dblTotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dPaymentDate"
-                .Value = dPaymentDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
         End Try
     End Function
 
-    Public Function EditPayment(ByVal lPaymentID As Integer, ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal dblTotalAmount As Decimal, ByVal dPaymentDate As Date) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditPayment"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lPaymentID"
-                .Value = lPaymentID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCountryID"
-                .Value = lCountryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lProviderID"
-                .Value = lProviderID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dblTotalAmount"
-                .Value = dblTotalAmount
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dPaymentDate"
-                .Value = dPaymentDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-        End Try
-    End Function
-
-    Public Function CheckNotDistributedCardsLimit() As DataSet
+    Public Function GetCountriesDS() As DataSet
         ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "CheckNotDistributedCardsLimit"
+            oSelectCommand.CommandText = "GetCountriesDS"
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
@@ -3786,10 +1658,13 @@ Public Class DBAccess
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
             Return ds
-
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -3807,8 +1682,12 @@ Public Class DBAccess
 
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -3936,8 +1815,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4033,13 +1916,26 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
+            'Using oDataAdapter As New MySql.Data.MySqlClient.MySqlDataAdapter
+            '    oDataAdapter.SelectCommand = oSelectCommand
+            '    oSelectCommand.Connection = Me.oConnection
+            '    oDataAdapter.Fill(ds)
+            'End Using
+
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
+
+            '  MsgBox(Me.oConnection.State)
+
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4105,8 +2001,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4158,8 +2058,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4261,14 +2165,23 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
+            Using oDataAdapter As New MySql.Data.MySqlClient.MySqlDataAdapter
+                oDataAdapter.SelectCommand = oSelectCommand
+                oSelectCommand.Connection = Me.oConnection
+                oDataAdapter.Fill(ds)
+            End Using
+            '  oConnection.Close()
+            'MsgBox(Me.oConnection.State)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
+
     End Function
 
     Public Function GetCardsStatus(oCard As Card) As DataSet
@@ -4417,180 +2330,98 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function ReturnCards(ByVal strCardID As String) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ReturnCards"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardID"
-                .Value = strCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
-    Public Function ReturnCardsFromCardUser() As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "ReturnCardsFromCardUser"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function SendCards(ByVal lSendToID As Integer, ByVal strCardID As String) As DataSet
+    Public Function GetShiftEndusersFull(ByVal dDate As Date, ByVal lShiftID As Integer) As Shift
         ds = New DataSet
+        Dim oShift As New Shift
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "SendCards"
-            oSelectCommand.Connection = oConnection
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetShiftEndusersFull"
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lSendToID"
-                .Value = lSendToID
+                .ParameterName = "dDate"
+                .Value = dDate
             End With
             oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "strCardID"
-                .Value = strCardID
+                .ParameterName = "lShiftLockupID"
+                .Value = lShiftID
             End With
             oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
 
             oDataAdapter.SelectCommand = oSelectCommand
             oSelectCommand.Connection = Me.oConnection
             oDataAdapter.Fill(ds)
 
-            Return ds
-
+            oShift.SetProperties(ds)
+            Return oShift
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
-        End Try
-    End Function
-
-    Public Function SetCardsDevice(ByVal lDeviceID As Integer, ByVal strCardID As String) As Boolean
-        ds = New DataSet
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "SetCardsDevice"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceID"
-                .Value = lDeviceID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "strCardID"
-                .Value = strCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
         End Try
     End Function
 
-    Public Function UseCard(ByVal lCardID As Integer, ByVal lShiftID As Integer, lCurrentDeviceSlotID As Long) As Boolean
+    Public Function GetShiftEndusers_Devices(ByVal dDate As Date, ByVal lShiftID As Integer) As Shift
+        ds = New DataSet
+        Dim oShift As New Shift
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "UseCard"
-            oSelectCommand.Connection = oConnection
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetShiftEndusers_Devices"
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lCardID"
-                .Value = lCardID
+                .ParameterName = "dDate"
+                .Value = dDate
             End With
             oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftLockupID"
+                .Value = lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+
+            oShift.SetProperties_Devices(ds)
+            Return oShift
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function GetUserShiftOperatorsLimits(ByVal lShiftID As Integer) As ColOperators
+        ds = New DataSet
+        Dim oColOperators As New ColOperators
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetUserShiftOperatorsLimits"
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
@@ -4601,59 +2432,39 @@ Public Class DBAccess
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lCurrentDeviceSlotID"
-                .Value = lCurrentDeviceSlotID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
                 .ParameterName = "lUserID"
                 .Value = gUser.Id
             End With
             oSelectCommand.Parameters.Add(oParam)
 
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
 
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
+            oColOperators.SetProperties(ds)
+            Return oColOperators
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
-    Public Function SetAsWrongCard(ByVal lCardID As Integer, ByVal enumWrongType As Enumerators.WrongCardTypes, ByVal lNewCategoryID As Long) As Boolean
+    Public Function GetUserShiftAlreadyUsedOperators(ByVal lShiftID As Integer) As ColOperators
+        ds = New DataSet
+        Dim oColOperators As New ColOperators
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "SetAsWrongCard"
-            oSelectCommand.Connection = oConnection
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetUserShiftAlreadyUsedOperators"
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lCardID"
-                .Value = lCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "enumWrongType"
-                .Value = enumWrongType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNewCategoryID"
-                .Value = lNewCategoryID
+                .ParameterName = "lShiftID"
+                .Value = lShiftID
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -4664,70 +2475,19 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
 
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
+            oColOperators.SetProperties(ds)
+            Return oColOperators
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
-        End Try
-    End Function
-
-    Public Function EditWrongCardType(ByVal lCardID As Long, ByVal enumWrongType As Enumerators.WrongCardTypes, ByVal lNewCategoryID As Long) As Boolean
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "EditWrongCardType"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lCardID"
-                .Value = lCardID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "enumWrongType"
-                .Value = enumWrongType
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lNewCategoryID"
-                .Value = lNewCategoryID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            oSelectCommand.ExecuteNonQuery()
-            oConnection.Close()
-
-            Return True
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return False
-
         End Try
     End Function
 
@@ -4778,8 +2538,12 @@ Public Class DBAccess
             oDataAdapter.Fill(ds)
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4810,22 +2574,150 @@ Public Class DBAccess
 
             Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
-    Public Function DeleteUser(ByVal lID As Long) As Boolean
+    Public Function getShiftID(ByVal dDate As Date, ByVal lShiftLockupId As Integer) As DataSet
+        ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "DeleteUser"
+            oSelectCommand.CommandText = "getShiftID"
             oSelectCommand.Connection = oConnection
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lID"
-                .Value = lID
+                .ParameterName = "dDate"
+                .Value = dDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftLockupId"
+                .Value = lShiftLockupId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+
+            Return ds
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+
+    End Function
+
+    Public Function GetSlotNote(ByVal lDeviceSlotId As Long) As String
+        Dim strNote As String
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "GetSlotNote"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotId"
+                .Value = lDeviceSlotId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            strNote = oSelectCommand.ExecuteScalar
+            oConnection.Close()
+
+            If Not strNote Is Nothing Then
+                Return strNote
+            Else
+                Return ""
+            End If
+
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return ""
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+
+#End Region
+
+#Region "Edit"
+    Public Function EditCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lGetCardFrom As Integer, ByVal strCardIDs As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = lProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = lOperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryID"
+                .Value = lCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lGetCardFrom"
+                .Value = lGetCardFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -4845,46 +2737,55 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
             Return False
-
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
-    Public Function InsertUser(ByVal oUser As User) As Integer
-        Dim lid As Integer = 0
+    Public Function EditProvider(ByVal lProviderId As Integer, ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "InsertUser"
+            oSelectCommand.CommandText = "EditProvider"
             oSelectCommand.Connection = oConnection
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "strUserName"
-                .Value = oUser.UserName
+                .ParameterName = "lProviderId"
+                .Value = lProviderId
             End With
             oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "strPassword"
-                .Value = oUser.Password
+                .ParameterName = "strProviderName"
+                .Value = strProviderName
             End With
             oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lType"
-                .Value = oUser.type
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
             End With
             oSelectCommand.Parameters.Add(oParam)
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
-                .ParameterName = "lProviderID"
-                .Value = oUser.Provider
+                .ParameterName = "strLocationIDs"
+                .Value = strLocationIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblWaivedDeductible"
+                .Value = dblWaivedDeductible
             End With
             oSelectCommand.Parameters.Add(oParam)
 
@@ -4899,15 +2800,678 @@ Public Class DBAccess
                 oConnection.Open()
             End If
 
-            lid = oSelectCommand.ExecuteScalar
+            oSelectCommand.ExecuteNonQuery()
             oConnection.Close()
 
-            Return lid
+            Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
             Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
 
+    Public Function EditOperator(ByVal lOperatorId As Integer, ByVal strOperatorName As String, ByVal lCountryID As Integer, ByVal lLimit As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditOperator"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorId"
+                .Value = lOperatorId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strOperatorName"
+                .Value = strOperatorName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lLimit"
+                .Value = lLimit
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditSimType(ByVal lSimTypeId As Integer, ByVal strSimType As String, ByVal lCountryID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditSimCardType"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimTypeId"
+                .Value = lSimTypeId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strSimType"
+                .Value = strSimType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditExpense(ByVal oExpenses As Expenses) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditExpense"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lExpenseID"
+                .Value = oExpenses.ExpenseID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = oExpenses.CountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = oExpenses.ProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = oExpenses.OperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryID"
+                .Value = oExpenses.CategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "enumExpenseType"
+                .Value = oExpenses.enumExpenseType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lExpenseCategory"
+                .Value = oExpenses.ExpenseCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardType"
+                .Value = oExpenses.SimCardType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardID"
+                .Value = 0
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNoOfCards"
+                .Value = oExpenses.NoOfCards
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblCardValue"
+                .Value = oExpenses.CardValue
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = oExpenses.TotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dExpenseDate"
+                .Value = oExpenses.ExpenseDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditDevice(ByVal lDeviceId As Integer, ByVal strDeviceName As String, ByVal lLocationID As Integer, strPrefix As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditDevice"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceId"
+                .Value = lDeviceId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strDeviceName"
+                .Value = strDeviceName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lLocationID"
+                .Value = lLocationID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strPrefix"
+                .Value = strPrefix
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditWrongCard(ByVal strCardNo As String, ByVal lCardID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditWrongCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardNo"
+                .Value = strCardNo
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCardID"
+                .Value = lCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditWrongValue(ByVal lCardID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditWrongValue"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCardID"
+                .Value = lCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditCategory(ByVal lCategoryId As Integer, ByVal strCategoryName As String, ByVal lCountryID As Integer, ByVal lOperatorID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditCategory"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryId"
+                .Value = lCategoryId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCategory"
+                .Value = strCategoryName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = lOperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditPayment(ByVal lPaymentID As Integer, ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal dblTotalAmount As Decimal, ByVal dPaymentDate As Date) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditPayment"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lPaymentID"
+                .Value = lPaymentID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = lProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = dblTotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dPaymentDate"
+                .Value = dPaymentDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function EditSimCardOrder(ByVal oSimcardOrder As SimcardsOrder) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditSimCardOrder"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardOrderID"
+                .Value = oSimcardOrder.SimCardOrderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = oSimcardOrder.CountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = oSimcardOrder.ProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardType"
+                .Value = oSimcardOrder.SimCardTypeID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNoOfCards"
+                .Value = oSimcardOrder.NoOfCards
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblCardValue"
+                .Value = oSimcardOrder.CardValue
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = oSimcardOrder.TotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dSimsOrderDate"
+                .Value = oSimcardOrder.SimcardOrderDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+
+    Public Function EditWrongCardType(ByVal lCardID As Long, ByVal enumWrongType As Enumerators.WrongCardTypes, ByVal lNewCategoryID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "EditWrongCardType"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCardID"
+                .Value = lCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "enumWrongType"
+                .Value = enumWrongType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNewCategoryID"
+                .Value = lNewCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -4969,20 +3533,2193 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
             Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+#End Region
 
+#Region "Insert"
+    Public Function insertProvider(ByVal strProviderName As String, ByVal lCountryID As Integer, ByVal strLocationIDs As String, dblWaivedDeductible As Double) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "insertProvider"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strProviderName"
+                .Value = strProviderName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strLocationIDs"
+                .Value = strLocationIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblWaivedDeductible"
+                .Value = dblWaivedDeductible
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
-    Public Function SaveShiftEndUsers(ByVal strUserIDs As String, ByVal dDate As Date, ByVal lShiftLockupID As Integer) As Integer
-        Dim lShiftID As Integer
+    Public Function insertOperator(ByVal strOperatorName As String, ByVal lCountryID As Integer, ByVal lLimit As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "insertOperator"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strOperatorName"
+                .Value = strOperatorName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lLimit"
+                .Value = lLimit
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function insertSimType(ByVal strSimType As String, ByVal lCountryID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertSimCardType"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strSimType"
+                .Value = strSimType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function insertDevice(ByVal strDeviceName As String, ByVal lLocationID As Integer, strPrefix As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "insertDevice"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strDeviceName"
+                .Value = strDeviceName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lLocationID"
+                .Value = lLocationID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strPrefix"
+                .Value = strPrefix
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertHistory(ByVal strNote As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertHistory"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strNote"
+                .Value = strNote
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertCards(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal lOperatorID As Integer, ByVal lCategoryID As Integer, ByVal lGetCardFrom As Integer, ByVal strCards As String, ByVal strLastCard As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = lProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = lOperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryID"
+                .Value = lCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lGetCardFrom"
+                .Value = lGetCardFrom
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCards"
+                .Value = strCards
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            If ex.Message = "Fatal error encountered during command execution." Then
+                'todo : check if the cards were instered
+                If odbaccess.checkCardExists(strLastCard) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                'MsgBox(ex.Message & ex.StackTrace)
+                '  oConnection.Close()
+                Return False
+
+            End If
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertCards(sql As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.Text
+            oSelectCommand.CommandText = sql
+            oSelectCommand.Connection = oConnection
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'If ex.Message = "Fatal error encountered during command execution." Then
+            '    'todo : check if the cards were instered
+            '    If odbaccess.checkCardExists(strLastCard) Then
+            '        Return True
+            '    Else
+            '        Return False
+            '    End If
+            'Else
+            'MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+            '  End If
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertSimCardOrder(ByVal oSimcardOrder As SimcardsOrder) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertSimCardOrder"
+            oSelectCommand.Connection = oConnection
+
+            'oParam = New MySql.Data.MySqlClient.MySqlParameter
+            'With oParam
+            '    .ParameterName = "lSimCardOrderID"
+            '    .Value = oSimcardOrder.SimCardOrderID
+            'End With
+            'oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = oSimcardOrder.CountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = oSimcardOrder.ProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardType"
+                .Value = oSimcardOrder.SimCardTypeID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNoOfCards"
+                .Value = oSimcardOrder.NoOfCards
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblCardValue"
+                .Value = oSimcardOrder.CardValue
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = oSimcardOrder.TotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dSimsOrderDate"
+                .Value = oSimcardOrder.SimcardOrderDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function insertCategory(ByVal strCategoryName As String, ByVal lCountryID As Integer, ByVal lOperatorID As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "insertCategory"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCategory"
+                .Value = strCategoryName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = lOperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            '  'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertExpense(ByVal oExpenses As Expenses) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertExpense"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = oExpenses.CountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = oExpenses.ProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = oExpenses.OperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryID"
+                .Value = oExpenses.CategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "enumExpenseType"
+                .Value = oExpenses.enumExpenseType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lExpenseCategory"
+                .Value = oExpenses.ExpenseCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardType"
+                .Value = oExpenses.SimCardTypeID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardID"
+                .Value = 0
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNoOfCards"
+                .Value = oExpenses.NoOfCards
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblCardValue"
+                .Value = oExpenses.CardValue
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = oExpenses.TotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dExpenseDate"
+                .Value = oExpenses.ExpenseDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertPayment(ByVal lCountryID As Integer, ByVal lProviderID As Integer, ByVal dblTotalAmount As Decimal, ByVal dPaymentDate As Date) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertPayment"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCountryID"
+                .Value = lCountryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = lProviderID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTotalAmount"
+                .Value = dblTotalAmount
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dPaymentDate"
+                .Value = dPaymentDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function InsertUser(ByVal oUser As User) As Integer
+        Dim lid As Integer = 0
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "InsertUser"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strUserName"
+                .Value = oUser.UserName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strPassword"
+                .Value = oUser.Password
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lType"
+                .Value = oUser.type
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderID"
+                .Value = oUser.Provider
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            lid = oSelectCommand.ExecuteScalar
+            oConnection.Close()
+
+            Return lid
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+#End Region
+
+#Region "Delete"
+
+    Public Function DeleteUser(ByVal lID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteUser"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lID"
+                .Value = lID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteProvider(ByVal lProviderId As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteProvider"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lProviderId"
+                .Value = lProviderId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteDevice(ByVal lDeviceId As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteDevice"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceId"
+                .Value = lDeviceId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteCategory(ByVal lCategoryId As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteCategory"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCategoryId"
+                .Value = lCategoryId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteCard(ByVal strCardIDs As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            'oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteOperator(ByVal lOperatorId As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteOperator"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorId"
+                .Value = lOperatorId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function DeleteSimCardType(ByVal lSimTypeId As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "DeleteSimCardType"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSimCardTypeId"
+                .Value = lSimTypeId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+#End Region
+
+#Region "Others"
+
+
+    Public Function CreateSlot(lDeviceID As Integer, lOperatorID As Integer, lSlotID As Integer, lShiftID As Integer, intNoOfSims As Integer, strHumanBehaiviour As String, strNote As String, ByRef lDeviceSlotID As Long) As Integer
+        Dim intCount As Integer
+        ds = New DataSet
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CreateSlot"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceID"
+                .Value = lDeviceID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lOperatorID"
+                .Value = lOperatorID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSlotID"
+                .Value = lSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftID"
+                .Value = lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "intNoOfSims"
+                .Value = intNoOfSims
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strHumanBehaiviour"
+                .Value = strHumanBehaiviour
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strNote"
+                .Value = strNote
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dCreateTime"
+                .Value = Now()
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+
+            If Not ds Is Nothing AndAlso Not ds.Tables.Count = 0 AndAlso Not ds.Tables(0).Rows.Count = 0 Then
+                intCount = CInt(ds.Tables(0).Rows(0).Item(0))
+                If Not ds.Tables.Count = 1 AndAlso Not ds.Tables(1).Rows.Count = 0 Then
+                    lDeviceSlotID = CLng(ds.Tables(1).Rows(0).Item(0))
+                End If
+            End If
+            If intCount = 4 Then
+                Return 2
+            ElseIf intCount = -1 Then
+                Return intCount
+            Else
+                Return 1
+            End If
+
+            'Return intCount
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return 0
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function StartSlot(lDeviceSlotID As Long, dStartDate As DateTime, lTrafficeType As Long, strOffer As String, dblMinuteCost As Double) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "StartSlot"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dStartDate"
+                .Value = dStartDate
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lTrafficeType"
+                .Value = lTrafficeType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strOffer"
+                .Value = strOffer
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblMinuteCost"
+                .Value = dblMinuteCost
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function CutSlot(lDeviceSlotID As Long, dCutTime As DateTime, strNote As String, dblBurnedBalance As Double, dblTalkTime As Double, dblACD As Double, dblASR As Double, intTotalCalls As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CutSlot"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dCutTime"
+                .Value = dCutTime
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strNote"
+                .Value = strNote
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblBurnedBalance"
+                .Value = dblBurnedBalance
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTalkTime"
+                .Value = dblTalkTime
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblACD"
+                .Value = dblACD
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblASR"
+                .Value = dblASR
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "intTotalCalls"
+                .Value = intTotalCalls
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ChangeSlotFromOldToHold(lDeviceSlotId As Long, dCutTime As Date, dblTalkTime As Double) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangeFromOldToHold"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotId
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dCutTime"
+                .Value = dCutTime
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "dblTalkTime"
+                .Value = dblTalkTime
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function AddSimsToDeviceSlot(lDeviceSlotID As Long, intNoOfSims As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "AddSimsToDeviceSlot"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "intNoOfSims"
+                .Value = intNoOfSims
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    'Public Function GetDevices() As DataSet
+    '    ds = New DataSet
+    '    Try
+    '        'ByVal lLocationID As Integer
+    '        oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+    '        oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+    '        oSelectCommand.CommandText = "GetDevices"
+
+    '        'oParam = New MySql.Data.MySqlClient.MySqlParameter
+    '        'With oParam
+    '        '    .ParameterName = "lLocationID"
+    '        '    .Value = lLocationID
+    '        'End With
+    '        'oSelectCommand.Parameters.Add(oParam)
+
+    '        oDataAdapter.SelectCommand = oSelectCommand
+    '        oSelectCommand.Connection = Me.oConnection
+    '        oDataAdapter.Fill(ds)
+    '        Return ds
+    '    Catch ex As Exception
+    '        'MsgBox(ex.Message & ex.StackTrace)
+    '        Return Nothing
+    '    End Try
+    'End Function
+
+    Public Function LogOut() As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "LogOut"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            '   'MsgBox(ex.Message & ex.StackTrace)
+            '    oConnection.Close()
+            Return False
+
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ReturnShiftCards() As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ReturnShiftCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ChangeFromWrongCardToUsedCard(ByVal strCardIDs As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangeCardsFromWrongCardToUsedCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ChangeCardsFromUsedCardToWrongCard(ByVal strCardIDs As String, lWrongCardType As Integer) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangeCardsFromUsedCardToWrongCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lWrongCardType"
+                .Value = lWrongCardType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function CheckLogin(ByVal strUserName As String, ByVal strPassword As String) As DataSet
+        ds = New DataSet
+        Try
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            '(  "set net_write_timeout=99999; set net_read_timeout=99999", oConnection)
+
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CheckLogin"
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strUserName"
+                .Value = strUserName
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strPassword"
+                .Value = strPassword
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            'oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+            Return ds
+        Catch ex As MySql.Data.MySqlClient.MySqlException
+            If ex.Message.EndsWith("Reading from the stream has failed.") Then
+                Return CheckLogin(strUserName, strPassword)
+            Else
+                Return Nothing
+            End If
+
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ChangePassword(ByVal lUserID As Long, ByVal strPassword As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ChangePassword"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lID"
+                .Value = lUserID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strPassword"
+                .Value = strPassword
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+
+    End Function
+
+    Public Function checkCardExists(ByVal strLastCard As String) As Boolean
+        Dim lID As Integer
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "checkCardExists"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strLastCard"
+                .Value = strLastCard
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            lID = CInt(oSelectCommand.ExecuteScalar)
+            oConnection.Close()
+
+            If lID > 1 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function CheckIfSlotChangedFromOldToHold(ByVal lDeviceSlotID As Long) As Boolean
+
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CheckIfSlotChangedFromOldToHold"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceSlotID"
+                .Value = lDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            Return CBool(oSelectCommand.ExecuteScalar)
+
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function CheckNotDistributedCardsLimit() As DataSet
+        ds = New DataSet
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
+            oSelectCommand.CommandText = "CheckNotDistributedCardsLimit"
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+            Return ds
+
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ReturnCards(ByVal strCardID As String) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ReturnCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardID"
+                .Value = strCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function ReturnCardsFromCardUser() As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "ReturnCardsFromCardUser"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '   oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function SendCards(ByVal lSendToID As Integer, ByVal strCardID As String) As DataSet
+        ds = New DataSet
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "SendCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lSendToID"
+                .Value = lSendToID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardID"
+                .Value = strCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oDataAdapter.SelectCommand = oSelectCommand
+            oSelectCommand.Connection = Me.oConnection
+            oDataAdapter.Fill(ds)
+
+            Return ds
+
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function SetCardsDevice(ByVal lDeviceID As Integer, ByVal strCardID As String) As Boolean
+        ds = New DataSet
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "SetCardsDevice"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lDeviceID"
+                .Value = lDeviceID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardID"
+                .Value = strCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function UseCard(ByVal lCardID As Integer, ByVal lShiftID As Integer, lCurrentDeviceSlotID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "UseCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCardID"
+                .Value = lCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftID"
+                .Value = lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCurrentDeviceSlotID"
+                .Value = lCurrentDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function UseCards(ByVal strCardIDs As String, ByVal lShiftID As Integer, lCurrentDeviceSlotID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "UseCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIds"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lShiftID"
+                .Value = lShiftID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCurrentDeviceSlotID"
+                .Value = lCurrentDeviceSlotID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function SetAsWrongCard(ByVal lCardID As Integer, ByVal enumWrongType As Enumerators.WrongCardTypes, ByVal lNewCategoryID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "SetAsWrongCard"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lCardID"
+                .Value = lCardID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "enumWrongType"
+                .Value = enumWrongType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNewCategoryID"
+                .Value = lNewCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function SetAsWrongCards(ByVal strCardIDs As String, ByVal enumWrongType As Enumerators.WrongCardTypes, ByVal lNewCategoryID As Long) As Boolean
+        Try
+            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
+            oSelectCommand.CommandType = CommandType.StoredProcedure
+            oSelectCommand.CommandText = "SetAsWrongCards"
+            oSelectCommand.Connection = oConnection
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "strCardIDs"
+                .Value = strCardIDs
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "enumWrongType"
+                .Value = enumWrongType
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lNewCategoryID"
+                .Value = lNewCategoryID
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            oParam = New MySql.Data.MySqlClient.MySqlParameter
+            With oParam
+                .ParameterName = "lUserID"
+                .Value = gUser.Id
+            End With
+            oSelectCommand.Parameters.Add(oParam)
+
+            If oConnection.State = ConnectionState.Closed Then
+                oConnection.Open()
+            End If
+
+            oSelectCommand.ExecuteNonQuery()
+            oConnection.Close()
+
+            Return True
+        Catch ex As Exception
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
+            Return False
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
+        End Try
+    End Function
+
+    Public Function SaveShiftEndUsers(ByVal strUserIDs As String, ByVal dDate As Date, ByVal lShiftLockupID As Integer) As DataSet
+        'Dim lShiftID As Integer
+        ds = New DataSet
         Try
             oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
             oSelectCommand.CommandType = CommandType.StoredProcedure
             oSelectCommand.CommandText = "SaveShiftEndUsers"
-            oSelectCommand.Connection = oConnection
+            ' oSelectCommand.Connection = oConnection
 
             oParam = New MySql.Data.MySqlClient.MySqlParameter
             With oParam
@@ -5012,20 +5749,23 @@ Public Class DBAccess
             End With
             oSelectCommand.Parameters.Add(oParam)
 
+            Using oDataAdapter As New MySql.Data.MySqlClient.MySqlDataAdapter
+                oDataAdapter.SelectCommand = oSelectCommand
+                oSelectCommand.Connection = Me.oConnection
+                oDataAdapter.Fill(ds)
+            End Using
 
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
-            End If
 
-            lShiftID = oSelectCommand.ExecuteScalar
-            oConnection.Close()
 
-            Return lShiftID
+            Return ds
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return -1
-
+            'MsgBox(ex.Message & ex.StackTrace)
+            '   oConnection.Close()
+            Return Nothing
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -5066,10 +5806,13 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
             Return False
-
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
 
@@ -5110,188 +5853,14 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            '  oConnection.Close()
             Return False
-
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
-    End Function
-
-    Public Function GetShiftEndusersFull(ByVal dDate As Date, ByVal lShiftID As Integer) As Shift
-        ds = New DataSet
-        Dim oShift As New Shift
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetShiftEndusersFull"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dDate"
-                .Value = dDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftLockupID"
-                .Value = lShiftID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            oShift.SetProperties(ds)
-            Return oShift
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function GetShiftEndusers_Devices(ByVal dDate As Date, ByVal lShiftID As Integer) As Shift
-        ds = New DataSet
-        Dim oShift As New Shift
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetShiftEndusers_Devices"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dDate"
-                .Value = dDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftLockupID"
-                .Value = lShiftID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            oShift.SetProperties_Devices(ds)
-            Return oShift
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function GetUserShiftOperatorsLimits(ByVal lShiftID As Integer) As ColOperators
-        ds = New DataSet
-        Dim oColOperators As New ColOperators
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetUserShiftOperatorsLimits"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftID"
-                .Value = lShiftID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            oColOperators.SetProperties(ds)
-            Return oColOperators
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function GetUserShiftAlreadyUsedOperators(ByVal lShiftID As Integer) As ColOperators
-        ds = New DataSet
-        Dim oColOperators As New ColOperators
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = System.Data.CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetUserShiftAlreadyUsedOperators"
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftID"
-                .Value = lShiftID
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            oColOperators.SetProperties(ds)
-            Return oColOperators
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-    End Function
-
-    Public Function getShiftID(ByVal dDate As Date, ByVal lShiftLockupId As Integer) As DataSet
-        ds = New DataSet
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "getShiftID"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "dDate"
-                .Value = dDate
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lShiftLockupId"
-                .Value = lShiftLockupId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lUserID"
-                .Value = gUser.Id
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-            oDataAdapter.SelectCommand = oSelectCommand
-            oSelectCommand.Connection = Me.oConnection
-            oDataAdapter.Fill(ds)
-
-            Return ds
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            Return Nothing
-        End Try
-
     End Function
 
     Public Function SaveShiftReport(strData As String, dDate As Date, lShiftID As Integer, lCountry As Integer) As Boolean
@@ -5345,46 +5914,13 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
+            'MsgBox(ex.Message & ex.StackTrace)
+            ' oConnection.Close()
             Return False
-
-        End Try
-    End Function
-
-    Public Function GetSlotNote(ByVal lDeviceSlotId As Long) As String
-        Dim strNote As String
-        Try
-            oSelectCommand = New MySql.Data.MySqlClient.MySqlCommand
-            oSelectCommand.CommandType = CommandType.StoredProcedure
-            oSelectCommand.CommandText = "GetSlotNote"
-            oSelectCommand.Connection = oConnection
-
-            oParam = New MySql.Data.MySqlClient.MySqlParameter
-            With oParam
-                .ParameterName = "lDeviceSlotId"
-                .Value = lDeviceSlotId
-            End With
-            oSelectCommand.Parameters.Add(oParam)
-
-
-            If oConnection.State = ConnectionState.Closed Then
-                oConnection.Open()
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
             End If
-
-            strNote = oSelectCommand.ExecuteScalar
-            oConnection.Close()
-
-            If Not strNote Is Nothing Then
-                Return strNote
-            Else
-                Return ""
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
-            oConnection.Close()
-            Return ""
         End Try
     End Function
 
@@ -5425,10 +5961,16 @@ Public Class DBAccess
 
             Return True
         Catch ex As Exception
-            MsgBox(ex.Message & ex.StackTrace)
+            'MsgBox(ex.Message & ex.StackTrace)
             oConnection.Close()
             Return False
-
+        Finally
+            If Not oConnection.State = ConnectionState.Closed Then
+                oConnection.Close()
+            End If
         End Try
     End Function
+
+#End Region
+
 End Class

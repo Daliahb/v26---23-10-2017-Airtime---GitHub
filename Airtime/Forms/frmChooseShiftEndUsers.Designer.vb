@@ -27,9 +27,7 @@ Partial Class frmChooseShiftEndUsers
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmChooseShiftEndUsers))
         Me.ShiftsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DsShifts = New WindowsApplication1.dsShifts()
         Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
-        Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
         Me.RemoveUserToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.btnSave = New System.Windows.Forms.Button()
@@ -54,30 +52,27 @@ Partial Class frmChooseShiftEndUsers
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnGetData = New System.Windows.Forms.Button()
+        Me.DsShifts = New WindowsApplication1.dsShifts()
+        Me.ShiftsTableAdapter = New WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter()
+        Me.lblError = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.lblError.SuspendLayout()
         Me.SuspendLayout()
         '
         'ShiftsBindingSource
         '
         Me.ShiftsBindingSource.DataMember = "shifts"
         '
-        'DsShifts
-        '
-        Me.DsShifts.DataSetName = "dsShifts"
-        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
         'ErrorProvider1
         '
         Me.ErrorProvider1.ContainerControl = Me
-        '
-        'ShiftsTableAdapter
-        '
-        Me.ShiftsTableAdapter.ClearBeforeFill = True
         '
         'RemoveUserToolStripMenuItem
         '
@@ -94,6 +89,7 @@ Partial Class frmChooseShiftEndUsers
         'btnSave
         '
         Me.btnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSave.Enabled = False
         Me.btnSave.Location = New System.Drawing.Point(435, 477)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(155, 31)
@@ -132,6 +128,7 @@ Partial Class frmChooseShiftEndUsers
         '
         'btnChoose
         '
+        Me.btnChoose.Enabled = False
         Me.btnChoose.Location = New System.Drawing.Point(267, 56)
         Me.btnChoose.Name = "btnChoose"
         Me.btnChoose.Size = New System.Drawing.Size(75, 23)
@@ -271,8 +268,9 @@ Partial Class frmChooseShiftEndUsers
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(4)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(337, 428)
+        Me.DataGridView1.Size = New System.Drawing.Size(337, 429)
         Me.DataGridView1.TabIndex = 87
         '
         'Column1
@@ -304,12 +302,51 @@ Partial Class frmChooseShiftEndUsers
         '
         'btnGetData
         '
-        Me.btnGetData.Location = New System.Drawing.Point(497, 10)
+        Me.btnGetData.Location = New System.Drawing.Point(489, 14)
         Me.btnGetData.Name = "btnGetData"
-        Me.btnGetData.Size = New System.Drawing.Size(122, 30)
+        Me.btnGetData.Size = New System.Drawing.Size(135, 30)
         Me.btnGetData.TabIndex = 102
         Me.btnGetData.Text = "Get Shift Users"
         Me.btnGetData.UseVisualStyleBackColor = True
+        '
+        'DsShifts
+        '
+        Me.DsShifts.DataSetName = "dsShifts"
+        Me.DsShifts.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'ShiftsTableAdapter
+        '
+        Me.ShiftsTableAdapter.ClearBeforeFill = True
+        '
+        'lblError
+        '
+        Me.lblError.Controls.Add(Me.Label5)
+        Me.lblError.Controls.Add(Me.Label4)
+        Me.lblError.Location = New System.Drawing.Point(369, 521)
+        Me.lblError.Name = "lblError"
+        Me.lblError.Size = New System.Drawing.Size(261, 53)
+        Me.lblError.TabIndex = 104
+        Me.lblError.Visible = False
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.Color.DarkRed
+        Me.Label5.Location = New System.Drawing.Point(27, 9)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(229, 16)
+        Me.Label5.TabIndex = 105
+        Me.Label5.Text = "Please return all cards before you"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.ForeColor = System.Drawing.Color.DarkRed
+        Me.Label4.Location = New System.Drawing.Point(27, 28)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(131, 16)
+        Me.Label4.TabIndex = 104
+        Me.Label4.Text = "create a new shift."
         '
         'frmChooseShiftEndUsers
         '
@@ -317,6 +354,7 @@ Partial Class frmChooseShiftEndUsers
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.LightSteelBlue
         Me.ClientSize = New System.Drawing.Size(636, 600)
+        Me.Controls.Add(Me.lblError)
         Me.Controls.Add(Me.btnGetData)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.ListView1)
@@ -337,12 +375,14 @@ Partial Class frmChooseShiftEndUsers
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Shift - End Users"
         CType(Me.ShiftsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsShifts, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.lblError.ResumeLayout(False)
+        Me.lblError.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -387,4 +427,7 @@ Partial Class frmChooseShiftEndUsers
     Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ShiftsTableAdapter As WindowsApplication1.dsShiftsTableAdapters.shiftsTableAdapter
     Friend WithEvents btnGetData As System.Windows.Forms.Button
+    Friend WithEvents lblError As System.Windows.Forms.Panel
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 End Class

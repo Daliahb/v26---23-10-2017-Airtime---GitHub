@@ -168,7 +168,7 @@ Partial Class frmDistributedCards
         'chkDevice
         '
         Me.chkDevice.AutoSize = True
-        Me.chkDevice.Location = New System.Drawing.Point(325, 106)
+        Me.chkDevice.Location = New System.Drawing.Point(325, 107)
         Me.chkDevice.Name = "chkDevice"
         Me.chkDevice.Size = New System.Drawing.Size(70, 20)
         Me.chkDevice.TabIndex = 118
@@ -647,7 +647,7 @@ Partial Class frmDistributedCards
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHistoryToolStripMenuItem, Me.DeleteCardToolStripMenuItem, Me.ToolStripSeparator1, Me.ExportToExcelToolStripMenuItem, Me.ToolStripSeparator2, Me.ChangeFromUsedToWrongScratchNoToolStripMenuItem, Me.ChangeFromUsedToAlradyUsedCardToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(266, 148)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(266, 126)
         '
         'ShowHistoryToolStripMenuItem
         '
